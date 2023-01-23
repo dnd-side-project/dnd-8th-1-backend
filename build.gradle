@@ -2,11 +2,14 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+
+	// jacoco 추가
+	id 'jacoco'
 }
 
 group = 'dnd'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -19,17 +22,129 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	//security
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
+
+	// lombok
+	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+
+// Jacoco 설정 추가 시작
+jacoco {
+	// JaCoCo 버전
+	toolVersion = '0.8.6'
 }
+
+
+tasks.named('test') {
+
+	useJUnitPlatform() // JUnit5를 사용하기 위한 설정
+
+	// Test 이후 커버리지가 동작하도록 finalizedBy 추가
+	finalizedBy 'jacocoTestReport'
+}
+
+
+
+
+jacocoTestReport {
+	reports {
+		html.enabled false
+		csv.enabled false
+		xml.enabled true
+	}
+
+	// QueryDSL q type 제외 + 다른 클래스 제외 가능(패키지+클래스 명으로 작성)
+	def Qdomains = []
+	def excludedClass = [
+			'**/*Application*',
+			'**/*Controller*',
+			'**/*Request*',
+			'**/*Response*',
+			'**/*Exception*'
+	]
+
+	// qPattern = '**/QA', '**/QB', ... '*.QZ'
+	for (qPattern in '**/QA'..'**/QZ') {
+		Qdomains.add(qPattern + '*')
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(
+				files(classDirectories.files.collect {
+					fileTree(dir: it, excludes:  excludedClass + Qdomains)
+				})
+		)
+	}
+	// query dsl q type 제외 끝
+
+	// 커버리지 이후 평가
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+
+// 커버리지 기준값 상세설정
+jacocoTestCoverageVerification {
+
+	// QueryDSL q type 제외 + 다른 클래스 제외 가능(패키지+클래스 명으로 작성)
+	def Qdomains = []
+	def excludedClass = [
+			'**.*Application*',
+			'**.*Controller*',
+			'**.*Request*',
+			'**.*Response*',
+			'**.*Exception*'
+	]
+
+	// qPattern = '*.QA', '*.QB', ... '*.QZ'
+	for (qPattern in '*.QA'..'*.QZ') {
+		Qdomains.add(qPattern + '*')
+	}
+
+	violationRules {
+		rule {
+			enabled = true
+
+			element = 'CLASS'
+
+			// 브랜치(if-else) 커버리지를 최소한 50% 만족시켜야 합니다.
+			limit {
+				counter = 'BRANCH'
+				value = 'COVEREDRATIO'
+				minimum = 0.5
+			}
+
+			// 라인 커버리지를 최소한 50% 만족시켜야 합니다.
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.5
+			}
+
+			// 빈 줄을 제외한 코드의 라인수를 최대 200라인으로 제한합니다.
+			limit {
+				counter = 'LINE'
+				value = 'TOTALCOUNT'
+				maximum = 200
+			}
+
+			// 커버리지 체크를 제외할 클래스들 (query dsl 제외)
+			excludes = excludedClass + Qdomains
+		} // end of rule
+	} // end of violationRules
+} // end of jacocoTestCoverageVerification
