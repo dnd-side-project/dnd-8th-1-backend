@@ -5,6 +5,9 @@ plugins {
 
 	// jacoco 추가
 	id 'jacoco'
+
+	//sonarCloud
+	id "org.sonarqube" version "3.5.0.2730"
 }
 
 group = 'dnd'
@@ -148,3 +151,16 @@ jacocoTestCoverageVerification {
 		} // end of rule
 	} // end of violationRules
 } // end of jacocoTestCoverageVerification
+
+
+//sonarCloud
+sonarqube {
+	properties {
+		property "sonar.projectKey", "dnd-side-project_dnd-8th-1-backend"
+		property "sonar.organization", "dnd-side-project"
+		property "sonar.host.url", "https://sonarcloud.io"
+
+		// SonarCloud가 jacoco에서 제공한 파일을 참고하기 위해 Property 추가
+		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+	}
+}
