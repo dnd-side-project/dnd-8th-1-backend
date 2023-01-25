@@ -5,8 +5,8 @@ name: backend-system
 on:
   push:
     branches:
-      -main
-      -develop
+      - main
+      - develop
       
   workflow_dispatch:
 
