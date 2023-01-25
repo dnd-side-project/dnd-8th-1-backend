@@ -14,4 +14,9 @@ public class HealthController {
     return "healthy";
   }
 
+  @GetMapping("/deploy/test")
+  public String deployTest(){
+    return "ok";
+  }
+
 }
