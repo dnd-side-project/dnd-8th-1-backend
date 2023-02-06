@@ -24,7 +24,7 @@ public class HttpSocialLoginRequest {
   private final RestTemplate restTemplate;
 
   @Value("${google.user.info.url}")
-  private final String googleUserInfoUrl;
+  private String googleUserInfoUrl;
 
 
 
