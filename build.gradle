@@ -70,7 +70,7 @@ dependencies {
 // aws parameter store
 dependencyManagement {
 	imports {
-		mavenBom 'io.awspring.cloud:spring-cloud-aws-dependencies:2.3.3'
+		mavenBom 'io.awspring.cloud:spring-cloud-aws-dependencies:2.3.5'
 	}
 }
 
