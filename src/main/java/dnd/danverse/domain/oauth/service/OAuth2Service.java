@@ -11,6 +11,7 @@ import dnd.danverse.domain.member.service.MemberSignUpService;
 import dnd.danverse.global.util.CookieUtil;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +35,17 @@ public class OAuth2Service {
   private final JwtTokenProvider tokenProvider;
   private final RedisService redisService;
 
+  @Value("${google.user.info.url}")
+  private String googleUserInfoUrl;
+
 
   @Transactional
   public ResponseEntity<DataResponse<MemberResponse>> oauth2Login(String googleToken) {
+
+    String urlInfo = String.format(googleUserInfoUrl, googleToken);
+
     // httpRequestUtil 를 통해서 google service 에게 googleToken 을 보내자.
-    OAuth2UserInfo userInfo = httpSocialLoginRequest.getUserInfo(googleToken);
+    OAuth2UserInfo userInfo = httpSocialLoginRequest.getUserInfo(urlInfo);
 
     // google 에서 받은 정보를 통해서 member 를 생성하거나 업데이트하자.
     Map<String, Object> map = memberSignUpService.signUpOrUpdate(userInfo);

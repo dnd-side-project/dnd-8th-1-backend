@@ -9,7 +9,6 @@ import dnd.danverse.domain.oauth.info.OAuth2UserInfo;
 import dnd.danverse.domain.oauth.info.OAuth2UserInfoFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,18 +22,16 @@ public class HttpSocialLoginRequest {
 
   private final RestTemplate restTemplate;
 
-  @Value("${google.user.info.url}")
-  private String googleUserInfoUrl;
+
 
 
 
   // https://www.googleapis.com/oauth2/v3/userinfo?access_token=
-  public OAuth2UserInfo getUserInfo(String googleToken) {
+  public OAuth2UserInfo getUserInfo(String urlInfo) {
 
     GoogleInfoDto dto;
     try {
-      dto = restTemplate.getForObject(googleUserInfoUrl.concat(googleToken),
-          GoogleInfoDto.class);
+      dto = restTemplate.getForObject(urlInfo, GoogleInfoDto.class);
       assert dto != null;
     } catch (Exception e) {
       log.error("Google API 호출 실패");
