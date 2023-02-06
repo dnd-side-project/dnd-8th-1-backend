@@ -1,0 +1,53 @@
+# active profile
+spring:
+  profiles:
+    active: prod
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: 'aws-parameterstore:'
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://${DATABASE_URL}:3306/aws_mariadb
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+
+
+aws:
+  paramstore:
+    enabled: true
+    prefix: /config
+    name: database
+    profileSeparator: _
+    region: ap-northeast-2
+
+
+
+jwt:
+  secret: secretkeyserveroutpuasdfqwerzxcvpoiu
+
+google:
+  user:
+    info:
+      url: https://www.googleapis.com/oauth2/v3/userinfo?access_token=%s
+
+
+
+
+
+

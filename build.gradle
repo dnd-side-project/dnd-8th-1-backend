@@ -43,8 +43,6 @@ dependencies {
 	// aws parameter store
 	implementation 'io.awspring.cloud:spring-cloud-starter-aws-parameter-store-config'
 
-
-
 	// lombok
 	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -70,7 +68,7 @@ dependencies {
 // aws parameter store
 dependencyManagement {
 	imports {
-		mavenBom 'io.awspring.cloud:spring-cloud-aws-dependencies:2.3.5'
+		mavenBom 'io.awspring.cloud:spring-cloud-aws-dependencies:2.3.3'
 	}
 }
 
