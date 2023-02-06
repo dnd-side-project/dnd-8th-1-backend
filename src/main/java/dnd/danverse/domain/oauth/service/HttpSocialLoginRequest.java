@@ -9,6 +9,7 @@ import dnd.danverse.domain.oauth.info.OAuth2UserInfo;
 import dnd.danverse.domain.oauth.info.OAuth2UserInfoFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,13 +23,17 @@ public class HttpSocialLoginRequest {
 
   private final RestTemplate restTemplate;
 
-  private static final String GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo?access_token=";
+  @Value("${google.user.info.url}")
+  private final String googleUserInfoUrl;
 
+
+
+  // https://www.googleapis.com/oauth2/v3/userinfo?access_token=
   public OAuth2UserInfo getUserInfo(String googleToken) {
 
     GoogleInfoDto dto;
     try {
-      dto = restTemplate.getForObject(GOOGLE_USER_INFO_URL + googleToken,
+      dto = restTemplate.getForObject(googleUserInfoUrl + googleToken,
           GoogleInfoDto.class);
       assert dto != null;
     } catch (Exception e) {
