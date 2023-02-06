@@ -33,7 +33,7 @@ public class HttpSocialLoginRequest {
 
     GoogleInfoDto dto;
     try {
-      dto = restTemplate.getForObject(googleUserInfoUrl + googleToken,
+      dto = restTemplate.getForObject(googleUserInfoUrl.concat(googleToken),
           GoogleInfoDto.class);
       assert dto != null;
     } catch (Exception e) {
