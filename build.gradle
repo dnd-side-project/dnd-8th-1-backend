@@ -40,11 +40,6 @@ dependencies {
 	// mariadb
 	implementation 'org.mariadb.jdbc:mariadb-java-client'
 
-	// aws parameter store
-	implementation 'io.awspring.cloud:spring-cloud-starter-aws-parameter-store-config'
-
-
-
 	// lombok
 	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -64,14 +59,6 @@ dependencies {
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-}
-
-
-// aws parameter store
-dependencyManagement {
-	imports {
-		mavenBom 'io.awspring.cloud:spring-cloud-aws-dependencies:2.3.3'
-	}
 }
 
 
