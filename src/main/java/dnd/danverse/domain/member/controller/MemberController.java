@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 서비스 사용자 관련 Controller
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/member")
