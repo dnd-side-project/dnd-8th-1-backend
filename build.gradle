@@ -183,7 +183,7 @@ jacocoTestCoverageVerification {
 			excludes = excludedClass + Qdomains
 		} // end of rule
 	} // end of violationRules
-} // end of jacocoTestCoverageVerification .
+} // end of jacocoTestCoverageVerification ..
 
 
 //sonarCloud
