@@ -59,8 +59,17 @@ dependencies {
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+	// aws parameter store
+	implementation 'io.awspring.cloud:spring-cloud-starter-aws-parameter-store-config'
+
 }
 
+// aws parameter store
+dependencyManagement {
+	imports {
+		mavenBom 'io.awspring.cloud:spring-cloud-aws-dependencies:2.4.1'
+	}
+}
 
 
 // Jacoco 설정 추가 시작
