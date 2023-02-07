@@ -38,7 +38,7 @@ public class SecurityConfig {
 
 
 
-    http.authorizeHttpRequests()
+    http.authorizeRequests()
         .antMatchers("/api/member/oauth/google/login","/api/jwt/refresh").permitAll()
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_USER_PROFILE_YES")
         .anyRequest().authenticated();
