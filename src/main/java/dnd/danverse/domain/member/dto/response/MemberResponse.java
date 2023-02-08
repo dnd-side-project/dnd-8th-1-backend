@@ -51,7 +51,7 @@ public class MemberResponse {
     this.id = member.getId();
     this.name = member.getName();
     this.email = member.getEmail();
-    this.picture = member.getProfileImage();
+    this.picture = member.getSocialImg();
     this.role = member.getRole().getAuthority();
     this.isSignUp = isSignUp;
   }

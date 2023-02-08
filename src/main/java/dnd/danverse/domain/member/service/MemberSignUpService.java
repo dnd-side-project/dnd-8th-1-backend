@@ -35,7 +35,7 @@ public class MemberSignUpService {
         .email(userInfo.getEmail())
         .username(userInfo.getId())
         .password(userInfo.getName() + userInfo.getId())
-        .profileImage(userInfo.getImageUrl())
+        .socialImg(userInfo.getImageUrl())
         .role(Role.USER_PROFILE_NO)
         .oauth2Provider(userInfo.getOauth2Provider())
         .build();

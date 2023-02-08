@@ -1,5 +1,6 @@
 package dnd.danverse.domain.member.entity;
 
+import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.oauth.info.OAuth2Provider;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @SequenceGenerator(name = "MEMBER_SEQ_GENERATOR", sequenceName = "MEMBER_SEQ", initialValue = 1,
     allocationSize = 1)
-public class Member {
+public class Member extends BaseTimeEntity {
 
   /**
    * 사용자의 고유 ID. Sequence 전략을 사용한다.
@@ -58,7 +59,7 @@ public class Member {
    * 사용자의 소셜 프로필 이미지.
    */
   @Column(length = 512, nullable = false)
-  private String profileImage;
+  private String socialImg;
 
   /**
    * 사용자의 권한.
@@ -76,13 +77,13 @@ public class Member {
 
 
   @Builder
-  public Member(String name, String email, String username, String password, String profileImage,
+  public Member(String name, String email, String username, String password, String socialImg,
       Role role, OAuth2Provider oauth2Provider) {
     this.name = name;
     this.email = email;
     this.username = username;
     this.password = password;
-    this.profileImage = profileImage;
+    this.socialImg = socialImg;
     this.role = role;
     this.oauth2Provider = oauth2Provider;
   }
@@ -92,12 +93,12 @@ public class Member {
    *
    * @param email        사용자의 이메일
    * @param name         사용자의 이름
-   * @param profileImage 사용자의 프로필 이미지
+   * @param socialImg 사용자의 프로필 이미지
    */
-  public void updateInfo(String email, String name, String profileImage) {
+  public void updateInfo(String email, String name, String socialImg) {
     this.email = email;
     this.name = name;
-    this.profileImage = profileImage;
+    this.socialImg = socialImg;
   }
 
 
