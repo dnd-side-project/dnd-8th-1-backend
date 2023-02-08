@@ -1,5 +1,6 @@
 package dnd.danverse.domain.member.entity;
 
+import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.oauth.info.OAuth2Provider;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @SequenceGenerator(name = "MEMBER_SEQ_GENERATOR", sequenceName = "MEMBER_SEQ", initialValue = 1,
     allocationSize = 1)
-public class Member {
+public class Member extends BaseTimeEntity {
 
   /**
    * 사용자의 고유 ID. Sequence 전략을 사용한다.
