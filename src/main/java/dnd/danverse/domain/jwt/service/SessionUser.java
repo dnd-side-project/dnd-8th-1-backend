@@ -28,7 +28,7 @@ public class SessionUser implements Serializable {
     this.email = member.getEmail();
     this.username = member.getUsername();
     this.password = member.getPassword();
-    this.profileImage = member.getProfileImage();
+    this.profileImage = member.getSocialImg();
     this.authority = member.getRole().getAuthority();
     this.provider = member.getOauth2Provider().name();
   }
