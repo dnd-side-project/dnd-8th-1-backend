@@ -39,6 +39,12 @@ public class OAuth2Service {
   private String googleUserInfoUrl;
 
 
+  /**
+   * googleToken 을 통해서 google service 에게 유저 정보를 요청하고,
+   * member 를 생성하거나 업데이트하고, jwt 토큰을 발급한다.
+   * @param googleToken : client 에서 받은 googleToken
+   * @return : jwt 토큰을 담은 response
+   */
   @Transactional
   public ResponseEntity<DataResponse<MemberResponse>> oauth2Login(String googleToken) {
 
@@ -58,7 +64,7 @@ public class OAuth2Service {
     String refreshToken = tokenProvider.createRefreshToken();
 
     // refresh token은 redis server에 저장해야 한다.
-    redisService.saveRefreshToken(refreshToken, member.getEmail());
+    redisService.saveRefreshToken(member.getEmail(), refreshToken);
 
     DataResponse<MemberResponse> response = DataResponse.of(HttpStatus.CREATED,
         "회원 가입 및 로그인 성공", new MemberResponse(member,isSignUp));
