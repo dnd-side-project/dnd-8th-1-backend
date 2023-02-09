@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 
-import org.springframework.util.StringUtils;
 import redis.embedded.RedisServer;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -84,11 +83,27 @@ public class EmbeddedRedisConfig {
    * 해당 port를 사용중인 프로세스 확인하는 sh 실행
    */
   private Process executeGrepProcessCommand(int port) throws IOException {
-//    String command = String.format("netstat -nao | find \"LISTEN\" | find \"%d\"", port);
-//    String[] shell = {"cmd.exe", "/y", "/c", command};
+
+    // check if os is windows
+    boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+    if (isWindows) {
+      return Runtime.getRuntime().exec(windowShell(port));
+    }
+    return Runtime.getRuntime().exec(linuxShell(port));
+  }
+
+  private static String[] linuxShell(int port) {
+    String[] shell;
     String command = String.format("netstat -nat | grep LISTEN|grep %d", port);
-    String[] shell = {"/bin/sh", "-c", command};
-    return Runtime.getRuntime().exec(shell);
+    shell = new String[]{"/bin/sh", "-c", command};
+    return shell;
+  }
+
+  private static String[] windowShell(int port) {
+    String[] shell;
+    String command = String.format("netstat -nao | find \"LISTEN\" | find \"%d\"", port);
+    shell = new String[]{"cmd.exe", "/y", "/c", command};
+    return shell;
   }
 
   /**
