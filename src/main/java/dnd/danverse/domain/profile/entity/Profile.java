@@ -23,9 +23,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  * 서비스 사용자의 팀(개인) 프로필 정보
@@ -33,8 +34,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-@SequenceGenerator(name = "PROFILE_SEQ_GENERATOR", sequenceName = "PROFILE_SEQ", initialValue = 1,
-    allocationSize = 1)
+@GenericGenerator(
+    name = "PROFILE_SEQ_GENERATOR",
+    strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = {
+        @Parameter(name = "sequence_name", value = "PROFILE_SEQ"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+    }
+)
 public class Profile extends BaseTimeEntity {
 
   /**
