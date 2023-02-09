@@ -19,20 +19,21 @@ public class RedisService {
 
   /**
    * Refresh Token 을 Redis 에 저장한다.
-   * @param refreshToken : Refresh Token
-   * @param email : email
+   * save 기본 동작은 ID 로 설정된 email 이라는 key 가 존재하면 update, 존재하지 않으면 insert 를 수행한다.
    */
   @Transactional
-  public void saveRefreshToken(String refreshToken, String email) {
-    refreshTokenRedisRepository.save(new RefreshTokenDto(refreshToken, email));
+  public void saveRefreshToken(String email, String refreshToken) {
+    refreshTokenRedisRepository.save(new RefreshTokenDto(email, refreshToken));
   }
 
   /**
    * Refresh Token 이 Redis 에 존재하는지 확인한다.
+   * Redis 에 저장된 객체에서 value 값이 refresh token은 index 로 설정되어 있기 때문에
+   * findByRefreshToken 으로 조회가 가능하다.
    * @param refreshToken : Refresh Token
    * @return : 존재하면 RefreshTokenDto, 존재하지 않으면 Optional.empty()
    */
-  public Optional<RefreshTokenDto> isExist(String refreshToken) {
-    return refreshTokenRedisRepository.findById(refreshToken);
+  public Optional<RefreshTokenDto> isRefreshTokenExist(String refreshToken) {
+    return refreshTokenRedisRepository.findByRefreshToken(refreshToken);
   }
 }
