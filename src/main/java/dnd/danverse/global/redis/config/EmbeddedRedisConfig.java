@@ -109,7 +109,7 @@ public class EmbeddedRedisConfig {
       log.error("Error Message : {}", e.getMessage());
     }
 
-    return !StringUtils.hasText(pidInfo.toString());
+    return !pidInfo.toString().isEmpty();
   }
 
 }
