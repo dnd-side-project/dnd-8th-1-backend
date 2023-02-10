@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 프로필 - 장르, 중간 테이블 Entity
+ * 프로필 - 장르, 중간 테이블 Entity.
  */
 @Entity
 @NoArgsConstructor
@@ -25,7 +25,7 @@ public class ProfileGenre extends BaseTimeEntity {
   private Long id;
 
   @Column(nullable = false)
-  private Genre genre;
+  private String genre;
 
 
 }
