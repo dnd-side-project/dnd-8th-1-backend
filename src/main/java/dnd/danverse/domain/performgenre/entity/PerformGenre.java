@@ -9,9 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  * 공연 - 장르, 중간 테이블 Entity
@@ -19,8 +20,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-@SequenceGenerator(name = "PERFORM_GENRE_SEQ_GENERATOR", sequenceName = "PERFORM_GENRE_SEQ",
-    initialValue = 1, allocationSize = 1)
+@GenericGenerator(
+    name = "PERFORM_GENRE_SEQ_GENERATOR",
+    strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = {
+        @Parameter(name = "sequence_name", value = "PERFORM_GENRE_SEQ"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+    }
+)
 public class PerformGenre extends BaseTimeEntity {
 
   @Id

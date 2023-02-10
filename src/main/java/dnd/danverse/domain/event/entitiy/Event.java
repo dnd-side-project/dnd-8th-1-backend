@@ -18,9 +18,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  * 이벤트 정보를 담는 Entity.
@@ -28,8 +29,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-@SequenceGenerator(name = "EVENT_SEQ_GENERATOR", sequenceName = "EVENT_SEQ", initialValue = 1,
-    allocationSize = 1)
+@GenericGenerator(
+    name = "EVENT_SEQ_GENERATOR",
+    strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = {
+        @Parameter(name = "sequence_name", value = "EVENT_SEQ"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+    }
+)
 public class Event extends BaseTimeEntity {
 
   /**
@@ -73,8 +81,7 @@ public class Event extends BaseTimeEntity {
   private int recruitCount;
 
   /**
-   * 이벤트의 모집 마감 기한
-   * (년, 월, 일, 시, 분, 초)
+   * 이벤트의 모집 마감 기한 (년, 월, 일, 시, 분, 초)
    */
   @Column(nullable = false)
   private LocalDateTime deadline;
@@ -97,10 +104,6 @@ public class Event extends BaseTimeEntity {
    */
   @Embedded
   private Image eventImg;
-
-
-
-
 
 
 }
