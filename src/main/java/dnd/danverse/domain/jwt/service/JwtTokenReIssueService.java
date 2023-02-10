@@ -1,6 +1,9 @@
 package dnd.danverse.domain.jwt.service;
 
+import static dnd.danverse.global.exception.ErrorCode.JWT_REFRESH_TOKEN_EXPIRED;
+
 import dnd.danverse.domain.jwt.AccessRefreshTokenDto;
+import dnd.danverse.domain.jwt.exception.JwtException;
 import dnd.danverse.global.redis.service.RedisService;
 import dnd.danverse.global.redis.dto.RefreshTokenDto;
 import java.util.Optional;
@@ -40,7 +43,7 @@ public class JwtTokenReIssueService {
       redisService.saveRefreshToken(email, newRefreshToken);
     } else {
       // Refresh Token 이 존재하지 않으면, Refresh Token 이 Redis 에서도 만료 됨을 의미, 그 만큼(1주일) 오랜 기간 접속하지 않았다.
-      throw new IllegalArgumentException("Refresh Token 이 존재하지 않습니다. 새롭게 로그인 해주세요");
+      throw new JwtException(JWT_REFRESH_TOKEN_EXPIRED);
     }
 
     return new AccessRefreshTokenDto(newAccessToken, newRefreshToken);
