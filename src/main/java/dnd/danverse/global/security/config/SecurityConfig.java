@@ -26,6 +26,9 @@ public class SecurityConfig {
   private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
   private final JwtExceptionFilter jwtExceptionFilter;
 
+  /**
+   * 인증이 필요한 부분에 대해서만 권한 설정을 하고 나머지는 모두 허용한다.
+   */
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors()
@@ -39,9 +42,8 @@ public class SecurityConfig {
 
 
     http.authorizeHttpRequests()
-        .antMatchers("/api/member/oauth/google/login","/api/jwt/refresh").permitAll()
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_USER_PROFILE_YES")
-        .anyRequest().authenticated();
+        .anyRequest().permitAll();
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     http.addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
