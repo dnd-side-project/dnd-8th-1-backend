@@ -2,7 +2,6 @@ package dnd.danverse.domain.performance.entity;
 
 import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.common.Image;
-import dnd.danverse.domain.common.Location;
 import dnd.danverse.domain.performgenre.entity.PerformGenre;
 import dnd.danverse.domain.profile.entity.Profile;
 import java.time.LocalDate;
@@ -13,8 +12,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -69,9 +66,8 @@ public class Performance extends BaseTimeEntity {
   /**
    * 공연 위치(지역)
    */
-  @Enumerated(EnumType.STRING)
   @Column(nullable = false)
-  private Location location;
+  private String location;
 
   /**
    * 공연 구체적인 장소
