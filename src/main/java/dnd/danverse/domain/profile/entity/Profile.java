@@ -2,7 +2,6 @@ package dnd.danverse.domain.profile.entity;
 
 import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.common.Image;
-import dnd.danverse.domain.common.Location;
 import dnd.danverse.domain.common.TeamType;
 import dnd.danverse.domain.member.entity.Member;
 import dnd.danverse.domain.profilegenre.entity.ProfileGenre;
@@ -91,9 +90,8 @@ public class Profile extends BaseTimeEntity {
   /**
    * 사용자 프로필 주 활동지역.
    */
-  @Enumerated(EnumType.STRING)
   @Column(nullable = false)
-  private Location location;
+  private String location;
 
   /**
    * 사용자 커리어 시작일 (년, 월, 일)

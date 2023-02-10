@@ -2,7 +2,6 @@ package dnd.danverse.domain.event.entitiy;
 
 import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.common.Image;
-import dnd.danverse.domain.common.Location;
 import dnd.danverse.domain.common.TeamType;
 import dnd.danverse.domain.profile.entity.Profile;
 import java.time.LocalDateTime;
@@ -89,9 +88,8 @@ public class Event extends BaseTimeEntity {
   /**
    * 이벤트 지역
    */
-  @Enumerated(EnumType.STRING)
   @Column(nullable = false)
-  private Location location;
+  private String location;
 
   /**
    * 이벤트의 상세 설명.
