@@ -1,6 +1,7 @@
 package dnd.danverse.global.exception;
 
 
+import dnd.danverse.domain.jwt.exception.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -67,6 +68,18 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(BusinessException.class)
   protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {
     log.warn("BusinessException", e);
+    final ErrorCode errorCode = e.getErrorCode();
+    final ErrorResponse response = ErrorResponse.of(errorCode);
+    return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
+  }
+
+  /**
+   * Refresh Token 을 통해, 토큰 재발급 과정에서 Refresh Token 조차 만료된 경우
+   * 처리하는 Exception Handler .
+   */
+  @ExceptionHandler(JwtException.class)
+  protected ResponseEntity<ErrorResponse> handleJwtException(final JwtException e) {
+    log.warn("JwtException", e);
     final ErrorCode errorCode = e.getErrorCode();
     final ErrorResponse response = ErrorResponse.of(errorCode);
     return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
