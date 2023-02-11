@@ -18,4 +18,8 @@ public class OpenChat {
   @Column(nullable = false)
   private String openChatUrl;
 
+  public OpenChat(String openChatUrl) {
+    this.openChatUrl = openChatUrl;
+  }
+
 }
