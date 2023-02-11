@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -57,9 +58,8 @@ public class Performance extends BaseTimeEntity {
   private Profile profileHost;
 
   /**
-   * 공연 장르 목록
-   * PerformGenre 의 삭제는 Performance 가 삭제될 때 함께 삭제된다.
-   * CascadeType.PERSIST 를 하지 않고, 추후 saveAll()를 통해서 한번의 네트워크 통신으로 처리한다.
+   * 공연 장르 목록 PerformGenre 의 삭제는 Performance 가 삭제될 때 함께 삭제된다. CascadeType.PERSIST 를 하지 않고, 추후
+   * saveAll()를 통해서 한번의 네트워크 통신으로 처리한다.
    */
   @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
   @JoinColumn(name = "performance_id", foreignKey = @ForeignKey(name = "FK_PERFORMGENRE_PERFORMANCE"))
@@ -84,15 +84,13 @@ public class Performance extends BaseTimeEntity {
   private String address;
 
   /**
-   * 공연 시작 날짜
-   * (년, 월, 일)
+   * 공연 시작 날짜 (년, 월, 일)
    */
   @Column(nullable = false)
   private LocalDate startDate;
 
   /**
-   * 공연 시작 시간
-   * (년, 월, 일, 시, 분, 초)
+   * 공연 시작 시간 (년, 월, 일, 시, 분, 초)
    */
   @Column(nullable = false)
   private LocalDateTime startTime;
@@ -110,7 +108,20 @@ public class Performance extends BaseTimeEntity {
   private String description;
 
 
-
+  @Builder
+  public Performance(Profile profileHost, List<PerformGenre> performGenres, String title,
+      String location, String address, LocalDate startDate, LocalDateTime startTime,
+      Image performanceImg, String description) {
+    this.profileHost = profileHost;
+    this.performGenres = performGenres;
+    this.title = title;
+    this.location = location;
+    this.address = address;
+    this.startDate = startDate;
+    this.startTime = startTime;
+    this.performanceImg = performanceImg;
+    this.description = description;
+  }
 
 
 }

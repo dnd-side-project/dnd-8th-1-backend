@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -117,6 +118,22 @@ public class Profile extends BaseTimeEntity {
   @Embedded
   private Portfolio portfolioUrl;
 
+
+  @Builder
+  public Profile(Member member, List<ProfileGenre> profileGenres, TeamType profileType, String profileName,
+      Image profileImg, String location, LocalDate careerStartDay, String description,
+      OpenChat openChatUrl, Portfolio portfolioUrl) {
+    this.member = member;
+    this.profileGenres = profileGenres;
+    this.profileType = profileType;
+    this.profileName = profileName;
+    this.profileImg = profileImg;
+    this.location = location;
+    this.careerStartDay = careerStartDay;
+    this.description = description;
+    this.openChatUrl = openChatUrl;
+    this.portfolioUrl = portfolioUrl;
+  }
 
 
 
