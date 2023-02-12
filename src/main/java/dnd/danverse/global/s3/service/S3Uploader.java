@@ -11,6 +11,8 @@ import dnd.danverse.global.s3.dto.response.S3Dto;
 import dnd.danverse.global.s3.exception.ImageUploadException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * S3에 이미지를 업로드 하는 서비스.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -55,14 +60,14 @@ public class S3Uploader {
 
   /**
    * @param fileName createFileName 메서드를 통해서 변경된 파일 이름
-   * @return 확장자
    */
   private String getFileExtension(String fileName) {
-    try {
-      return fileName.substring(fileName.lastIndexOf("."));
-    } catch (ImageUploadException e) {
+    List<String> possibleExtensions = Arrays.asList("jpg", "jpeg", "png", "gif");
+    String extension = fileName.substring(fileName.lastIndexOf("."));
+    if (!possibleExtensions.contains(extension)) {
       throw new ImageUploadException(IMAGE_WRONG_FILE_FORMAT);
     }
+    return extension;
   }
 
 

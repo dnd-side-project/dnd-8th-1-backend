@@ -37,7 +37,7 @@ public enum ErrorCode {
   SOCIAL_ACCESS_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "S001", "유효하지 않은 소셜 로그인 토큰입니다."),
 
   // S3를 사용해 이미지를 업로드할 때
-  IMAGE_WRONG_FILE_FORMAT(HttpStatus.BAD_REQUEST, "I001", "파일 형식이 잘못되었습니다.");
+  IMAGE_WRONG_FILE_FORMAT(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "I001", "파일 형식이 잘못되었습니다.");
 
 
 
