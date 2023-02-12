@@ -30,6 +30,7 @@ public class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors()
         .and()
+        .csrf().disable()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     http.exceptionHandling()
@@ -38,10 +39,9 @@ public class SecurityConfig {
 
 
 
-    http.authorizeHttpRequests()
-        .antMatchers("/api/member/oauth/google/login","/api/jwt/refresh").permitAll()
+    http.authorizeRequests()
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_USER_PROFILE_YES")
-        .anyRequest().authenticated();
+        .anyRequest().permitAll();
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     http.addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
