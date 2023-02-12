@@ -34,17 +34,22 @@ public enum ErrorCode {
   RESOURCE_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "R002", "인증이 필요합니다. 로그인을 해주세요."),
 
   // 소셜 로그인 서비스에 access token 을 통해 사용자 데이터 요청하는데 실패한 경우
-  SOCIAL_ACCESS_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "S001", "유효하지 않은 소셜 로그인 토큰입니다.");
+  SOCIAL_ACCESS_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "S001", "유효하지 않은 소셜 로그인 토큰입니다."),
+
+  // S3를 사용해 이미지를 업로드할 때
+  IMAGE_WRONG_FILE_FORMAT(HttpStatus.BAD_REQUEST, "I001", "파일 형식이 잘못되었습니다.");
+
+
 
   private final HttpStatus status;
   private final String code;
   private final String message;
 
-  public int getStatus(){
+  public int getStatus() {
     return this.status.value();
   }
 
-  ErrorCode (HttpStatus status, String code, String message) {
+  ErrorCode(HttpStatus status, String code, String message) {
     this.status = status;
     this.code = code;
     this.message = message;
