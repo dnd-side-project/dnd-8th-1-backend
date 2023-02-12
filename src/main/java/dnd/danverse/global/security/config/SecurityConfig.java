@@ -33,6 +33,7 @@ public class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors()
         .and()
+        .csrf().disable()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     http.exceptionHandling()
@@ -41,7 +42,8 @@ public class SecurityConfig {
 
 
 
-    http.authorizeHttpRequests()
+
+    http.authorizeRequests()
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_USER_PROFILE_YES")
         .anyRequest().permitAll();
 
