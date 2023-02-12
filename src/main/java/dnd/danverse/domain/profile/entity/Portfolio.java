@@ -16,4 +16,10 @@ public class Portfolio {
   private String instagramUrl;
   private String twitterUrl;
 
+  public Portfolio(String youtubeUrl, String instagramUrl, String twitterUrl) {
+    this.youtubeUrl = youtubeUrl;
+    this.instagramUrl = instagramUrl;
+    this.twitterUrl = twitterUrl;
+  }
+
 }

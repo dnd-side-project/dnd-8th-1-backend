@@ -26,6 +26,9 @@ public class SecurityConfig {
   private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
   private final JwtExceptionFilter jwtExceptionFilter;
 
+  /**
+   * 인증이 필요한 부분에 대해서만 권한 설정을 하고 나머지는 모두 허용한다.
+   */
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors()
@@ -36,6 +39,7 @@ public class SecurityConfig {
     http.exceptionHandling()
         .authenticationEntryPoint(jwtAuthenticationEntryPointHandler) // 인증 되지 않는 사용자가 접근할 경우
         .accessDeniedHandler(jwtAccessDeniedHandler); // 인증은 했으나 권한이 없는 경우
+
 
 
 

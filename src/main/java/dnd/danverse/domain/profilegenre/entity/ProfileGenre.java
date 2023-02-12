@@ -35,5 +35,9 @@ public class ProfileGenre extends BaseTimeEntity {
   @Column(nullable = false)
   private String genre;
 
+  public ProfileGenre(String genre) {
+    this.genre = genre;
+  }
+
 
 }

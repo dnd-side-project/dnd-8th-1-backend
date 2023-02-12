@@ -34,4 +34,8 @@ public class PerformGenre extends BaseTimeEntity {
 
   @Column(nullable = false)
   private String genre;
+
+  public PerformGenre(String genre) {
+    this.genre = genre;
+  }
 }
