@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * 공연 관련 데이터를 처리하기 위한 Repository.
  */
 @Repository
-public interface PerformanceRepository extends JpaRepository<Performance, Long> {
+public interface PerformanceRepository extends JpaRepository<Performance, Long>, PerformFilterCustom {
 
   @Query("select p from Performance p where p.startDate >= :now order by p.startDate asc")
   List<Performance> findImminentPerforms(@Param("now") LocalDate now);
