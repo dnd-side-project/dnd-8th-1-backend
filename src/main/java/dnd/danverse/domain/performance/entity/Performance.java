@@ -123,5 +123,17 @@ public class Performance extends BaseTimeEntity {
     this.description = description;
   }
 
+  /**
+   * 공연 장르 목록을 문자열로 반환한다.
+   * @return 장르 목록
+   */
+  public List<String> getPerformGenres() {
+    List<String> genres = new ArrayList<>();
+    for (PerformGenre genre : performGenres) {
+      genres.add(genre.getGenre());
+    }
+    return genres;
+  }
+
 
 }
