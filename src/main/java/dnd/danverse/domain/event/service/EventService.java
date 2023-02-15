@@ -33,12 +33,12 @@ public class EventService {
   @Transactional
   public EventSavedResponseDto createEvent(EventSavedRequestDto eventRequest, Long userId) {
     Optional<Profile> profileOptional = profileRepository.findByMember(userId);
-    if (profileOptional.isPresent()) {
-      Profile profile = profileOptional.get();
-      Event event = eventRepository.save(eventRequest.toEntity(profile));
-      return new EventSavedResponseDto(event, new ProfileDto(profile));
+    if (profileOptional.isEmpty()) {
+      throw new NoProfileException(PROFILE_NOT_FOUND);
     }
-    throw new NoProfileException(PROFILE_NOT_FOUND);
+    Profile profile = profileOptional.get();
+    Event event = eventRepository.save(eventRequest.toEntity(profile));
+    return new EventSavedResponseDto(event, new ProfileDto(profile));
   }
 
 
