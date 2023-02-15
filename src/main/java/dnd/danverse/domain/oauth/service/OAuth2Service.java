@@ -11,7 +11,6 @@ import dnd.danverse.domain.member.service.MemberSignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * OAuth2 로그인을 위한 서비스 클래스. 1. google 에서 받은 googleToken 을 통해서 google service 에게 유저 정보를 요청한다. 2.
@@ -51,19 +50,38 @@ public class OAuth2Service {
   }
 
 
-
+  /**
+   * redis 에 refresh token 을 저장한다.
+   * @param email 사용자 email
+   * @param refreshToken refresh token
+   */
   private void saveRefreshTokenToRedis(String email,String refreshToken) {
     redisService.saveRefreshToken(email, refreshToken);
   }
 
+  /**
+   * refresh token 을 생성한다.
+   * @return refresh token
+   */
   private String createRefreshToken() {
     return tokenProvider.createRefreshToken();
   }
 
+  /**
+   * access token 을 생성한다.
+   * @param email 사용자 email
+   * @param role 사용자 권한
+   * @return access token
+   */
   private String createAccessToken(String email, Role role) {
     return tokenProvider.createAccessToken(email, role);
   }
 
+  /**
+   * google service 에게 유저 정보를 요청한다.
+   * @param googleToken client 로 부터 넘어온 googleToken
+   * @return google service 에서 받은 유저 정보
+   */
   private OAuth2UserInfo getUserInfoFromGoogle(String googleToken) {
     String urlInfo = String.format(googleUserInfoUrl, googleToken);
     return httpSocialLoginRequest.getUserInfo(urlInfo);
@@ -71,7 +89,6 @@ public class OAuth2Service {
 
   /**
    * SignUpResult 에서 email 을 추출한다.
-   *
    * @param signUpResult 회원 가입 결과
    * @return email
    */
