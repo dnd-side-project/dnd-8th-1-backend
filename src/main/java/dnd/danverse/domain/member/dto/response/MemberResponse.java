@@ -58,7 +58,7 @@ public class MemberResponse {
    */
   public MemberResponse(SignUpResult signUpResult) {
     Member member = signUpResult.getMember();
-    Profile profile = signUpResult.getProfile();
+    Profile resultProfile = signUpResult.getProfile();
 
     this.id = member.getId();
     this.name = member.getName();
@@ -66,7 +66,7 @@ public class MemberResponse {
     this.picture = member.getSocialImg();
     this.role = member.getRole().getAuthority();
     this.isSignUp = signUpResult.isSignUp();
-    this.profile = profile != null ? new ProfileInfoDto(profile) : null;
+    this.profile = resultProfile != null ? new ProfileInfoDto(resultProfile) : null;
   }
 
 

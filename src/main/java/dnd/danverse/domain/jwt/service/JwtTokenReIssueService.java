@@ -43,9 +43,13 @@ public class JwtTokenReIssueService {
 
     String email = refreshTokenDto.get().getEmail();
 
-    Member member = memberRepository.findByEmail(email).get();
+    Optional<Member> optionalMember = memberRepository.findByEmail(email);
 
-    String newAccessToken = jwtTokenProvider.createAccessToken(email, member.getRole());
+    if (optionalMember.isEmpty()) {
+      throw new JwtException(JWT_REFRESH_TOKEN_EXPIRED);
+    }
+
+    String newAccessToken = jwtTokenProvider.createAccessToken(email, optionalMember.get().getRole());
     String newRefreshToken = jwtTokenProvider.createRefreshToken();
     redisService.saveRefreshToken(email, newRefreshToken);
 
