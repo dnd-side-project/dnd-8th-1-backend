@@ -17,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -26,7 +28,9 @@ import org.hibernate.annotations.Parameter;
  * 이벤트 정보를 담는 Entity.
  */
 @Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @GenericGenerator(
     name = "EVENT_SEQ_GENERATOR",

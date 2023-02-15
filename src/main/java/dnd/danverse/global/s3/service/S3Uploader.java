@@ -62,7 +62,7 @@ public class S3Uploader {
    * @param fileName createFileName 메서드를 통해서 변경된 파일 이름
    */
   private String getFileExtension(String fileName) {
-    List<String> possibleExtensions = Arrays.asList("jpg", "jpeg", "png", "gif");
+    List<String> possibleExtensions = Arrays.asList(".jpg", ".jpeg", ".png", ".gif");
     String extension = fileName.substring(fileName.lastIndexOf("."));
     if (!possibleExtensions.contains(extension)) {
       throw new ImageUploadException(IMAGE_WRONG_FILE_FORMAT);
