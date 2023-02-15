@@ -2,6 +2,7 @@ package dnd.danverse.domain.profile.entity;
 
 
 import javax.persistence.Embeddable;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 유튜브, 인스타그램, 트위터 링크를 담는다.
  */
 @Embeddable
+@Getter
 @NoArgsConstructor
 public class Portfolio {
 

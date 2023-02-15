@@ -1,12 +1,9 @@
 package dnd.danverse.domain.member.service;
 
 import dnd.danverse.domain.member.entity.Member;
-import dnd.danverse.domain.member.entity.Role;
 import dnd.danverse.domain.member.repository.MemberRepository;
 import dnd.danverse.domain.oauth.info.OAuth2UserInfo;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,7 +34,7 @@ public class MemberSignUpService {
     if (optionalMember.isPresent()) {
       Member member = optionalMember.get();
       updateMemberInfo(userInfo, member);
-      return new SignUpResult(member, false);
+      return new SignUpResult(member, member.getProfile() ,false);
     }
     // 존재하지 않는다면 회원가입
     Member member = signUp(userInfo);

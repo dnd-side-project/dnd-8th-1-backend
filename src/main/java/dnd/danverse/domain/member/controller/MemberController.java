@@ -41,12 +41,8 @@ public class MemberController {
     CookieUtil.setRefreshCookie(headers, responseDto.getRefreshToken());
     HttpHeaderUtil.setAccessToken(headers, responseDto.getAccessToken());
 
-    return ResponseEntity
-        .status(HttpStatus.CREATED)
-        .headers(headers)
-        .body(DataResponse.of(HttpStatus.CREATED,
-            "회원 가입 및 로그인 성공", responseDto.getMemberResponse()));
-
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED,
+        "회원 가입 및 로그인 성공", responseDto.getMemberResponse()), headers, HttpStatus.CREATED);
   }
 
   @GetMapping("resource")
