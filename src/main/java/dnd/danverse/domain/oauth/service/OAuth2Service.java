@@ -1,5 +1,6 @@
 package dnd.danverse.domain.oauth.service;
 
+import dnd.danverse.domain.member.entity.Role;
 import dnd.danverse.domain.member.service.SignUpResult;
 import dnd.danverse.domain.oauth.dto.OAuth2LoginResponseDTO;
 import dnd.danverse.domain.oauth.info.OAuth2UserInfo;
@@ -43,7 +44,7 @@ public class OAuth2Service {
     OAuth2UserInfo userInfo = getUserInfoFromGoogle(googleToken);
     SignUpResult signUpResult = memberSignUpService.signUpOrUpdate(userInfo);
     String email = getEmail(signUpResult);
-    String accessToken = createAccessToken(email);
+    String accessToken = createAccessToken(email, signUpResult.getMember().getRole());
     String refreshToken = createRefreshToken();
     saveRefreshTokenToRedis(email, refreshToken);
 
@@ -61,8 +62,8 @@ public class OAuth2Service {
     return tokenProvider.createRefreshToken();
   }
 
-  private String createAccessToken(String email) {
-    return tokenProvider.createAccessToken(email);
+  private String createAccessToken(String email, Role role) {
+    return tokenProvider.createAccessToken(email, role);
   }
 
   private OAuth2UserInfo getUserInfoFromGoogle(String googleToken) {

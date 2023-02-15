@@ -4,6 +4,8 @@ import static dnd.danverse.global.exception.ErrorCode.JWT_REFRESH_TOKEN_EXPIRED;
 
 import dnd.danverse.domain.jwt.AccessRefreshTokenDto;
 import dnd.danverse.domain.jwt.exception.JwtException;
+import dnd.danverse.domain.member.entity.Member;
+import dnd.danverse.domain.member.repository.MemberRepository;
 import dnd.danverse.global.redis.service.RedisService;
 import dnd.danverse.global.redis.dto.RefreshTokenDto;
 import java.util.Optional;
@@ -21,6 +23,7 @@ public class JwtTokenReIssueService {
 
   private final JwtTokenProvider jwtTokenProvider;
   private final RedisService redisService;
+  private final MemberRepository memberRepository;
 
   /**
    * Refresh Token 을 이용하여 Access Token 과 Refresh Token 을 재발급 받는다.
@@ -40,7 +43,9 @@ public class JwtTokenReIssueService {
 
     String email = refreshTokenDto.get().getEmail();
 
-    String newAccessToken = jwtTokenProvider.createAccessToken(email);
+    Member member = memberRepository.findByEmail(email).get();
+
+    String newAccessToken = jwtTokenProvider.createAccessToken(email, member.getRole());
     String newRefreshToken = jwtTokenProvider.createRefreshToken();
     redisService.saveRefreshToken(email, newRefreshToken);
 
