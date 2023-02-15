@@ -2,6 +2,9 @@ package dnd.danverse.domain.jwt.controller;
 
 import dnd.danverse.domain.jwt.AccessRefreshTokenDto;
 import dnd.danverse.domain.jwt.service.JwtTokenReIssueService;
+import dnd.danverse.domain.member.dto.response.MemberResponse;
+import dnd.danverse.domain.oauth.service.OAuth2Service;
+import dnd.danverse.global.response.DataResponse;
 import dnd.danverse.global.util.CookieUtil;
 import dnd.danverse.global.util.HttpHeaderUtil;
 import dnd.danverse.global.response.MessageResponse;
@@ -12,18 +15,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/jwt")
+@RequestMapping("/api/v1/oauth/")
 @Slf4j
 public class JwtTokenController {
 
   private final JwtTokenReIssueService refreshTokenReIssueService;
+  private final OAuth2Service oAuth2Service;
 
-  @GetMapping("/refresh")
+  @GetMapping("/jwt/refresh")
   public ResponseEntity<MessageResponse> reIssueToken(@CookieValue(name = "refreshToken") String refreshToken) {
 
     AccessRefreshTokenDto tokenDto = refreshTokenReIssueService.reIssueToken(refreshToken);
@@ -37,5 +42,17 @@ public class JwtTokenController {
 
     return new ResponseEntity<>(responseDto, headers, HttpStatus.CREATED);
   }
+
+
+  /**
+   * 클라이언트 Request 으로부터 Header 에 있는 Authorization 에 담긴 토큰을 받아서
+   * 회원 가입을 하고, JWT 토큰을 생성하여 반환한다.
+   * @return Header 에 Access Token , Cookie 에 Refresh Token 을 담아서 반환한다.
+   */
+  @GetMapping(value = "/google/login")
+  public ResponseEntity<DataResponse<MemberResponse>> oauth2Login(@RequestHeader("google-token") String googleToken) {
+    return oAuth2Service.oauth2Login(googleToken);
+  }
+
 
 }
