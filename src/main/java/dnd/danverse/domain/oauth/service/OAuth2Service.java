@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
  * jwt 토큰을 쿠키와 헤더에 담아서 클라이언트에게 전달한다.
  */
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class OAuth2Service {
 
@@ -38,7 +37,6 @@ public class OAuth2Service {
    * @param googleToken : client 에서 받은 googleToken
    * @return : jwt 토큰을 담은 response
    */
-  @Transactional
   public OAuth2LoginResponseDTO oauth2Login(String googleToken) {
 
     OAuth2UserInfo userInfo = getUserInfoFromGoogle(googleToken);
