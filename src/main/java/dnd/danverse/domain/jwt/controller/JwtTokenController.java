@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * JWT 토큰 관련 컨트롤러
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/oauth/")

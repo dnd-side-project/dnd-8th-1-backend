@@ -31,20 +31,18 @@ public class JwtTokenReIssueService {
 
     jwtTokenProvider.validateToken(refreshToken);
 
-    Optional<RefreshTokenDto> tokenDto = redisService.isRefreshTokenExist(refreshToken);
+    Optional<RefreshTokenDto> refreshTokenDto = redisService.isRefreshTokenExist(refreshToken);
 
-    String newAccessToken;
-    String newRefreshToken;
-    // Refresh Token 이 존재하면, 새로운 Access Token 과 Refresh Token 을 발급한다.
-    if (tokenDto.isPresent()) {
-      String email = tokenDto.get().getEmail();
-      newAccessToken = jwtTokenProvider.createAccessToken(email);
-      newRefreshToken = jwtTokenProvider.createRefreshToken();
-      redisService.saveRefreshToken(email, newRefreshToken);
-    } else {
-      // Refresh Token 이 존재하지 않으면, Refresh Token 이 Redis 에서도 만료 됨을 의미, 그 만큼(1주일) 오랜 기간 접속하지 않았다.
+    // redis 에 저장된 refresh token 이 없으면 만료된 것으로 간주한다.
+    if (refreshTokenDto.isEmpty()) {
       throw new JwtException(JWT_REFRESH_TOKEN_EXPIRED);
     }
+
+    String email = refreshTokenDto.get().getEmail();
+
+    String newAccessToken = jwtTokenProvider.createAccessToken(email);
+    String newRefreshToken = jwtTokenProvider.createRefreshToken();
+    redisService.saveRefreshToken(email, newRefreshToken);
 
     return new AccessRefreshTokenDto(newAccessToken, newRefreshToken);
   }
