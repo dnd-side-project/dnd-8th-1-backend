@@ -1,6 +1,6 @@
 package dnd.danverse.domain.member.dto.response;
 
-import dnd.danverse.domain.member.entity.Member;
+import dnd.danverse.domain.member.service.SignUpResult;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -45,15 +45,15 @@ public class MemberResponse {
 
   /**
    * Member Entity 를 MemberResponse 로 변환하는 메소드
-   * @param member Member Entity
+   * @param signUpResult 회원가입 결과
    */
-  public MemberResponse(Member member, boolean isSignUp) {
-    this.id = member.getId();
-    this.name = member.getName();
-    this.email = member.getEmail();
-    this.picture = member.getSocialImg();
-    this.role = member.getRole().getAuthority();
-    this.isSignUp = isSignUp;
+  public MemberResponse(SignUpResult signUpResult) {
+    this.id = signUpResult.getMember().getId();
+    this.name = signUpResult.getMember().getName();
+    this.email = signUpResult.getMember().getEmail();
+    this.picture = signUpResult.getMember().getSocialImg();
+    this.role = signUpResult.getMember().getRole().getAuthority();
+    this.isSignUp = signUpResult.isSignUp();
   }
 
 
