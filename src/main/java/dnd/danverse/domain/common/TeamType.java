@@ -1,5 +1,8 @@
 package dnd.danverse.domain.common;
 
+import static dnd.danverse.global.exception.ErrorCode.*;
+
+import dnd.danverse.domain.event.exception.TypeNotSupportException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +24,6 @@ public enum TeamType {
         return teamType;
       }
     }
-    // TODO : TypeNotSupported Exception 으로 변경 필요 (작성일 : 2023-02-13 03:00)
-    throw new IllegalArgumentException("해당 type은 존재하지 않습니다. type=" + type);
+    throw new TypeNotSupportException(TYPE_NOT_FOUND);
   }
 }

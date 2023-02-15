@@ -23,6 +23,7 @@ public enum ErrorCode {
 
   MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "M003", "존재하지 않는 회원입니다."),
   PROFILE_NOT_FOUND(HttpStatus.BAD_REQUEST, "P001", "프로필 등록이 필요한 서비스입니다."),
+  TYPE_NOT_FOUND(HttpStatus.BAD_REQUEST, "T001", "해당 타입은 존재하지 않습니다."),
 
 
   // JWT (Json Web Token)
