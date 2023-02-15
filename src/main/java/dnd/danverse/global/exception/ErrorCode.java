@@ -22,6 +22,7 @@ public enum ErrorCode {
   LOGIN_INPUT_INVALID(HttpStatus.BAD_REQUEST, "L002", "로그인 정보가 올바르지 않습니다."),
 
   MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "M003", "존재하지 않는 회원입니다."),
+  PROFILE_NOT_FOUND(HttpStatus.BAD_REQUEST, "P001", "프로필 등록이 필요한 서비스입니다."),
 
 
   // JWT (Json Web Token)
