@@ -1,6 +1,7 @@
 package dnd.danverse.domain.matching.entity;
 
 import dnd.danverse.domain.common.BaseTimeEntity;
+import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.profile.entity.Profile;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -43,11 +45,11 @@ public class EventMatch extends BaseTimeEntity {
   private Long id;
 
   /**
-   * 이벤트 매칭 주최자
+   * 이벤트 매칭 이벤트
    */
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "profile_host_id", nullable = false, foreignKey = @ForeignKey(name = "FK_EVENT_MATCH_PROFILE_HOST"))
-  private Profile profileHost;
+  @JoinColumn(name = "event_id", nullable = false, foreignKey = @ForeignKey(name = "FK_EVENT_MATCH_EVENT"))
+  private Event event;
 
   /**
    * 이벤트 매칭 지원자
@@ -73,5 +75,15 @@ public class EventMatch extends BaseTimeEntity {
   }
 
 
+  /**
+   * 이벤트 매칭 생성자
+   * @param event 이벤트
+   * @param profileGuest 지원자
+   */
+  @Builder
+  public EventMatch(Event event, Profile profileGuest) {
+    this.event = event;
+    this.profileGuest = profileGuest;
+  }
 
 }
