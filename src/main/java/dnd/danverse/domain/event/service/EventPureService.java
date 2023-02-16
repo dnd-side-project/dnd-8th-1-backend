@@ -32,4 +32,14 @@ public class EventPureService {
     event.checkIfOverDeadline();
     return event;
   }
+
+  /**
+   * 이벤트 생성
+   * @param event 만들고자 하는 이벤트
+   * @return DB에 저장된 Event
+   */
+  @Transactional
+  public Event createEvent(Event event) {
+    return eventRepository.save(event);
+  }
 }
