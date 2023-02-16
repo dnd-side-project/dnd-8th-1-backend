@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 import dnd.danverse.domain.performance.dto.response.ImminentPerformsDto;
 import dnd.danverse.domain.performance.entity.Performance;
 import dnd.danverse.domain.performance.repository.PerformanceRepository;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -18,25 +17,25 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = {PerformanceService.class})
+@ContextConfiguration(classes = {PerformancePureService.class})
 @ActiveProfiles({"test"})
 @ExtendWith(SpringExtension.class)
-class PerformanceServiceTest {
+class PerformancePureServiceTest {
 
   @MockBean
   private PerformanceRepository performanceRepository;
 
   @Autowired
-  private PerformanceService performanceService;
+  private PerformancePureService performancePureService;
 
 
   @Test
   void testSearchImminentPerforms() {
     // Arrange
     ArrayList<Performance> performanceList = new ArrayList<>();
-    when(performanceRepository.findImminentPerforms((LocalDate) any())).thenReturn(performanceList);
+    when(performanceRepository.findImminentPerforms(any())).thenReturn(performanceList);
     // Act
-    List<ImminentPerformsDto> imminentPerformsDtoList = performanceService.searchImminentPerforms();
+    List<ImminentPerformsDto> imminentPerformsDtoList = performancePureService.searchImminentPerforms();
     // Assert
     assertEquals(0, imminentPerformsDtoList.size());
   }

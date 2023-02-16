@@ -5,7 +5,7 @@ import dnd.danverse.domain.performance.dto.response.ImminentPerformsDto;
 import dnd.danverse.domain.performance.dto.response.PageDto;
 import dnd.danverse.domain.performance.dto.response.PerformInfoResponse;
 import dnd.danverse.domain.performance.service.PerformFilterService;
-import dnd.danverse.domain.performance.service.PerformanceService;
+import dnd.danverse.domain.performance.service.PerformancePureService;
 import dnd.danverse.global.response.DataResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/performances")
 public class PerformanceController {
 
-  private final PerformanceService performanceService;
+  private final PerformancePureService performancePureService;
   private final PerformFilterService performFilterService;
 
   /**
@@ -35,7 +35,7 @@ public class PerformanceController {
   @GetMapping("/imminent")
   public ResponseEntity<DataResponse<List<ImminentPerformsDto>>> searchImminentPerformance() {
 
-    List<ImminentPerformsDto> performs = performanceService.searchImminentPerforms();
+    List<ImminentPerformsDto> performs = performancePureService.searchImminentPerforms();
     return ResponseEntity.ok(DataResponse.of(HttpStatus.OK, "임박한 공연 조회 성공", performs));
   }
 
