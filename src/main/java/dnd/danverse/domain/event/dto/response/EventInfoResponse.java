@@ -25,6 +25,7 @@ public class EventInfoResponse {
   // 이벤트 주최자
   @Getter
   static class ProfileSimpleInfo {
+
     private final Long id;
     private final String name;
     private final String imgUrl;
@@ -38,14 +39,16 @@ public class EventInfoResponse {
   }
 
   @QueryProjection
-   public EventInfoResponse(Long eventId, String title, String location, EventType type, String eventImg, LocalDateTime eventDeadline, LocalDateTime eventCreatedAt, Long profileId, String profileName, String profileImg) {
-      this.id = eventId;
-      this.title = title;
-      this.location = location;
-      this.type = type;
-      this.imgUrl = eventImg;
-      this.deadline = eventDeadline;
-      this.createdAt = eventCreatedAt;
-      this.profile = new ProfileSimpleInfo(profileId, profileName, profileImg);
-    }
+  public EventInfoResponse(Long eventId, String title, String location, EventType type,
+      String eventImg, LocalDateTime eventDeadline, LocalDateTime eventCreatedAt, Long profileId,
+      String profileName, String profileImg) {
+    this.id = eventId;
+    this.title = title;
+    this.location = location;
+    this.type = type;
+    this.imgUrl = eventImg;
+    this.deadline = eventDeadline;
+    this.createdAt = eventCreatedAt;
+    this.profile = new ProfileSimpleInfo(profileId, profileName, profileImg);
+  }
 }
