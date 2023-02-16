@@ -20,6 +20,7 @@ public class ProfilePureService {
 
   /**
    * 프로필 조회
+   * 프로필이 존재하지 않으면 예외를 발생시킨다.
    * @param memberId 사용자 (member 고유 DB ID)
    * @return 프로필
    */
