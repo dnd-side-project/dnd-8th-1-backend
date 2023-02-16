@@ -31,9 +31,7 @@ import org.hibernate.annotations.Parameter;
  * 이벤트 정보를 담는 Entity.
  */
 @Entity
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @GenericGenerator(
     name = "EVENT_SEQ_GENERATOR",
@@ -109,6 +107,21 @@ public class Event extends BaseTimeEntity {
    */
   @Embedded
   private Image eventImg;
+
+  @Builder
+  public Event(Profile profile, EventType eventType, String title, TeamType recruitType,
+      int recruitCount, LocalDateTime deadline, String location, String description,
+      Image eventImg) {
+    this.profile = profile;
+    this.eventType = eventType;
+    this.title = title;
+    this.recruitType = recruitType;
+    this.recruitCount = recruitCount;
+    this.deadline = deadline;
+    this.location = location;
+    this.description = description;
+    this.eventImg = eventImg;
+  }
 
 
   /**
