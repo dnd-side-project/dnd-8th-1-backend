@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor
-public class EventSavedResponseDto {
+public class EventWithProfileDto {
 
   private Long id;
   private ProfileDto profile;
@@ -42,7 +42,7 @@ public class EventSavedResponseDto {
    * @param profile 작성자 프로필
    */
   @Builder
-  public EventSavedResponseDto(Event event, ProfileDto profile) {
+  public EventWithProfileDto(Event event, ProfileDto profile) {
     this.profile = profile;
     this.type = event.getEventType().getType();
     this.title = event.getTitle();
@@ -62,7 +62,7 @@ public class EventSavedResponseDto {
    * @param profile 작성자 프로필
    */
   @Builder
-  public EventSavedResponseDto(Long id, Event event, ProfileDto profile) {
+  public EventWithProfileDto(Long id, Event event, ProfileDto profile) {
     this.id = id;
     this.profile = profile;
     this.type = event.getEventType().getType();

@@ -3,9 +3,9 @@ package dnd.danverse.domain.event.controller;
 import dnd.danverse.domain.event.dto.request.EventCondDto;
 import dnd.danverse.domain.event.dto.request.EventSavedRequestDto;
 import dnd.danverse.domain.event.dto.response.EventInfoResponse;
-import dnd.danverse.domain.event.dto.response.EventSavedResponseDto;
-import dnd.danverse.domain.event.service.EventDetailComplexService;
+import dnd.danverse.domain.event.dto.response.EventWithProfileDto;
 import dnd.danverse.domain.event.service.EventFilterService;
+import dnd.danverse.domain.event.service.EventPureService;
 import dnd.danverse.domain.event.service.EventSaveComplexService;
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.performance.dto.response.PageDto;
@@ -32,7 +32,7 @@ public class EventController {
 
   private final EventFilterService eventFilterService;
   private final EventSaveComplexService eventSaveComplexService;
-  private final EventDetailComplexService eventDetailComplexService;
+  private final EventPureService eventPureService;
 
   /**
    * 이벤트 필터링과, 페이징을 적용한 이벤트 조회.
@@ -57,9 +57,9 @@ public class EventController {
    * @return "이벤트 등록 성공" 메시지와 함께 201 상태코드가 나타납니다.
    */
   @PostMapping()
-  public ResponseEntity<DataResponse<EventSavedResponseDto>> postEvent(@RequestBody EventSavedRequestDto requestDto,
+  public ResponseEntity<DataResponse<EventWithProfileDto>> postEvent(@RequestBody EventSavedRequestDto requestDto,
       @AuthenticationPrincipal SessionUser sessionUser) {
-    EventSavedResponseDto responseDto = eventSaveComplexService.createEvent(requestDto, sessionUser.getId());
+    EventWithProfileDto responseDto = eventSaveComplexService.createEvent(requestDto, sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED, "이벤트 등록 성공", responseDto),
         HttpStatus.CREATED);
   }
@@ -71,8 +71,8 @@ public class EventController {
    * @return "이벤트 상세 조회 성공" 메시지와 함께 200 상태코드가 나타납니다.
    */
   @GetMapping("/{id}")
-  public ResponseEntity<DataResponse<EventSavedResponseDto>> getEvent(@PathVariable("id") Long eventId) {
-    EventSavedResponseDto detailEventDto = eventDetailComplexService.getEvent(eventId);
+  public ResponseEntity<DataResponse<EventWithProfileDto>> getEvent(@PathVariable("id") Long eventId) {
+    EventWithProfileDto detailEventDto = eventPureService.getEventDetail(eventId);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 상세 조회 성공", detailEventDto),
     HttpStatus.OK);
   }
