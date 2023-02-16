@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,15 +27,24 @@ public class EventMatchController {
 
   /**
    * 이벤트 매칭을 진행한다.
-   * @param requestDto 신청하고자 하는 이벤트 ID가 담긴 DTO
+   *
+   * @param requestDto  신청하고자 하는 이벤트 ID가 담긴 DTO
    * @param sessionUser 현재 로그인한 유저의 정보
    * @return 성공 메시지
    */
   @PostMapping("/apply")
-  public ResponseEntity<MessageResponse> matchEvent(@RequestBody EventIdRequestDto requestDto, @AuthenticationPrincipal
-  SessionUser sessionUser) {
+  public ResponseEntity<MessageResponse> matchEvent(@RequestBody EventIdRequestDto requestDto,
+      @AuthenticationPrincipal SessionUser sessionUser) {
     eventMatchComplexService.matchEvent(requestDto, sessionUser.getId());
     return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "이벤트 매칭 성공"), HttpStatus.OK);
+  }
+
+  @DeleteMapping("{eventId}/cancel-apply")
+  public ResponseEntity<MessageResponse> cancelEventApply(@PathVariable("eventId") Long eventId,
+      @AuthenticationPrincipal SessionUser sessionUser) {
+    eventMatchComplexService.cancelEventApply(eventId, sessionUser.getId());
+    return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "이벤트 신청 취소 성공"),
+        HttpStatus.OK);
   }
 
 
