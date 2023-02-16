@@ -21,7 +21,7 @@ public class ProfilePureService {
   private final ProfileRepository profileRepository;
 
   /**
-   * 프로필 조회
+   * member Id 를 통해서 프로필 조회
    * @param memberId 사용자 (member 고유 DB ID)
    * @return 프로필
    */
