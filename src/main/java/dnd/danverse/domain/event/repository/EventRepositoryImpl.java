@@ -40,9 +40,6 @@ public class EventRepositoryImpl implements EventFilterCustom {
    */
   public Page<EventInfoResponse> searchAllEventWithCond(EventCondDto eventCond, Pageable pageable) {
 
-    // 현재 시간 이후로 모집 기간이 지난 이벤트는 제외하기 위해
-    LocalDateTime now = LocalDateTime.now();
-
     // dto 를 통해서 이벤트 및 프로필 정보만 조회
     List<EventInfoResponse> eventContent = queryFactory
         .select(new QEventInfoResponse(
@@ -60,8 +57,8 @@ public class EventRepositoryImpl implements EventFilterCustom {
         .join(event.profile, profile)
         .where(
             locationEq(eventCond.getLocation()),
-            eventTypeEq(EventType.of(eventCond.getType())),
-            eventAfterNow(now))
+            eventTypeEq(EventType.of(eventCond.getType()))
+        )
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
         .fetch();
@@ -70,14 +67,7 @@ public class EventRepositoryImpl implements EventFilterCustom {
     return PageableExecutionUtils.getPage(eventContent, pageable, () -> getTotalCount(eventCond));
   }
 
-  /**
-   * 이벤트 모집 기간이 현재 시간 이후인 이벤트만 조회
-   * @param now 현재 시간
-   * @return BooleanExpression 을 반환하여 동적 쿼리를 만든다.
-   */
-  private BooleanExpression eventAfterNow(LocalDateTime now) {
-    return event.deadline.after(now);
-  }
+
 
   /**
    * 전체 이벤트 갯수를 조회한다.
