@@ -19,6 +19,7 @@ public class EventInfoResponse {
   private final EventType type;
   private final String eventImg;
   private final LocalDateTime eventDeadLine;
+  private final LocalDateTime eventCreatedAt;
 
   // 이벤트 주최자
   private final Long profileId;
@@ -26,15 +27,16 @@ public class EventInfoResponse {
   private final String profileImg;
 
   @QueryProjection
-  public EventInfoResponse(Long eventId, String title, String location, EventType type, String eventImg, LocalDateTime eventDeadLine, Long profileId, String profileName, String profileImg) {
-    this.eventId = eventId;
-    this.title = title;
-    this.location = location;
-    this.type = type;
-    this.eventImg = eventImg;
-    this.eventDeadLine = eventDeadLine;
-    this.profileId = profileId;
-    this.profileName = profileName;
-    this.profileImg = profileImg;
-  }
+   public EventInfoResponse(Long eventId, String title, String location, EventType type, String eventImg, LocalDateTime eventDeadLine, LocalDateTime eventCreatedAt, Long profileId, String profileName, String profileImg) {
+      this.eventId = eventId;
+      this.title = title;
+      this.location = location;
+      this.type = type;
+      this.eventImg = eventImg;
+      this.eventDeadLine = eventDeadLine;
+      this.eventCreatedAt = eventCreatedAt;
+      this.profileId = profileId;
+      this.profileName = profileName;
+      this.profileImg = profileImg;
+    }
 }

@@ -12,7 +12,6 @@ import dnd.danverse.domain.event.dto.response.EventInfoResponse;
 import dnd.danverse.domain.event.dto.response.QEventInfoResponse;
 import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.event.entitiy.EventType;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
@@ -49,6 +48,7 @@ public class EventRepositoryImpl implements EventFilterCustom {
             event.eventType,
             event.eventImg.imageUrl,
             event.deadline,
+            event.createdAt,
             profile.id,
             profile.profileName,
             profile.profileImg.imageUrl
@@ -59,6 +59,7 @@ public class EventRepositoryImpl implements EventFilterCustom {
             locationEq(eventCond.getLocation()),
             eventTypeEq(EventType.of(eventCond.getType()))
         )
+        .orderBy(event.createdAt.desc())
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
         .fetch();
