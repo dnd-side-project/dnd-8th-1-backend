@@ -7,6 +7,7 @@ import dnd.danverse.domain.jwt.handler.JwtAccessDeniedHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,7 +46,7 @@ public class SecurityConfig {
 
     http.authorizeRequests()
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
-        .anyRequest().permitAll();
+        .antMatchers(HttpMethod.POST, "/api/v1/events").hasAuthority("ROLE_USER");
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     http.addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
