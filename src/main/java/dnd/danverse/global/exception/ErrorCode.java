@@ -24,6 +24,9 @@ public enum ErrorCode {
   EVENT_OVER_DEADLINE(HttpStatus.BAD_REQUEST, "E003", "신청 기간이 지났습니다."),
   EVENT_TYPE_NOT_MATCH(HttpStatus.BAD_REQUEST, "E004", "모집 유형이 일치하지 않습니다."),
 
+  // 이벤트 매치
+  EVENT_MATCH_NOT_FOUND(HttpStatus.NOT_FOUND, "EM001", "지원한 내역이 없는 이벤트입니다."),
+
   // 회원 member
   MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M001", "존재하지 않는 회원입니다."),
 
