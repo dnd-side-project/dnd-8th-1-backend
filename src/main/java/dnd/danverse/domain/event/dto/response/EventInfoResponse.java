@@ -13,30 +13,39 @@ import lombok.Getter;
 public class EventInfoResponse {
 
   // 이벤트
-  private final Long eventId;
+  private final Long id;
   private final String title;
   private final String location;
   private final EventType type;
-  private final String eventImg;
-  private final LocalDateTime eventDeadLine;
-  private final LocalDateTime eventCreatedAt;
+  private final String imgUrl;
+  private final LocalDateTime deadline;
+  private final LocalDateTime createdAt;
+  private final ProfileSimpleInfo profile;
 
   // 이벤트 주최자
-  private final Long profileId;
-  private final String profileName;
-  private final String profileImg;
+  @Getter
+  static class ProfileSimpleInfo {
+    private final Long id;
+    private final String name;
+    private final String imgUrl;
+
+    @QueryProjection
+    public ProfileSimpleInfo(Long id, String name, String imgUrl) {
+      this.id = id;
+      this.name = name;
+      this.imgUrl = imgUrl;
+    }
+  }
 
   @QueryProjection
-   public EventInfoResponse(Long eventId, String title, String location, EventType type, String eventImg, LocalDateTime eventDeadLine, LocalDateTime eventCreatedAt, Long profileId, String profileName, String profileImg) {
-      this.eventId = eventId;
+   public EventInfoResponse(Long eventId, String title, String location, EventType type, String eventImg, LocalDateTime eventDeadline, LocalDateTime eventCreatedAt, Long profileId, String profileName, String profileImg) {
+      this.id = eventId;
       this.title = title;
       this.location = location;
       this.type = type;
-      this.eventImg = eventImg;
-      this.eventDeadLine = eventDeadLine;
-      this.eventCreatedAt = eventCreatedAt;
-      this.profileId = profileId;
-      this.profileName = profileName;
-      this.profileImg = profileImg;
+      this.imgUrl = eventImg;
+      this.deadline = eventDeadline;
+      this.createdAt = eventCreatedAt;
+      this.profile = new ProfileSimpleInfo(profileId, profileName, profileImg);
     }
 }
