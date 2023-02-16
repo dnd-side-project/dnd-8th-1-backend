@@ -1,8 +1,11 @@
 package dnd.danverse.domain.profile.entity;
 
+import static dnd.danverse.global.exception.ErrorCode.EVENT_TYPE_NOT_MATCH;
+
 import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.common.Image;
 import dnd.danverse.domain.common.TeamType;
+import dnd.danverse.domain.event.exception.EventNotAvailableException;
 import dnd.danverse.domain.member.entity.Member;
 import dnd.danverse.domain.profilegenre.entity.ProfileGenre;
 import java.time.LocalDate;
@@ -136,5 +139,13 @@ public class Profile extends BaseTimeEntity {
   }
 
 
-
+  /**
+   * 프로필의 팀 타입과 모집 타입이 일치하는지 확인한다.
+   * @param recruitType 모집 타입
+   */
+  public void checkMatchType(TeamType recruitType) {
+    if (this.profileType != recruitType) {
+      throw new EventNotAvailableException(EVENT_TYPE_NOT_MATCH);
+    }
+  }
 }

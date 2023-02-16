@@ -1,8 +1,11 @@
 package dnd.danverse.domain.event.entitiy;
 
+import static dnd.danverse.global.exception.ErrorCode.EVENT_OVER_DEADLINE;
+
 import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.common.Image;
 import dnd.danverse.domain.common.TeamType;
+import dnd.danverse.domain.event.exception.EventNotAvailableException;
 import dnd.danverse.domain.profile.entity.Profile;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -108,4 +111,20 @@ public class Event extends BaseTimeEntity {
   private Image eventImg;
 
 
+  /**
+   * 요청한 시간이 마감 기한보다 늦은지 확인한다.
+   * @return 마감 기한이 지났으면 true, 아니면 false
+   */
+  public boolean overDeadline() {
+    return LocalDateTime.now().isAfter(this.deadline);
+  }
+
+  /**
+   * 이벤트 모집 기간이 지났는지 확인한다.
+   */
+  public void checkIfOverDeadline() {
+    if (overDeadline()) {
+      throw new EventNotAvailableException(EVENT_OVER_DEADLINE);
+    }
+  }
 }
