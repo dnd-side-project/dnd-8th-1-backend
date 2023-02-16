@@ -29,7 +29,7 @@ public class EventMatchController {
    * @param sessionUser 현재 로그인한 유저의 정보
    * @return 성공 메시지
    */
-  @PostMapping("/match")
+  @PostMapping("/apply")
   public ResponseEntity<MessageResponse> matchEvent(@RequestBody EventIdRequestDto requestDto, @AuthenticationPrincipal
   SessionUser sessionUser) {
     eventMatchComplexService.matchEvent(requestDto, sessionUser.getId());
