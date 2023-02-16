@@ -46,7 +46,8 @@ public class SecurityConfig {
 
     http.authorizeRequests()
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
-        .antMatchers(HttpMethod.POST, "/api/v1/events").hasAuthority("ROLE_USER");
+        .antMatchers(HttpMethod.POST, "/api/v1/events").hasAuthority("ROLE_USER")
+        .anyRequest().permitAll();
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     http.addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
