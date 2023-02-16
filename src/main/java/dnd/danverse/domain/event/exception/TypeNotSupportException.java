@@ -8,7 +8,7 @@ import dnd.danverse.global.exception.ErrorCode;
  */
 public class TypeNotSupportException extends BusinessException {
 
-  protected TypeNotSupportException(ErrorCode errorCode) {
+  public TypeNotSupportException(ErrorCode errorCode) {
     super(errorCode);
   }
 }
