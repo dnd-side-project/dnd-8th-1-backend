@@ -10,8 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Role {
 
-  USER_PROFILE_YES("ROLE_USER_PROFILE_YES"),
-  USER_PROFILE_NO("ROLE_USER_PROFILE_NO");
+  ROLE_USER("ROLE_USER");
 
   private final String authority;
 }

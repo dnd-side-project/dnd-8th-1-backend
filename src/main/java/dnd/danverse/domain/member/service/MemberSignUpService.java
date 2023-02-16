@@ -34,7 +34,7 @@ public class MemberSignUpService {
     if (optionalMember.isPresent()) {
       Member member = optionalMember.get();
       updateMemberInfo(userInfo, member);
-      return new SignUpResult(member, member.getProfile() ,false);
+      return new SignUpResult(member, false);
     }
     // 존재하지 않는다면 회원가입
     Member member = signUp(userInfo);

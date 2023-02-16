@@ -94,14 +94,14 @@ public class JwtTokenProvider {
    * @param email 사용자 email
    * @return 생성된 Access Token
    */
-  public String createAccessToken(String email, Role role) {
+  public String createAccessToken(String email) {
     Date now = new Date();
     Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_LENGTH_MS);
 
     return Jwts.builder()
         .signWith(secretKey)
         .setSubject(email)
-        .claim(AUTHORITIES_KEY, role.getAuthority())
+        .claim(AUTHORITIES_KEY, Role.ROLE_USER.getAuthority())
         .setIssuer("danverse")
         .setIssuedAt(now)
         .setExpiration(validity)

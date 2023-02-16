@@ -1,5 +1,6 @@
 package dnd.danverse.domain.profile.dto.response;
 
+import dnd.danverse.domain.profile.entity.Portfolio;
 import dnd.danverse.domain.profile.entity.Profile;
 import java.time.LocalDate;
 import lombok.Getter;
@@ -66,10 +67,10 @@ public class ProfileInfoDto {
      */
     private final String twitter;
 
-    public PortfolioUrl(String youtube, String instagram, String twitter) {
-      this.youtube = youtube;
-      this.instagram = instagram;
-      this.twitter = twitter;
+    public PortfolioUrl(Portfolio portfolio) {
+      this.youtube = portfolio.getYoutubeUrl();
+      this.instagram = portfolio.getInstagramUrl();
+      this.twitter = portfolio.getTwitterUrl();
     }
   }
 
@@ -86,8 +87,7 @@ public class ProfileInfoDto {
     this.careerStartDay = profile.getCareerStartDay();
     this.description = profile.getDescription();
     this.openChatUrl = profile.getOpenChatUrl().getOpenChatUrl();
-    this.portfolioUrl = new PortfolioUrl(profile.getPortfolioUrl().getYoutubeUrl(),
-        profile.getPortfolioUrl().getInstagramUrl(), profile.getPortfolioUrl().getTwitterUrl());
+    this.portfolioUrl = new PortfolioUrl(profile.getPortfolioUrl());
   }
 
 }

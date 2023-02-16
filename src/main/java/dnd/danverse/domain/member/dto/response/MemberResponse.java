@@ -32,7 +32,7 @@ public class MemberResponse {
   /**
    * 사용자의 소셜 프로필 이미지.
    */
-  private String picture;
+  private String imgUrl;
 
   /**
    * 사용자의 권한.
@@ -63,7 +63,7 @@ public class MemberResponse {
     this.id = member.getId();
     this.name = member.getName();
     this.email = member.getEmail();
-    this.picture = member.getSocialImg();
+    this.imgUrl = member.getSocialImg();
     this.role = member.getRole().getAuthority();
     this.isSignUp = signUpResult.isSignUp();
     this.profile = resultProfile != null ? new ProfileInfoDto(resultProfile) : null;

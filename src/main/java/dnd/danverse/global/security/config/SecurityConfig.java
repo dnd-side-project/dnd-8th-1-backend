@@ -44,7 +44,7 @@ public class SecurityConfig {
 
 
     http.authorizeRequests()
-        .antMatchers("/api/manager/resource").hasAuthority("ROLE_USER_PROFILE_YES")
+        .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
         .anyRequest().permitAll();
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

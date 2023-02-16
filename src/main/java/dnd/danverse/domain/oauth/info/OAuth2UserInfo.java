@@ -42,7 +42,7 @@ public abstract class OAuth2UserInfo {
         .username(this.getId())
         .password(this.getName().concat(this.getId()))
         .socialImg(this.getImageUrl())
-        .role(Role.USER_PROFILE_NO)
+        .role(Role.ROLE_USER)
         .oauth2Provider(this.getOauth2Provider())
         .build();
   }
