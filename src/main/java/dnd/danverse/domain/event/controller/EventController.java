@@ -2,6 +2,7 @@ package dnd.danverse.domain.event.controller;
 
 import dnd.danverse.domain.event.dto.request.EventCondDto;
 import dnd.danverse.domain.event.dto.request.EventSavedRequestDto;
+import dnd.danverse.domain.event.dto.response.EventDetailResponseDto;
 import dnd.danverse.domain.event.dto.response.EventInfoResponse;
 import dnd.danverse.domain.event.dto.response.EventSavedResponseDto;
 import dnd.danverse.domain.event.service.EventDetailComplexService;
@@ -71,8 +72,8 @@ public class EventController {
    * @return "이벤트 상세 조회 성공" 메시지와 함께 200 상태코드가 나타납니다.
    */
   @GetMapping("/{id}")
-  public ResponseEntity<DataResponse<EventSavedResponseDto>> getEvent(@PathVariable("id") Long eventId) {
-    EventSavedResponseDto detailEventDto = eventDetailComplexService.getEvent(eventId);
+  public ResponseEntity<DataResponse<EventDetailResponseDto>> getEvent(@PathVariable("id") Long eventId) {
+    EventDetailResponseDto detailEventDto = eventDetailComplexService.getEvent(eventId);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 상세 조회 성공", detailEventDto),
     HttpStatus.OK);
   }

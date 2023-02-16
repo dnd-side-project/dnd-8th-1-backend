@@ -1,6 +1,6 @@
 package dnd.danverse.domain.event.service;
 
-import dnd.danverse.domain.event.dto.response.EventSavedResponseDto;
+import dnd.danverse.domain.event.dto.response.EventDetailResponseDto;
 import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.profile.dto.response.ProfileDto;
 import dnd.danverse.domain.profile.entity.Profile;
@@ -23,10 +23,10 @@ public class EventDetailComplexService {
    * @param eventId     조회하려는 이벤트 Id
    * @return EventSavedResponseDto 이벤트 응답 DTO
    */
-  public EventSavedResponseDto getEvent(Long eventId) {
+  public EventDetailResponseDto getEvent(Long eventId) {
     Event event = eventPureService.getDetailEvent(eventId);
     Profile profile = profilePureService.retrieveProfile(event.getProfile().getId());
-    return new EventSavedResponseDto(event, new ProfileDto(profile));
+    return new EventDetailResponseDto(event, new ProfileDto(profile));
 
   }
 
