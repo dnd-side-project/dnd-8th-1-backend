@@ -4,8 +4,9 @@ import dnd.danverse.domain.event.dto.request.EventCondDto;
 import dnd.danverse.domain.event.dto.request.EventSavedRequestDto;
 import dnd.danverse.domain.event.dto.response.EventInfoResponse;
 import dnd.danverse.domain.event.dto.response.EventSavedResponseDto;
-import dnd.danverse.domain.event.service.EventSaveComplexService;
+import dnd.danverse.domain.event.service.EventDetailComplexService;
 import dnd.danverse.domain.event.service.EventFilterService;
+import dnd.danverse.domain.event.service.EventSaveComplexService;
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.performance.dto.response.PageDto;
 import dnd.danverse.global.response.DataResponse;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,7 @@ public class EventController {
 
   private final EventFilterService eventFilterService;
   private final EventSaveComplexService eventSaveComplexService;
+  private final EventDetailComplexService eventDetailComplexService;
 
   /**
    * 이벤트 필터링과, 페이징을 적용한 이벤트 조회.
@@ -61,5 +64,17 @@ public class EventController {
         HttpStatus.CREATED);
   }
 
+  /**
+   * 이벤트 글 조회 가능.
+   *
+   * @param eventId 조회하고자 하는 이벤트 고유 Id.
+   * @return "이벤트 상세 조회 성공" 메시지와 함께 200 상태코드가 나타납니다.
+   */
+  @GetMapping("/{id}")
+  public ResponseEntity<DataResponse<EventSavedResponseDto>> getEvent(@PathVariable("id") Long eventId) {
+    EventSavedResponseDto detailEventDto = eventDetailComplexService.getEvent(eventId);
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 상세 조회 성공", detailEventDto),
+    HttpStatus.OK);
+  }
 
 }
