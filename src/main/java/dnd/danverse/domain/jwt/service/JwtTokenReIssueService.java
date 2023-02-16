@@ -1,12 +1,8 @@
 package dnd.danverse.domain.jwt.service;
 
-import static dnd.danverse.global.exception.ErrorCode.JWT_REFRESH_TOKEN_EXPIRED;
-
 import dnd.danverse.domain.jwt.AccessRefreshTokenDto;
-import dnd.danverse.domain.jwt.exception.JwtException;
 import dnd.danverse.global.redis.service.RedisService;
 import dnd.danverse.global.redis.dto.RefreshTokenDto;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,20 +27,11 @@ public class JwtTokenReIssueService {
 
     jwtTokenProvider.validateToken(refreshToken);
 
-    Optional<RefreshTokenDto> tokenDto = redisService.isRefreshTokenExist(refreshToken);
+    RefreshTokenDto refreshTokenDto = redisService.isRefreshTokenExist(refreshToken);
 
-    String newAccessToken;
-    String newRefreshToken;
-    // Refresh Token 이 존재하면, 새로운 Access Token 과 Refresh Token 을 발급한다.
-    if (tokenDto.isPresent()) {
-      String email = tokenDto.get().getEmail();
-      newAccessToken = jwtTokenProvider.createAccessToken(email);
-      newRefreshToken = jwtTokenProvider.createRefreshToken();
-      redisService.saveRefreshToken(email, newRefreshToken);
-    } else {
-      // Refresh Token 이 존재하지 않으면, Refresh Token 이 Redis 에서도 만료 됨을 의미, 그 만큼(1주일) 오랜 기간 접속하지 않았다.
-      throw new JwtException(JWT_REFRESH_TOKEN_EXPIRED);
-    }
+    String newAccessToken = jwtTokenProvider.createAccessToken(refreshTokenDto.getEmail());
+    String newRefreshToken = jwtTokenProvider.createRefreshToken();
+    redisService.saveRefreshToken(refreshTokenDto.getEmail(), newRefreshToken);
 
     return new AccessRefreshTokenDto(newAccessToken, newRefreshToken);
   }

@@ -101,7 +101,7 @@ public class JwtTokenProvider {
     return Jwts.builder()
         .signWith(secretKey)
         .setSubject(email)
-        .claim(AUTHORITIES_KEY, Role.USER_PROFILE_NO.getAuthority())
+        .claim(AUTHORITIES_KEY, Role.ROLE_USER.getAuthority())
         .setIssuer("danverse")
         .setIssuedAt(now)
         .setExpiration(validity)

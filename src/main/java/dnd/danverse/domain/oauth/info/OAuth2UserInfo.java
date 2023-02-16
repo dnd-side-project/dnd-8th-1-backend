@@ -1,5 +1,7 @@
 package dnd.danverse.domain.oauth.info;
 
+import dnd.danverse.domain.member.entity.Member;
+import dnd.danverse.domain.member.entity.Role;
 import java.util.Map;
 
 /**
@@ -31,6 +33,18 @@ public abstract class OAuth2UserInfo {
 
   public OAuth2Provider getOauth2Provider() {
     return oauth2Provider;
+  }
+
+  public Member toEntity() {
+    return Member.builder()
+        .name(this.getName())
+        .email(this.getEmail())
+        .username(this.getId())
+        .password(this.getName().concat(this.getId()))
+        .socialImg(this.getImageUrl())
+        .role(Role.ROLE_USER)
+        .oauth2Provider(this.getOauth2Provider())
+        .build();
   }
 }
 

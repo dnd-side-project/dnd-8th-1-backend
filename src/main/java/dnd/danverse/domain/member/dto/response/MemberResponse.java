@@ -1,6 +1,9 @@
 package dnd.danverse.domain.member.dto.response;
 
 import dnd.danverse.domain.member.entity.Member;
+import dnd.danverse.domain.member.service.SignUpResult;
+import dnd.danverse.domain.profile.dto.response.ProfileInfoDto;
+import dnd.danverse.domain.profile.entity.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -29,7 +32,7 @@ public class MemberResponse {
   /**
    * 사용자의 소셜 프로필 이미지.
    */
-  private String picture;
+  private String imgUrl;
 
   /**
    * 사용자의 권한.
@@ -44,16 +47,26 @@ public class MemberResponse {
   private boolean isSignUp;
 
   /**
-   * Member Entity 를 MemberResponse 로 변환하는 메소드
-   * @param member Member Entity
+   * 사용자의 프로필 정보를 담는 Dto
    */
-  public MemberResponse(Member member, boolean isSignUp) {
+  private ProfileInfoDto profile;
+
+  /**
+   * SignUpResult 가 가지고 있는 member , profile 정보를 이용하여 MemberResponse 를 생성한다.
+   * 프로필을 아직 등록하지 않은 사용자의 경우, profile 은 null 이다.
+   * @param signUpResult 회원가입 결과를 담은 객체
+   */
+  public MemberResponse(SignUpResult signUpResult) {
+    Member member = signUpResult.getMember();
+    Profile resultProfile = signUpResult.getProfile();
+
     this.id = member.getId();
     this.name = member.getName();
     this.email = member.getEmail();
-    this.picture = member.getSocialImg();
+    this.imgUrl = member.getSocialImg();
     this.role = member.getRole().getAuthority();
-    this.isSignUp = isSignUp;
+    this.isSignUp = signUpResult.isSignUp();
+    this.profile = resultProfile != null ? new ProfileInfoDto(resultProfile) : null;
   }
 
 

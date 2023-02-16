@@ -1,8 +1,10 @@
 package dnd.danverse.global.redis.service;
 
+import static dnd.danverse.global.exception.ErrorCode.JWT_REFRESH_TOKEN_EXPIRED;
+
+import dnd.danverse.domain.jwt.exception.JwtException;
 import dnd.danverse.global.redis.dto.RefreshTokenDto;
 import dnd.danverse.global.redis.repository.RefreshTokenRedisRepository;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +35,8 @@ public class RedisService {
    * @param refreshToken : Refresh Token
    * @return : 존재하면 RefreshTokenDto, 존재하지 않으면 Optional.empty()
    */
-  public Optional<RefreshTokenDto> isRefreshTokenExist(String refreshToken) {
-    return refreshTokenRedisRepository.findByRefreshToken(refreshToken);
+  public RefreshTokenDto isRefreshTokenExist(String refreshToken) {
+    return refreshTokenRedisRepository.findByRefreshToken(refreshToken)
+        .orElseThrow(() -> new JwtException(JWT_REFRESH_TOKEN_EXPIRED));
   }
 }

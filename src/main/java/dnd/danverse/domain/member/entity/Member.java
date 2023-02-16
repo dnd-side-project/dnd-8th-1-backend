@@ -2,13 +2,17 @@ package dnd.danverse.domain.member.entity;
 
 import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.oauth.info.OAuth2Provider;
+import dnd.danverse.domain.profile.entity.Profile;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +42,12 @@ public class Member extends BaseTimeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
   private Long id;
+
+  /**
+   * 사용자의 프로필 정보. OneToOne 관계이며, Member 의 프로필 정보를 조회할 때 사용한다.
+   */
+  @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  private Profile profile;
 
   /**
    * 사용자의 이름.

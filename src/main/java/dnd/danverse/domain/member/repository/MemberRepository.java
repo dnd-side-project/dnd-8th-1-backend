@@ -3,6 +3,8 @@ package dnd.danverse.domain.member.repository;
 import dnd.danverse.domain.member.entity.Member;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,5 +15,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
   Optional<Member> findByEmail(String email);
 
-  Optional<Member> findByUsername(String oauth2Id);
+  @Query("select m from Member m left join fetch m.profile p where m.username = :oauth2Id")
+  Optional<Member> findByUsername(@Param("oauth2Id") String oauth2Id);
 }

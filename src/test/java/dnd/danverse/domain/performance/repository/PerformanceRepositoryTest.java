@@ -213,7 +213,7 @@ class PerformanceRepositoryTest {
             "username" + i,
             "password" + i,
             "imgUrl" + i,
-            Role.USER_PROFILE_NO,
+            Role.ROLE_USER,
             OAuth2Provider.GOOGLE))
         .collect(Collectors.toList());
   }

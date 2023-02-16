@@ -21,9 +21,7 @@ public class CookieUtil {
    * @param refreshToken 서버에서 생성한 Refresh Token
    * @return Cookie 가 담긴 Header
    */
-  public static HttpHeaders setRefreshCookie(String refreshToken) {
-
-    HttpHeaders headers = new HttpHeaders();
+  public static void setRefreshCookie(HttpHeaders httpHeaders, String refreshToken) {
 
     ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
         .httpOnly(true)
@@ -31,8 +29,6 @@ public class CookieUtil {
         .path("/")
         .build();
 
-    headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
-
-    return headers;
+    httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
   }
 }
