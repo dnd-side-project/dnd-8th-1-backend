@@ -6,6 +6,7 @@ import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.event.exception.EventNotFoundException;
 import dnd.danverse.domain.event.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EventPureService {
 
   private final EventRepository eventRepository;
@@ -26,13 +28,32 @@ public class EventPureService {
    */
   @Transactional(readOnly = true)
   public Event checkAvailable(Long eventId) {
-    Event event = eventRepository.findById(eventId).orElseThrow(
-        () -> new EventNotFoundException(EVENT_NOT_FOUND));
+    Event event = getEvent(eventId);
 
     event.checkIfOverDeadline();
     return event;
   }
 
+  /**
+   * 이벤트 존재 여부 확인
+   * @param eventId 이벤트 ID
+   * @return 이벤트
+   */
+  private Event getEvent(Long eventId) {
+    log.info("이벤트를 찾습니다. eventId: {}", eventId);
+    return eventRepository.findById(eventId).orElseThrow(
+        () -> new EventNotFoundException(EVENT_NOT_FOUND));
+  }
+
+  /**
+   * 이벤트 존재 여부 확인
+   * @param eventId 이벤트 ID
+   * @return 이벤트
+   */
+  public Event checkIfDeleted(Long eventId) {
+    return getEvent(eventId);
+   }
+   
   /**
    * 이벤트 생성
    * @param event 만들고자 하는 이벤트

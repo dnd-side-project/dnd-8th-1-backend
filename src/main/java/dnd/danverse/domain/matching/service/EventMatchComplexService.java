@@ -3,6 +3,7 @@ package dnd.danverse.domain.matching.service;
 import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.event.service.EventPureService;
 import dnd.danverse.domain.matching.dto.request.EventIdRequestDto;
+import dnd.danverse.domain.matching.entity.EventMatch;
 import dnd.danverse.domain.profile.entity.Profile;
 import dnd.danverse.domain.profile.service.ProfilePureService;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,21 @@ public class EventMatchComplexService {
 
     // profile 도 가지고 있고, 신청 가능한 이벤트라면, 신청을 진행한다.
     eventMatchPureService.matchEvent(targetEvent, applier);
+  }
+
+  /**
+   * 취소하고자 하는 이벤트 ID, 지원자 ID 가 필요하다.
+   * 이벤트 ID가 우선적으로 존재하는지 확인한다. (이벤트가 삭제 된 경우 Exception)
+   * 지원자 Member ID 로써 Profile 이 존재하는지 확인한다. (존재하지 않으면 Exception)
+   * 지원자가 취소하고자 하는 이벤트 ID에 먼저 지원했는지 확인한다. (지원 한 적이 없으면 Exception)
+   * 최종적으로 지원을 취소한다. (지원 내역 삭제)
+   * @param eventId 취소하고자 하는 이벤트 ID
+   * @param memberId 지원자 ID
+   */
+  public void cancelEventApply(Long eventId, Long memberId) {
+    Event event = eventPureService.checkIfDeleted(eventId);
+    Profile profile = profilePureService.retrieveProfile(memberId);
+    EventMatch eventMatch = eventMatchPureService.checkIfEventSupported(event, profile);
+    eventMatchPureService.cancelEventApply(eventMatch);
   }
 }

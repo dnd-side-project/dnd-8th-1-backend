@@ -132,6 +132,7 @@ public class JwtTokenProvider {
    * @return 생성된 Authentication 객체
    */
   private SessionUser getSessionUser(String email) {
+    log.info("session user 를 만들기 위해서 email : {} 인 사람을 찾습니다.", email);
     Optional<Member> optionalMember = memberRepository.findByEmail(email);
 
     if (optionalMember.isEmpty()) {
