@@ -5,7 +5,7 @@ import static dnd.danverse.global.exception.ErrorCode.PROFILE_NOT_FOUND;
 import dnd.danverse.domain.event.dto.request.EventSavedRequestDto;
 import dnd.danverse.domain.event.dto.response.EventSavedResponseDto;
 import dnd.danverse.domain.event.entitiy.Event;
-import dnd.danverse.domain.event.exception.NoProfileException;
+import dnd.danverse.domain.profile.exception.NoProfileException;
 import dnd.danverse.domain.event.repository.EventRepository;
 import dnd.danverse.domain.profile.ProfileRepository;
 import dnd.danverse.domain.profile.dto.response.ProfileDto;

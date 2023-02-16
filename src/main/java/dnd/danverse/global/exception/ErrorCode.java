@@ -18,11 +18,19 @@ public enum ErrorCode {
   HANDLE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "C005", "접근이 거부 되었습니다."),
 
   // Depend on Entity (도메인에 따라서 달라지는 경우)
+  // 이벤트
   EMAIL_DUPLICATION(HttpStatus.BAD_REQUEST, "E001", "이메일 중복 입니다."),
-  LOGIN_INPUT_INVALID(HttpStatus.BAD_REQUEST, "L002", "로그인 정보가 올바르지 않습니다."),
+  EVENT_NOT_FOUND(HttpStatus.NOT_FOUND, "E002", "존재하지 않는 이벤트입니다."),
+  EVENT_OVER_DEADLINE(HttpStatus.BAD_REQUEST, "E003", "신청 기간이 지났습니다."),
+  EVENT_TYPE_NOT_MATCH(HttpStatus.BAD_REQUEST, "E004", "모집 유형이 일치하지 않습니다."),
 
-  MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "M003", "존재하지 않는 회원입니다."),
+  // 회원 member
+  MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M001", "존재하지 않는 회원입니다."),
+
+  // 프로필
   PROFILE_NOT_FOUND(HttpStatus.BAD_REQUEST, "P001", "프로필 등록이 필요한 서비스입니다."),
+
+  // Enum Type
   TYPE_NOT_FOUND(HttpStatus.BAD_REQUEST, "T001", "해당 타입은 존재하지 않습니다."),
 
 
