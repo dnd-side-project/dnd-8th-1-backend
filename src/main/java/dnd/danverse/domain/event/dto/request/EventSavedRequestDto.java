@@ -37,14 +37,14 @@ public class EventSavedRequestDto {
   public Event toEntity(Profile profile) {
     return Event.builder()
         .eventType(EventType.of(this.type))
-        .title(title)
+        .title(this.title)
         .profile(profile)
         .recruitType(TeamType.of(this.recruitType))
-        .recruitCount(recruitCount)
-        .deadline(deadline)
-        .location(location)
-        .description(description)
-        .eventImg(new Image(imgUrl))
+        .recruitCount(this.recruitCount)
+        .deadline(this.deadline)
+        .location(this.location)
+        .description(this.description)
+        .eventImg(new Image(this.imgUrl))
         .build();
   }
 
