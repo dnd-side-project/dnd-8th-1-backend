@@ -6,8 +6,8 @@ import dnd.danverse.global.util.CookieUtil;
 import dnd.danverse.global.util.HttpHeaderUtil;
 import dnd.danverse.global.response.MessageResponse;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -31,11 +31,9 @@ public class JwtTokenController {
   private final JwtTokenReIssueService refreshTokenReIssueService;
 
   @GetMapping("/jwt/refresh")
-  @ApiOperation(value = "JWT 토큰 재발급" ,
-      notes = "JWT 토큰 재 발급을 할 수 있다. 재발급시, Authorization header 가 있으면 안된다.")
-  @ApiImplicitParam(value = "refresh token 을 cookie 에 'refreshToken' key 로 갖는 value 로 받는다.",
-      name = "refreshToken", required = true, dataType = "String", paramType = "cookie")
-  public ResponseEntity<MessageResponse> reIssueToken(@CookieValue(name = "refreshToken") String refreshToken) {
+  @ApiOperation(value = "JWT 토큰 재발급", notes = "JWT 토큰 재 발급을 할 수 있다. 재발급시, Authorization header 가 있으면 안된다.")
+  public ResponseEntity<MessageResponse> reIssueToken(@CookieValue(name = "refreshToken")
+   @ApiParam(value = "refresh token 을 cookie 에 'refreshToken' key 로 갖는 value 로 받는다.") String refreshToken) {
 
     AccessRefreshTokenDto tokenDto = refreshTokenReIssueService.reIssueToken(refreshToken);
 
