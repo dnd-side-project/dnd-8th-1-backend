@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 공연 관련 데이터를 처리하기 위한 Contorller.
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/performances")
+@ApiIgnore
 public class PerformanceController {
 
   private final PerformancePureService performancePureService;
