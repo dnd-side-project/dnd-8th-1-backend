@@ -36,13 +36,14 @@ public class EventWithProfileDto {
   private String imgUrl;
 
   /**
-   * 이벤트 작성 responseDto.
+   * 이벤트 작성 responseDto. 이벤트 상세조회 responseDto.
    *
    * @param event 작성한 이벤트 글
    * @param profile 작성자 프로필
    */
   @Builder
   public EventWithProfileDto(Event event, ProfileDto profile) {
+    this.id = event.getId();
     this.profile = profile;
     this.type = event.getEventType().getType();
     this.title = event.getTitle();
@@ -53,27 +54,4 @@ public class EventWithProfileDto {
     this.description = event.getDescription();
     this.imgUrl = event.getEventImg().getImageUrl();
   }
-
-  /**
-   * 이벤트 상세 조회 responseDto.
-   *
-   * @param id 이벤트글의 고유 Id.
-   * @param event 상세조회하는 이벤트
-   * @param profile 작성자 프로필
-   */
-  @Builder
-  public EventWithProfileDto(Long id, Event event, ProfileDto profile) {
-    this.id = id;
-    this.profile = profile;
-    this.type = event.getEventType().getType();
-    this.title = event.getTitle();
-    this.recruitType = event.getRecruitType().getType();
-    this.recruitCount = event.getRecruitCount();
-    this.deadline = event.getDeadline();
-    this.location = event.getLocation();
-    this.description = event.getDescription();
-    this.imgUrl = event.getEventImg().getImageUrl();
-  }
-
-
 }

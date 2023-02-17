@@ -2,11 +2,9 @@ package dnd.danverse.domain.event.service;
 
 import static dnd.danverse.global.exception.ErrorCode.EVENT_NOT_FOUND;
 
-import dnd.danverse.domain.event.dto.response.EventWithProfileDto;
 import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.event.exception.EventNotFoundException;
 import dnd.danverse.domain.event.repository.EventRepository;
-import dnd.danverse.domain.profile.dto.response.ProfileDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -81,9 +79,9 @@ public class EventPureService {
    * @return EventSavedResponseDto 이벤트 응답 DTO
    */
   @Transactional(readOnly = true)
-   public EventWithProfileDto getEventDetail(Long eventId) {
-    Event event = eventRepository.findProfileJoinFetch(eventId);
-    return new EventWithProfileDto(eventId, event, new ProfileDto(event.getProfile()));
+   public Event getEventDetail(Long eventId) {
+    return eventRepository.findProfileJoinFetch(eventId)
+        .orElseThrow(() -> new EventNotFoundException(EVENT_NOT_FOUND));
   }
 
 }

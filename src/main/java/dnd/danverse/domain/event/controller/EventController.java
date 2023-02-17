@@ -4,11 +4,13 @@ import dnd.danverse.domain.event.dto.request.EventCondDto;
 import dnd.danverse.domain.event.dto.request.EventSavedRequestDto;
 import dnd.danverse.domain.event.dto.response.EventInfoResponse;
 import dnd.danverse.domain.event.dto.response.EventWithProfileDto;
+import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.event.service.EventFilterService;
 import dnd.danverse.domain.event.service.EventPureService;
 import dnd.danverse.domain.event.service.EventSaveComplexService;
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.performance.dto.response.PageDto;
+import dnd.danverse.domain.profile.dto.response.ProfileDto;
 import dnd.danverse.global.response.DataResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -72,8 +74,9 @@ public class EventController {
    */
   @GetMapping("/{id}")
   public ResponseEntity<DataResponse<EventWithProfileDto>> getEvent(@PathVariable("id") Long eventId) {
-    EventWithProfileDto detailEventDto = eventPureService.getEventDetail(eventId);
-    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 상세 조회 성공", detailEventDto),
+    Event event = eventPureService.getEventDetail(eventId);
+    EventWithProfileDto response = new EventWithProfileDto(event, new ProfileDto(event.getProfile()));
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 상세 조회 성공", response),
     HttpStatus.OK);
   }
 

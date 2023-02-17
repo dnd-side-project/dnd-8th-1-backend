@@ -1,6 +1,7 @@
 package dnd.danverse.domain.event.repository;
 
 import dnd.danverse.domain.event.entitiy.Event;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +15,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long>, EventFilterCustom {
   @Query("select e from Event e join fetch e.profile where e.id = :eventId")
-  Event findProfileJoinFetch(@Param("eventId") Long eventId);
+  Optional<Event> findProfileJoinFetch(@Param("eventId") Long eventId);
 
 }
