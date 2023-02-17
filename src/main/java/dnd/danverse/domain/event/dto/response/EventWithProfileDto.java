@@ -1,7 +1,7 @@
 package dnd.danverse.domain.event.dto.response;
 
 import dnd.danverse.domain.event.entitiy.Event;
-import dnd.danverse.domain.profile.dto.response.ProfileDto;
+import dnd.danverse.domain.profile.dto.response.ProfileSimpleDto;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,9 +21,10 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor
-public class EventSavedResponseDto {
+public class EventWithProfileDto {
 
-  private ProfileDto profile;
+  private Long id;
+  private ProfileSimpleDto profile;
   private String type;
   private String title;
   private String recruitType;
@@ -34,9 +35,15 @@ public class EventSavedResponseDto {
   private String description;
   private String imgUrl;
 
-
+  /**
+   * 이벤트 작성 responseDto. 이벤트 상세조회 responseDto.
+   *
+   * @param event 작성한 이벤트 글
+   * @param profile 작성자 프로필
+   */
   @Builder
-  public EventSavedResponseDto(Event event, ProfileDto profile) {
+  public EventWithProfileDto(Event event, ProfileSimpleDto profile) {
+    this.id = event.getId();
     this.profile = profile;
     this.type = event.getEventType().getType();
     this.title = event.getTitle();
@@ -47,5 +54,4 @@ public class EventSavedResponseDto {
     this.description = event.getDescription();
     this.imgUrl = event.getEventImg().getImageUrl();
   }
-
 }
