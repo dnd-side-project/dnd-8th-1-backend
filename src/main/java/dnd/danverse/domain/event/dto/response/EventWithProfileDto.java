@@ -1,7 +1,7 @@
 package dnd.danverse.domain.event.dto.response;
 
 import dnd.danverse.domain.event.entitiy.Event;
-import dnd.danverse.domain.profile.dto.response.ProfileDto;
+import dnd.danverse.domain.profile.dto.response.ProfileSimpleDto;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class EventWithProfileDto {
 
   private Long id;
-  private ProfileDto profile;
+  private ProfileSimpleDto profile;
   private String type;
   private String title;
   private String recruitType;
@@ -42,7 +42,7 @@ public class EventWithProfileDto {
    * @param profile 작성자 프로필
    */
   @Builder
-  public EventWithProfileDto(Event event, ProfileDto profile) {
+  public EventWithProfileDto(Event event, ProfileSimpleDto profile) {
     this.id = event.getId();
     this.profile = profile;
     this.type = event.getEventType().getType();

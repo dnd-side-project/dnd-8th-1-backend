@@ -4,7 +4,7 @@ package dnd.danverse.domain.event.service;
 import dnd.danverse.domain.event.dto.request.EventSavedRequestDto;
 import dnd.danverse.domain.event.dto.response.EventWithProfileDto;
 import dnd.danverse.domain.event.entitiy.Event;
-import dnd.danverse.domain.profile.dto.response.ProfileDto;
+import dnd.danverse.domain.profile.dto.response.ProfileSimpleDto;
 import dnd.danverse.domain.profile.entity.Profile;
 import dnd.danverse.domain.profile.service.ProfilePureService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class EventSaveComplexService {
     Profile profile = profilePureService.retrieveProfile(memberId);
 
     Event event = eventPureService.createEvent(eventRequest.toEntity(profile));
-    return new EventWithProfileDto(event, new ProfileDto(profile));
+    return new EventWithProfileDto(event, new ProfileSimpleDto(profile));
   }
 
 

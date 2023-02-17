@@ -13,13 +13,18 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor
-public class ProfileDto {
+public class ProfileSimpleDto {
   private Long id;
   private String name;
   private String imgUrl;
 
+  /**
+   * 전체조회에서 간단히 보여주는 프로필의 정보를 담은 Dto.
+   *
+   * @param profile 반환하고자 하는 프로필 정보
+   */
   @Builder
-  public ProfileDto(Profile profile) {
+  public ProfileSimpleDto(Profile profile) {
     this.id = profile.getId();
     this.name = profile.getProfileName();
     this.imgUrl = profile.getProfileImg().getImageUrl();
