@@ -1,5 +1,6 @@
 package dnd.danverse.global.response;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class DataResponse<T> extends DefaultResponse {
 
+  @ApiModelProperty(value = "응답 데이터")
   private final T data;
 
   private DataResponse(HttpStatus status, String message, T data) {

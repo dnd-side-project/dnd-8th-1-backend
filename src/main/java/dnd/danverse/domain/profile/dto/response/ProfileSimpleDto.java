@@ -1,6 +1,7 @@
 package dnd.danverse.domain.profile.dto.response;
 
 import dnd.danverse.domain.profile.entity.Profile;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ProfileSimpleDto {
+
+  @ApiModelProperty(value = "프로필 고유 ID")
   private Long id;
+  @ApiModelProperty(value = "프로필 이름")
   private String name;
+  @ApiModelProperty(value = "프로필 이미지 url")
   private String imgUrl;
 
   /**

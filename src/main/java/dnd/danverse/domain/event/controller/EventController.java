@@ -10,6 +10,9 @@ import dnd.danverse.domain.event.service.EventSearchComplexService;
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.performance.dto.response.PageDto;
 import dnd.danverse.global.response.DataResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/events")
 @RequiredArgsConstructor
+@Api(tags = "EventController : 이벤트 관련 API")
 public class EventController {
 
   private final EventFilterService eventFilterService;
@@ -42,10 +46,10 @@ public class EventController {
    * @return 페이징 처리된 이벤트 목록 (모집 기간이 지난 이벤트는 제외)
    */
   @GetMapping()
+  @ApiOperation(value = "이벤트 전체 조회 & 필터링 조회", notes = "이벤트 필터링과, 페이징을 적용한 이벤트 조회")
   public ResponseEntity<DataResponse<PageDto<EventInfoResponse>>> searchAllEvent(
       EventCondDto eventCondDto, Pageable pageable) {
-    PageDto<EventInfoResponse> events = eventFilterService.searchAllEventWithCond(
-        eventCondDto, pageable);
+    PageDto<EventInfoResponse> events = eventFilterService.searchAllEventWithCond(eventCondDto, pageable);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 조회 성공", events), HttpStatus.OK);
   }
 
@@ -57,9 +61,14 @@ public class EventController {
    * @return "이벤트 등록 성공" 메시지와 함께 201 상태코드가 나타납니다.
    */
   @PostMapping()
-  public ResponseEntity<DataResponse<EventWithProfileDto>> postEvent(@RequestBody EventSavedRequestDto requestDto,
+  @ApiOperation(value = "이벤트 글 등록", notes = "이벤트 글을 등록을 할 수 있다. 프로필 등록자만 가능하다.")
+  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+      required = true, dataType = "string", paramType = "header")
+  public ResponseEntity<DataResponse<EventWithProfileDto>> postEvent(
+      @RequestBody EventSavedRequestDto requestDto,
       @AuthenticationPrincipal SessionUser sessionUser) {
-    EventWithProfileDto responseDto = eventSaveComplexService.createEvent(requestDto, sessionUser.getId());
+    EventWithProfileDto responseDto = eventSaveComplexService.createEvent(requestDto,
+        sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED, "이벤트 등록 성공", responseDto),
         HttpStatus.CREATED);
   }
@@ -71,9 +80,13 @@ public class EventController {
    * @return "이벤트 상세 조회 성공" 메시지와 함께 200 상태코드가 나타납니다.
    */
   @GetMapping("/{eventId}")
-  public ResponseEntity<DataResponse<EventWithProfileDto>> getEvent(@PathVariable("eventId") Long eventId) {
+  @ApiOperation(value = "이벤트 글 조회", notes = "이벤트 글을 조회할 수 있다.")
+  @ApiImplicitParam(name = "eventId", value = "이벤트 고유 ID", required = true)
+  public ResponseEntity<DataResponse<EventWithProfileDto>> getEvent(
+      @PathVariable("eventId") Long eventId) {
     EventWithProfileDto response = eventSearchComplexService.searchDetail(eventId);
-    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 상세 조회 성공", response), HttpStatus.OK);
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 상세 조회 성공", response),
+        HttpStatus.OK);
   }
 
 }

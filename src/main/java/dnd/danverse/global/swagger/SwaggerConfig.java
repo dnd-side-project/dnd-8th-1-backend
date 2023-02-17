@@ -1,5 +1,6 @@
 package dnd.danverse.global.swagger;
 
+import dnd.danverse.domain.jwt.service.SessionUser;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +30,7 @@ public class SwaggerConfig {
     return new Docket(DocumentationType.SWAGGER_2)
         .produces(DEFAULT_PRODUCES_AND_CONSUMES)
         .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
+        .ignoredParameterTypes(SessionUser.class)
         .apiInfo(DEFAULT_API_INFO).select()
         .apis(RequestHandlerSelectors.basePackage("dnd.danverse.domain"))
         .paths(PathSelectors.any())

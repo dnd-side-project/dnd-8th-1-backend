@@ -1,5 +1,6 @@
 package dnd.danverse.domain.matching.dto.request;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ public class EventIdRequestDto {
   /**
    * 이벤트 id
    */
+  @ApiModelProperty(value = "이벤트 고유 ID")
   private Long eventId;
 
 }
