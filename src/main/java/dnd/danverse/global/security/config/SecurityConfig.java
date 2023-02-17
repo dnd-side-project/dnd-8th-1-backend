@@ -45,6 +45,7 @@ public class SecurityConfig {
 
 
     http.authorizeRequests()
+        .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight Request 허용해주기
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
         .antMatchers(HttpMethod.POST, "/api/v1/events","/api/v1/events/apply").hasAuthority("ROLE_USER")
         .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply").hasAuthority("ROLE_USER")
