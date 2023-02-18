@@ -26,6 +26,7 @@ public enum ErrorCode {
 
   // 이벤트 매치
   EVENT_MATCH_NOT_FOUND(HttpStatus.NOT_FOUND, "EM001", "지원한 내역이 없는 이벤트입니다."),
+  EVENT_MATCH_NOT_WRITER(HttpStatus.FORBIDDEN, "EM002", "작성자 외에 접근권한이 없습니다."),
 
   // 회원 member
   MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M001", "존재하지 않는 회원입니다."),
