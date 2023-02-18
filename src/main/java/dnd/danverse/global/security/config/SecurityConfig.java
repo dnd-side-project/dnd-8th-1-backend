@@ -14,8 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * Spring Security 설정
- * 권한이 필요한 요청에 대해서 정의할 수 있게 한다.
+ * Spring Security 설정 권한이 필요한 요청에 대해서 정의할 수 있게 한다.
  */
 @Configuration
 @RequiredArgsConstructor
@@ -45,15 +44,18 @@ public class SecurityConfig {
     http.authorizeRequests()
         .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight Request 허용해주기
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
-        .antMatchers(HttpMethod.POST, "/api/v1/events", "/api/v1/events/apply").hasAuthority(userRole)
-        .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply").hasAuthority(userRole)
+        .antMatchers(HttpMethod.POST, "/api/v1/events", "/api/v1/events/apply",
+            "/api/v1/events/image", "/api/v1/performances/image", "/api/v1/profiles/image")
+          .hasAuthority(userRole)
+        .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply")
+          .hasAuthority(userRole)
         .antMatchers(HttpMethod.GET, "/api/v1/events/{eventId}/applicants").hasAuthority(userRole)
-        .antMatchers(HttpMethod.PATCH, "/api/v1/events/{eventId}/accept", "/api/v1/events/deadline").hasAuthority(userRole)
+        .antMatchers(HttpMethod.PATCH, "/api/v1/events/{eventId}/accept", "/api/v1/events/deadline")
+          .hasAuthority(userRole)
         .anyRequest().permitAll();
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     http.addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
-
 
     return http.build();
   }
