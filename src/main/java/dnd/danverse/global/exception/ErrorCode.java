@@ -4,8 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 /**
- * ErrorCode 를 정의하는 Enum Class 이다.
- * ErrorCode 는 HttpStatus, ErrorCode, ErrorMessage 를 가진다.
+ * ErrorCode 를 정의하는 Enum Class 이다. ErrorCode 는 HttpStatus, ErrorCode, ErrorMessage 를 가진다.
  */
 @Getter
 public enum ErrorCode {
@@ -26,7 +25,11 @@ public enum ErrorCode {
 
   // 이벤트 매치
   EVENT_MATCH_NOT_FOUND(HttpStatus.NOT_FOUND, "EM001", "지원한 내역이 없는 이벤트입니다."),
+
   EVENT_MATCH_NOT_WRITER(HttpStatus.FORBIDDEN, "EM002", "작성자 외에 접근권한이 없습니다."),
+
+  EVENT_ALREADY_APPLIED(HttpStatus.BAD_REQUEST, "EM003", "이미 지원한 이벤트입니다. 중복으로 지원할 수 없습니다."),
+
 
   // 회원 member
   MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M001", "존재하지 않는 회원입니다."),
@@ -52,7 +55,6 @@ public enum ErrorCode {
 
   // S3를 사용해 이미지를 업로드할 때
   IMAGE_WRONG_FILE_FORMAT(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "I001", "파일 형식이 잘못되었습니다.");
-
 
 
   private final HttpStatus status;
