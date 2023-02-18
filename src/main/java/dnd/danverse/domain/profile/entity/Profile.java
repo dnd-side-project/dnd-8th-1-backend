@@ -11,6 +11,7 @@ import dnd.danverse.domain.profilegenre.entity.ProfileGenre;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -28,12 +29,14 @@ import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 /**
- * 서비스 사용자의 팀(개인) 프로필 정보
+ * 서비스 사용자의 팀(개인) 프로필 정보.
  */
+@Slf4j
 @Entity
 @NoArgsConstructor
 @Getter
@@ -98,7 +101,7 @@ public class Profile extends BaseTimeEntity {
   private String location;
 
   /**
-   * 사용자 커리어 시작일 (년, 월, 일)
+   * 사용자 커리어 시작일 (년, 월, 일).
    */
   @Column(nullable = false)
   private LocalDate careerStartDay;
@@ -110,13 +113,13 @@ public class Profile extends BaseTimeEntity {
   private String description;
 
   /**
-   * 사용자에게 연락할 수 있는 오픈 카카오톡 채팅 URL
+   * 사용자에게 연락할 수 있는 오픈 카카오톡 채팅 URL.
    */
   @Embedded
   private OpenChat openChatUrl;
 
   /**
-   * 사용자 작업물을 확인할 수 있는 포트폴리오 URL
+   * 사용자 작업물을 확인할 수 있는 포트폴리오 URL.
    */
   @Embedded
   private Portfolio portfolioUrl;
@@ -141,11 +144,16 @@ public class Profile extends BaseTimeEntity {
 
   /**
    * 프로필의 팀 타입과 모집 타입이 일치하는지 확인한다.
+   *
    * @param recruitType 모집 타입
    */
   public void checkMatchType(TeamType recruitType) {
     if (this.profileType != recruitType) {
       throw new EventNotAvailableException(EVENT_TYPE_NOT_MATCH);
     }
+  }
+
+  public boolean isNotSame(Profile stranger) {
+    return !Objects.equals(this.id, stranger.getId());
   }
 }

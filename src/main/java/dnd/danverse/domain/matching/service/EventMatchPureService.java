@@ -7,6 +7,7 @@ import dnd.danverse.domain.matching.entity.EventMatch;
 import dnd.danverse.domain.matching.exception.EventMatchNotFoundException;
 import dnd.danverse.domain.matching.repository.EventMatchRepository;
 import dnd.danverse.domain.profile.entity.Profile;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,8 @@ public class EventMatchPureService {
 
 
   /**
-   * 이벤트 신청
+   * 이벤트 신청.
+   *
    * @param event 신청하고자 하는 이벤트
    * @param profile 지원하고자 하는 사람의 프로필
    */
@@ -41,7 +43,8 @@ public class EventMatchPureService {
   }
 
   /**
-   * 지원자가 이벤트에 지원한 적이 있는지 확인
+   * 지원자가 이벤트에 지원한 적이 있는지 확인.
+   *
    * @param event 이벤트
    * @param profile 지원자 프로필
    * @return 지원한 적이 있으면 EventMatch 객체를 반환한다.
@@ -56,11 +59,23 @@ public class EventMatchPureService {
 
   /**
    * 최종적으로 이벤트 지원 내역에 대해서 취소한다.
+   *
    * @param eventMatch 이벤트 지원 내역
    */
   @Transactional
   public void cancelEventApply(EventMatch eventMatch) {
     log.info("이벤트 지원 내역을 취소합니다. eventMatch: {}", eventMatch.getId());
     eventMatchRepository.delete(eventMatch);
+  }
+
+  /**
+   * 이벤트 신청자의 프로필을 가져온다.
+   *
+   * @param eventId 신청자 리스트를 가진 이벤트 글 Id.
+   * @return List<EventMatch>
+   */
+  @Transactional(readOnly = true)
+  public List<EventMatch> getApplicants(Long eventId) {
+    return eventMatchRepository.findByEventId(eventId);
   }
 }

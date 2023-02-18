@@ -41,7 +41,8 @@ public class EventPureService {
    * @param eventId 이벤트 ID
    * @return 이벤트
    */
-  private Event getEvent(Long eventId) {
+  @Transactional(readOnly = true)
+  public Event getEvent(Long eventId) {
     log.info("이벤트를 찾습니다. eventId: {}", eventId);
     return eventRepository.findById(eventId).orElseThrow(
         () -> new EventNotFoundException(EVENT_NOT_FOUND));
