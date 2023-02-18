@@ -143,6 +143,10 @@ public class Event extends BaseTimeEntity {
     }
   }
 
+  /**
+   * 이벤트의 마감 기한을 수정한다.
+   * @param now 현재 시간
+   */
   public void updateDeadline(LocalDateTime now) {
     this.deadline = now;
   }
