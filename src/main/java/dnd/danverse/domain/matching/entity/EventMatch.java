@@ -90,4 +90,10 @@ public class EventMatch extends BaseTimeEntity {
     this.profileGuest = profileGuest;
   }
 
+  /**
+   * isMatched 변수를 true 로 변경한다.
+   */
+  public void accept() {
+    this.isMatched = true;
+  }
 }

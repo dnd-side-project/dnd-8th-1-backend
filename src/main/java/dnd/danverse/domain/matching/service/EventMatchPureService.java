@@ -47,14 +47,14 @@ public class EventMatchPureService {
   /**
    * 지원자가 이벤트에 지원한 적이 있는지 확인.
    *
-   * @param event   이벤트
-   * @param profile 지원자 프로필
+   * @param eventId   이벤트
+   * @param profileId 지원자 프로필
    * @return 지원한 적이 있으면 EventMatch 객체를 반환한다.
    */
   @Transactional(readOnly = true)
-  public EventMatch checkIfEventSupported(Event event, Profile profile) {
-    log.info("이벤트 지원 확인 위해 event: {}, memberId: {} 데이터를 통해서 찾습니다.", event.getId(), profile.getId());
-    return eventMatchRepository.findByEventAndProfileGuest(event, profile)
+  public EventMatch checkIfEventSupported(Long eventId, Long profileId) {
+    log.info("이벤트 지원 확인 위해 eventId: {}, memberId: {} 데이터를 통해서 찾습니다.", eventId, profileId);
+    return eventMatchRepository.findByEventAndProfileGuest(eventId, profileId)
         .orElseThrow(() -> new EventMatchNotFoundException(EVENT_MATCH_NOT_FOUND));
   }
 
@@ -89,9 +89,20 @@ public class EventMatchPureService {
    */
   @Transactional(readOnly = true)
   public void checkIfDuplicated(Event targetEvent, Profile applier) {
-    eventMatchRepository.findByEventAndProfileGuest(targetEvent, applier)
+    eventMatchRepository.findByEventAndProfileGuest(targetEvent.getId(), applier.getId())
         .ifPresent(eventMatch -> {
           throw new AlreadyAppliedException(EVENT_ALREADY_APPLIED);
         });
+  }
+
+  /**
+   * 이벤트 지원자에 대한 요청을 수락한다.
+   * isMatched = true 로 변경한다.
+   * Dirty Checking 을 통해 DB 에 반영한다.
+   * @param eventMatch 이벤트 매치 객체
+   */
+  @Transactional
+  public void acceptApplicant(EventMatch eventMatch) {
+    eventMatch.accept();
   }
 }
