@@ -33,7 +33,7 @@ public class EventWithProfileDto {
   private String type;
   @ApiModelProperty(value = "이벤트 제목")
   private String title;
-  @ApiModelProperty(value = "이벤트 모집 유형 ex) 팀, 개인")
+  @ApiModelProperty(value = "이벤트 모집 유형 ex) 댄스팀, 댄서")
   private String recruitType;
   @ApiModelProperty(value = "이벤트 모집 인원")
   private int recruitCount;

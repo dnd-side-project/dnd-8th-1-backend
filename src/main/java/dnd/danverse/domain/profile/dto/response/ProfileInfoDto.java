@@ -19,9 +19,9 @@ public class ProfileInfoDto {
   private final Long id;
 
   /**
-   * 프로필의 타입. (팀, 개인)
+   * 프로필의 타입. (댄스팀, 댄서)
    */
-  @ApiModelProperty(value = "프로필의 타입 (팀, 개인)")
+  @ApiModelProperty(value = "이벤트 모집 유형 ex) 댄스팀, 댄서")
   private final String type;
 
   /**
