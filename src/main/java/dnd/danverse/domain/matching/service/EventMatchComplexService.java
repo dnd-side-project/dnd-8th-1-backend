@@ -66,7 +66,7 @@ public class EventMatchComplexService {
   public void cancelEventApply(Long eventId, Long memberId) {
     Event event = eventPureService.checkIfDeleted(eventId);
     Profile profile = profilePureService.retrieveProfile(memberId);
-    EventMatch eventMatch = eventMatchPureService.checkIfEventSupported(event, profile);
+    EventMatch eventMatch = eventMatchPureService.checkIfEventSupported(event.getId(), profile.getId());
     eventMatchPureService.cancelEventApply(eventMatch);
   }
 
