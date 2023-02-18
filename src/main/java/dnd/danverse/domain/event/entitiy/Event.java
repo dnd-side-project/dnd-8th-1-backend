@@ -142,4 +142,8 @@ public class Event extends BaseTimeEntity {
       throw new EventNotAvailableException(EVENT_OVER_DEADLINE);
     }
   }
+
+  public void updateDeadline(LocalDateTime now) {
+    this.deadline = now;
+  }
 }
