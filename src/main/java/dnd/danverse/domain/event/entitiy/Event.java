@@ -24,6 +24,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Parameter;
 
 /**
@@ -55,6 +57,7 @@ public class Event extends BaseTimeEntity {
    */
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "profile_id", nullable = false, foreignKey = @ForeignKey(name = "FK_EVENT_PROFILE"))
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private Profile profile;
 
   /**

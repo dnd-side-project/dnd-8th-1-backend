@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Parameter;
 
 /**
@@ -46,6 +48,7 @@ public class Review extends BaseTimeEntity {
    */
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "performance_id", nullable = false, foreignKey = @ForeignKey(name = "FK_REVIEW_PERFORMANCE"))
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private Performance performance;
 
   /**
@@ -53,6 +56,7 @@ public class Review extends BaseTimeEntity {
    */
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "profile_id", nullable = false, foreignKey = @ForeignKey(name = "FK_REVIEW_PROFILE"))
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private Profile profile;
 
   /**
