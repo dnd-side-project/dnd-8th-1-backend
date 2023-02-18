@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum TeamType {
-  INDIVIDUAL("개인"), TEAM("팀");
+  INDIVIDUAL("댄서"), TEAM("댄스팀");
 
   private final String type;
 
