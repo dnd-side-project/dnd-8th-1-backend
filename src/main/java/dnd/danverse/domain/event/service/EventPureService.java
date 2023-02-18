@@ -54,11 +54,10 @@ public class EventPureService {
    * @param eventId 이벤트 ID
    * @return 이벤트
    */
+  @Transactional(readOnly = true)
   public Event checkIfDeleted(Long eventId) {
     return getEvent(eventId);
   }
-
-
 
 
   /**
