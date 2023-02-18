@@ -2,6 +2,7 @@ package dnd.danverse.domain.event.dto.response;
 
 import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.profile.dto.response.ProfileSimpleDto;
+import dnd.danverse.domain.profile.entity.Profile;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -55,6 +56,24 @@ public class EventWithProfileDto {
   public EventWithProfileDto(Event event, ProfileSimpleDto profile) {
     this.id = event.getId();
     this.profile = profile;
+    this.type = event.getEventType().getType();
+    this.title = event.getTitle();
+    this.recruitType = event.getRecruitType().getType();
+    this.recruitCount = event.getRecruitCount();
+    this.deadline = event.getDeadline();
+    this.location = event.getLocation();
+    this.description = event.getDescription();
+    this.imgUrl = event.getEventImg().getImageUrl();
+  }
+
+  /**
+   * 이벤트 데이터 업데이트 후, 업데이트 된 결과를 반환
+   * @param event 이벤트
+   * @param profile 프로필
+   */
+  public EventWithProfileDto(Event event, Profile profile) {
+    this.id = event.getId();
+    this.profile = new ProfileSimpleDto(profile);
     this.type = event.getEventType().getType();
     this.title = event.getTitle();
     this.recruitType = event.getRecruitType().getType();

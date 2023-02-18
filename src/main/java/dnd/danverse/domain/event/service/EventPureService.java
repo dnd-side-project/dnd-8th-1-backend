@@ -2,6 +2,7 @@ package dnd.danverse.domain.event.service;
 
 import static dnd.danverse.global.exception.ErrorCode.EVENT_NOT_FOUND;
 
+import dnd.danverse.domain.event.dto.request.EventUpdateRequestDto;
 import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.event.exception.EventNotFoundException;
 import dnd.danverse.domain.event.repository.EventRepository;
@@ -93,5 +94,13 @@ public class EventPureService {
   public void updateDeadline(Long eventId) {
     Event event = getEvent(eventId);
     event.updateDeadline(LocalDateTime.now());
+  }
+
+  @Transactional
+  public Event updateEventInfo(Long eventId, EventUpdateRequestDto requestDto) {
+    // 이미 Event 는 영속화 되어 있기 때문에, 쿼리가 나가지 X
+    Event event = getEvent(eventId);
+    event.updateEventInfo(requestDto);
+    return event;
   }
 }

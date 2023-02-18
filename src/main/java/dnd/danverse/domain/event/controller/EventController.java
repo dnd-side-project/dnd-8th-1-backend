@@ -2,6 +2,7 @@ package dnd.danverse.domain.event.controller;
 
 import dnd.danverse.domain.event.dto.request.EventCondDto;
 import dnd.danverse.domain.event.dto.request.EventSavedRequestDto;
+import dnd.danverse.domain.event.dto.request.EventUpdateRequestDto;
 import dnd.danverse.domain.event.dto.response.EventInfoResponse;
 import dnd.danverse.domain.event.dto.response.EventWithProfileDto;
 import dnd.danverse.domain.event.service.EventFilterService;
@@ -98,13 +99,27 @@ public class EventController {
    * 이벤트 모집 기한을 조기 마감 시킬 수 있다.
    * @return "조기 마감 성공" 메시지와 함께 200 상태코드가 나타납니다.
    */
+  @PatchMapping("/deadline")
   @ApiOperation(value = "이벤트 조기 마감", notes = "이벤트 모집 기한을 조기 마감 시킬 수 있다.")
   @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
       required = true, dataType = "string", paramType = "header")
-  @PatchMapping("/deadline")
   public ResponseEntity<MessageResponse> updateDeadLine(@RequestBody EventIdRequestDto requestDto, @AuthenticationPrincipal SessionUser sessionUser) {
     eventUpdateService.updateDeadline(requestDto.getEventId(), sessionUser.getId());
     return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "해당 이벤트를 조기 마감하였습니다."), HttpStatus.OK);
+  }
+
+  /**
+   * 이벤트 글 수정 할 수 있다.
+   */
+  @PatchMapping()
+  @ApiOperation(value = "이벤트 글 수정", notes = "이벤트 글을 수정할 수 있다.")
+  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+      required = true, dataType = "string", paramType = "header")
+  public ResponseEntity<DataResponse<EventWithProfileDto>> updateEventInfo(@RequestBody EventUpdateRequestDto requestDto,
+      @AuthenticationPrincipal SessionUser sessionUser) {
+    EventWithProfileDto responseDto = eventUpdateService.updateEventInfo(requestDto,
+        sessionUser.getId());
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 수정 성공", responseDto), HttpStatus.OK);
   }
 
 }
