@@ -31,8 +31,8 @@ public class EventMatchComplexService {
    * 1. 신청자의 프로필이 존재하는지 확인한다.
    * 2. 신청 가능한 이벤트인지 확인한다. (존재하는지, 신청 기간이 지났는지)
    * 3. 신청자의 모집 유형이 이벤트의 모집 유형과 일치하는지 확인한다.
-   * 4. 모든 검증이 완료되면, 이벤트 신청을 진행한다.
-   *
+   * 4. 중복 신청이 아닌지 확인한다.
+   * 5. 모든 검증이 완료되면, 이벤트 신청을 진행한다.
    * @param requestDto 이벤트 신청을 위한 요청 DTO
    * @param memberId 신청자의 고유 DB ID
    */
@@ -45,6 +45,9 @@ public class EventMatchComplexService {
 
     // 모집 유형이 일치한지 확인한다. 아니면 Exception 을 던진다.
     applier.checkMatchType(targetEvent.getRecruitType());
+
+    // 중복으로 지원한 경우는 없는지 확인한다.
+    eventMatchPureService.checkIfDuplicated(targetEvent, applier);
 
     // profile 도 가지고 있고, 신청 가능한 이벤트라면, 신청을 진행한다.
     eventMatchPureService.matchEvent(targetEvent, applier);
@@ -72,8 +75,8 @@ public class EventMatchComplexService {
    * 1. 입력받은 이벤트 아이디로 이벤트글을 가져온다. (event)
    * 2. 이벤트 글에 있는 프로필을 가져온다. (writer)
    * 3. 입력받은 멤버 아이디를 통해 프로필을 가져온다. (profile)
-   * 4. profile과 writer를 비교하여 다르면 403에러 발생한다.
-   * 5. 동일하면 신청자 리스트를 가져와서 dto에 담아 반환한다.
+   * 4. profile 과 writer 를 비교하여 다르면 403에러 발생한다.
+   * 5. 동일하면 신청자 리스트를 가져와서 dto 에 담아 반환한다.
    *
    * @param eventId 신청자 리스트를 조회하고자 하는 이벤트 글 아이디.
    * @param memberId 신청자 리스트를 조회하려고 하는 사용자 Id.
