@@ -2,7 +2,9 @@ package dnd.danverse.domain.matching.controller;
 
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.matching.dto.request.EventIdRequestDto;
+import dnd.danverse.domain.matching.dto.request.ProfileIdRequestDto;
 import dnd.danverse.domain.matching.dto.response.ApplicantsResponseDto;
+import dnd.danverse.domain.matching.service.EventAcceptComplexService;
 import dnd.danverse.domain.matching.service.EventMatchComplexService;
 import dnd.danverse.global.response.DataResponse;
 import dnd.danverse.global.response.MessageResponse;
@@ -18,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class EventMatchController {
 
   private final EventMatchComplexService eventMatchComplexService;
+  private final EventAcceptComplexService eventAcceptComplexService;
 
   /**
    * 이벤트에 지원한다.
@@ -91,6 +95,21 @@ public class EventMatchController {
       @AuthenticationPrincipal SessionUser sessionUser) {
     List<ApplicantsResponseDto> resultList = eventMatchComplexService.getApplicants(eventId, sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "신청자 리스트 조회 성공", resultList), HttpStatus.OK);
+  }
+
+  /**
+   * 이벤트 지원자 요청을 수락한다.
+   * @param eventId 이벤트 글 아이디
+   * @param requestDto 수락하려는 사용자의 프로필 아이디
+   * @return MessageResponse 상태 메시지 담은 dto
+   */
+  @ApiOperation(value = "이벤트 지원자 요청 수락", notes = "이벤트 주최자는 자신의 이벤트에 신청한 지원의 요청을 수락할 수 있다.")
+  @ApiImplicitParam(name = "eventId", value = "이벤트 고유 ID", required = true)
+  @PatchMapping("/{eventId}/accept")
+  public ResponseEntity<MessageResponse> acceptApplicant(@PathVariable("eventId") Long eventId,
+      @RequestBody ProfileIdRequestDto requestDto) {
+    eventAcceptComplexService.acceptApplicant(eventId, requestDto.getProfileId());
+    return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "신청자 수락 성공"), HttpStatus.OK);
   }
 
 
