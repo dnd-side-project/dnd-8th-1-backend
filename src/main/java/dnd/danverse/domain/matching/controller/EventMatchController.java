@@ -105,9 +105,13 @@ public class EventMatchController {
    * @param requestDto 수락하려는 사용자의 프로필 아이디
    * @return MessageResponse 상태 메시지 담은 dto
    */
-  @ApiOperation(value = "이벤트 지원자 요청 수락", notes = "이벤트 주최자는 자신의 이벤트에 신청한 지원의 요청을 수락할 수 있다.")
-  @ApiImplicitParam(name = "eventId", value = "이벤트 고유 ID", required = true)
   @PatchMapping("/{eventId}/accept")
+  @ApiOperation(value = "이벤트 지원자 요청 수락", notes = "이벤트 주최자는 자신의 이벤트에 신청한 지원의 요청을 수락할 수 있다.")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "eventId", value = "이벤트 고유 ID", required = true),
+      @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+          required = true, dataType = "string", paramType = "header")
+  })
   public ResponseEntity<MessageResponse> acceptApplicant(@PathVariable("eventId") Long eventId,
       @RequestBody ProfileIdRequestDto requestDto) {
     eventAcceptComplexService.acceptApplicant(eventId, requestDto.getProfileId());
