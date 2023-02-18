@@ -6,6 +6,7 @@ import dnd.danverse.domain.matching.dto.request.ProfileIdRequestDto;
 import dnd.danverse.domain.matching.dto.response.ApplicantsResponseDto;
 import dnd.danverse.domain.matching.service.EventAcceptComplexService;
 import dnd.danverse.domain.matching.service.EventMatchComplexService;
+import dnd.danverse.domain.matching.service.EventMatchSearchService;
 import dnd.danverse.global.response.DataResponse;
 import dnd.danverse.global.response.MessageResponse;
 import io.swagger.annotations.Api;
@@ -37,6 +38,7 @@ public class EventMatchController {
 
   private final EventMatchComplexService eventMatchComplexService;
   private final EventAcceptComplexService eventAcceptComplexService;
+  private final EventMatchSearchService eventMatchSearchService;
 
   /**
    * 이벤트에 지원한다.
@@ -93,7 +95,7 @@ public class EventMatchController {
   })
   public ResponseEntity<DataResponse<List<ApplicantsResponseDto>>> getApplicants(@PathVariable("eventId") Long eventId,
       @AuthenticationPrincipal SessionUser sessionUser) {
-    List<ApplicantsResponseDto> resultList = eventMatchComplexService.getApplicants(eventId, sessionUser.getId());
+    List<ApplicantsResponseDto> resultList = eventMatchSearchService.getApplicants(eventId, sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "신청자 리스트 조회 성공", resultList), HttpStatus.OK);
   }
 
