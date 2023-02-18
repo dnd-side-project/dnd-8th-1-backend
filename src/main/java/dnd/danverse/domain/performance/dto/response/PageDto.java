@@ -1,5 +1,6 @@
 package dnd.danverse.domain.performance.dto.response;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,31 +17,38 @@ public class PageDto<T> {
   /**
    * 조회한 결과
    */
+  @ApiModelProperty(value = "조회한 결과")
   private List<T> content;
   /**
    * 하나의 페이지에 담기는 요소의 수
    */
+  @ApiModelProperty(value = "하나의 페이지에 담기는 요소의 수")
   private int numberOfElements;
   /**
    * 조회한 결과의 시작 위치
    * 0부터 시작해서 몇 개를 건너뛰었는지를 나타냄
    */
+  @ApiModelProperty(value = "조회한 결과의 시작 위치, 0부터 시작해서 몇 개를 건너뛰었는지를 나타냄")
   private long offset;
   /**
    * 현재 페이지 번호
    */
+  @ApiModelProperty(value = "현재 페이지 번호, 0부터 시작")
   private int pageNumber;
   /**
    * 페이지의 크기 (수용 가능한 content 수)
    */
+  @ApiModelProperty(value = "페이지의 크기 (수용 가능한 content 수)")
   private int pageSize;
   /**
    * 전체 요소의 수
    */
+  @ApiModelProperty(value = "검색 결과의 전체 요소의 수")
   private long totalElements;
   /**
    * 전체 페이지의 수
    */
+  @ApiModelProperty(value = "검색 결과의 전체 페이지의 수")
   private int totalPages;
 
   public PageDto(Page<T> page) {
