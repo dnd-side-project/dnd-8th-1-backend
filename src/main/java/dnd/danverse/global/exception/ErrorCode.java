@@ -24,7 +24,7 @@ public enum ErrorCode {
   EVENT_TYPE_NOT_MATCH(HttpStatus.BAD_REQUEST, "E004", "모집 유형이 일치하지 않습니다."),
 
   // 이벤트 매치
-  EVENT_MATCH_NOT_FOUND(HttpStatus.NOT_FOUND, "EM001", "지원한 내역이 없는 이벤트입니다."),
+  EVENT_MATCH_NOT_FOUND(HttpStatus.NOT_FOUND, "EM001", "지원자는 해당 이벤트에 지원한 기록이 없습니다."),
 
   EVENT_MATCH_NOT_WRITER(HttpStatus.FORBIDDEN, "EM002", "작성자 외에 접근권한이 없습니다."),
 
