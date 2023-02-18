@@ -5,6 +5,7 @@ import static dnd.danverse.global.exception.ErrorCode.EVENT_NOT_FOUND;
 import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.event.exception.EventNotFoundException;
 import dnd.danverse.domain.event.repository.EventRepository;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -84,4 +85,13 @@ public class EventPureService {
         .orElseThrow(() -> new EventNotFoundException(EVENT_NOT_FOUND));
   }
 
+  /**
+   * 지금 시간으로 마감 기한을 업데이트 한다.
+   * @param eventId 이벤트 고유 ID
+   */
+  @Transactional
+  public void updateDeadline(Long eventId) {
+    Event event = getEvent(eventId);
+    event.updateDeadline(LocalDateTime.now());
+  }
 }
