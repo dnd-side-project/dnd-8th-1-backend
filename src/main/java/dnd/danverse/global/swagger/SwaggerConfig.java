@@ -32,7 +32,7 @@ public class SwaggerConfig {
         .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
         .ignoredParameterTypes(SessionUser.class)
         .apiInfo(DEFAULT_API_INFO).select()
-        .apis(RequestHandlerSelectors.basePackage("dnd.danverse.domain"))
+        .apis(RequestHandlerSelectors.basePackage("dnd.danverse.domain").or(RequestHandlerSelectors.basePackage("dnd.danverse.global.s3.controller")))
         .paths(PathSelectors.any())
         .build();
   }
