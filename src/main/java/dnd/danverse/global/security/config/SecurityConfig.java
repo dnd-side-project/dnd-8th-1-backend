@@ -1,7 +1,7 @@
 package dnd.danverse.global.security.config;
 
-import dnd.danverse.domain.jwt.filter.JwtAuthenticationFilter;
 import dnd.danverse.domain.jwt.exception.JwtExceptionFilter;
+import dnd.danverse.domain.jwt.filter.JwtAuthenticationFilter;
 import dnd.danverse.domain.jwt.handler.JwtAccessDeniedHandler;
 import dnd.danverse.domain.jwt.handler.JwtAuthenticationEntryPointHandler;
 import lombok.RequiredArgsConstructor;
@@ -41,15 +41,13 @@ public class SecurityConfig {
         .authenticationEntryPoint(jwtAuthenticationEntryPointHandler) // 인증 되지 않는 사용자가 접근할 경우
         .accessDeniedHandler(jwtAccessDeniedHandler); // 인증은 했으나 권한이 없는 경우
 
-
-
-
+    final String userRole = "ROLE_USER";
     http.authorizeRequests()
         .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight Request 허용해주기
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
-        .antMatchers(HttpMethod.POST, "/api/v1/events","/api/v1/events/apply").hasAuthority("ROLE_USER")
-        .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply").hasAuthority("ROLE_USER")
-        .antMatchers(HttpMethod.GET, "/api/v1/events/{eventId}/applicants").hasAuthority("ROLE_USER")
+        .antMatchers(HttpMethod.POST, "/api/v1/events", "/api/v1/events/apply").hasAuthority(userRole)
+        .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply").hasAuthority(userRole)
+        .antMatchers(HttpMethod.GET, "/api/v1/events/{eventId}/applicants").hasAuthority(userRole)
         .anyRequest().permitAll();
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -82,8 +82,11 @@ public class EventMatchController {
    */
   @GetMapping("/{eventId}/applicants")
   @ApiOperation(value = "이벤트 신청자 리스트 조회", notes = "이벤트 작성자는 자신의 이벤트에 신청한 프로필 리스트를 볼 수 있다.")
-  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
-      required = true, dataType = "string", paramType = "header")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "eventId", value = "이벤트 고유 ID", required = true),
+      @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+          required = true, dataType = "string", paramType = "header")
+  })
   public ResponseEntity<DataResponse<List<ApplicantsResponseDto>>> getApplicants(@PathVariable("eventId") Long eventId,
       @AuthenticationPrincipal SessionUser sessionUser) {
     List<ApplicantsResponseDto> resultList = eventMatchComplexService.getApplicants(eventId, sessionUser.getId());
