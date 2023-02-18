@@ -31,6 +31,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Parameter;
 
 /**
@@ -63,6 +65,7 @@ public class Profile extends BaseTimeEntity {
    */
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_PROFILE_MEMBER"))
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private Member member;
 
   /**
