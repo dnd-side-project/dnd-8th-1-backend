@@ -5,7 +5,9 @@ import dnd.danverse.domain.performance.entity.Performance;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * 공연 조회 복합 서비스.
+ */
 @Service
 @RequiredArgsConstructor
 public class PerformSearchComplexService {
