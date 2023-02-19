@@ -5,6 +5,7 @@ import static dnd.danverse.global.exception.ErrorCode.EVENT_OVER_DEADLINE;
 import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.common.Image;
 import dnd.danverse.domain.common.TeamType;
+import dnd.danverse.domain.event.dto.request.EventUpdateRequestDto;
 import dnd.danverse.domain.event.exception.EventNotAvailableException;
 import dnd.danverse.domain.profile.entity.Profile;
 import java.time.LocalDateTime;
@@ -149,5 +150,23 @@ public class Event extends BaseTimeEntity {
    */
   public void updateDeadline(LocalDateTime now) {
     this.deadline = now;
+  }
+
+  /**
+   * 이벤트 데이터를 수정한다.
+   * @param eventDto 수정하고자 하는 값
+   * @return 수정된 이벤트 데이터
+   */
+  public Event updateEventInfo(EventUpdateRequestDto eventDto) {
+    this.title = eventDto.getTitle();
+    this.location = eventDto.getLocation();
+    this.eventType = EventType.of(eventDto.getType());
+    this.eventImg = new Image(eventDto.getImgUrl());
+    this.recruitType = TeamType.of(eventDto.getRecruitType());
+    this.description = eventDto.getDescription();
+    this.recruitCount = eventDto.getRecruitCount();
+    this.deadline = eventDto.getDeadline();
+
+    return this;
   }
 }

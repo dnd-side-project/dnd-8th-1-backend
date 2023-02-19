@@ -1,5 +1,8 @@
 package dnd.danverse.domain.event.service;
 
+import dnd.danverse.domain.event.dto.request.EventUpdateRequestDto;
+import dnd.danverse.domain.event.dto.response.EventWithProfileDto;
+import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.matching.service.EventWriterValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,4 +28,10 @@ public class EventUpdateService {
     eventPureService.updateDeadline(eventId);
   }
 
+  public EventWithProfileDto updateEventInfo(EventUpdateRequestDto eventDto, Long memberId) {
+    // 아래를 수행하면 Event , Profile 객체가 모두 영속화 된다. (전부 각각의 프록시를 가지고 있다)
+    eventWriterValidationService.validateEventWriter(eventDto.getId(), memberId);
+    Event event = eventPureService.updateEventInfo(eventDto.getId(), eventDto);
+    return new EventWithProfileDto(event, event.getProfile());
+  }
 }

@@ -1,5 +1,6 @@
 package dnd.danverse.global.s3.dto.response;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class S3Dto {
-  private String savedUrl;
+  @ApiModelProperty(value = "이미지 url")
+  private String imgUrl;
 
 }
