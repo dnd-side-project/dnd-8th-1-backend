@@ -88,6 +88,7 @@ public class EventPureService {
 
   /**
    * 지금 시간으로 마감 기한을 업데이트 한다.
+   *
    * @param eventId 이벤트 고유 ID
    */
   @Transactional
@@ -102,5 +103,10 @@ public class EventPureService {
     Event event = getEvent(eventId);
     event.updateEventInfo(requestDto);
     return event;
+  }
+
+  @Transactional
+  public void deleteEvent(Event event) {
+    eventRepository.delete(event);
   }
 }
