@@ -1,7 +1,10 @@
 package dnd.danverse.domain.performance.service;
 
+import static dnd.danverse.global.exception.ErrorCode.PERFORMANCE_NOT_FOUND;
+
 import dnd.danverse.domain.performance.dto.response.ImminentPerformsDto;
 import dnd.danverse.domain.performance.entity.Performance;
+import dnd.danverse.domain.performance.exception.PerformanceNotFoundException;
 import dnd.danverse.domain.performance.repository.PerformanceRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 공연 순수 서비스
+ * 공연 순수 서비스.
  */
 @Service
 @RequiredArgsConstructor
@@ -32,5 +35,11 @@ public class PerformancePureService {
         .map(ImminentPerformsDto::new)
         .limit(4)
         .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  public Performance getPerformanceDetail(Long performId) {
+    return performanceRepository.findPerformanceWithProfile(performId)
+        .orElseThrow(() -> new PerformanceNotFoundException(PERFORMANCE_NOT_FOUND));
   }
 }
