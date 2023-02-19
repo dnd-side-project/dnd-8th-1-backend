@@ -2,7 +2,6 @@ package dnd.danverse.domain.event.service;
 
 import dnd.danverse.domain.event.dto.response.EventWithProfileDto;
 import dnd.danverse.domain.event.entitiy.Event;
-import dnd.danverse.domain.profile.dto.response.ProfileSimpleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +21,7 @@ public class EventSearchComplexService {
    */
   public EventWithProfileDto searchDetail(Long eventId) {
     Event event = eventPureService.getEventDetail(eventId);
-    ProfileSimpleDto profile = new ProfileSimpleDto(event.getProfile());
-    return new EventWithProfileDto(event, profile);
+    return new EventWithProfileDto(event, event.getProfile());
   }
 
 }

@@ -5,7 +5,6 @@ import dnd.danverse.domain.profile.dto.response.ProfileSimpleDto;
 import dnd.danverse.domain.profile.entity.Profile;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -46,28 +45,10 @@ public class EventWithProfileDto {
   @ApiModelProperty(value = "이벤트 이미지 url")
   private String imgUrl;
 
-  /**
-   * 이벤트 작성 responseDto. 이벤트 상세조회 responseDto.
-   *
-   * @param event 작성한 이벤트 글
-   * @param profile 작성자 프로필
-   */
-  @Builder
-  public EventWithProfileDto(Event event, ProfileSimpleDto profile) {
-    this.id = event.getId();
-    this.profile = profile;
-    this.type = event.getEventType().getType();
-    this.title = event.getTitle();
-    this.recruitType = event.getRecruitType().getType();
-    this.recruitCount = event.getRecruitCount();
-    this.deadline = event.getDeadline();
-    this.location = event.getLocation();
-    this.description = event.getDescription();
-    this.imgUrl = event.getEventImg().getImageUrl();
-  }
 
   /**
-   * 이벤트 데이터 업데이트 후, 업데이트 된 결과를 반환
+   * 이벤트와 프로필 정보를 함께 반환하는 response dto.
+   *
    * @param event 이벤트
    * @param profile 프로필
    */
