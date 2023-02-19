@@ -47,7 +47,7 @@ public class EventWithProfileDto {
 
 
   /**
-   * 이벤트 데이터 업데이트 후, 업데이트 된 결과를 반환.
+   * 이벤트와 프로필 정보를 함께 반환하는 response dto.
    *
    * @param event 이벤트
    * @param profile 프로필
