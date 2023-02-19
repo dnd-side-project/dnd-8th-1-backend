@@ -5,6 +5,7 @@ import dnd.danverse.domain.event.dto.request.EventSavedRequestDto;
 import dnd.danverse.domain.event.dto.request.EventUpdateRequestDto;
 import dnd.danverse.domain.event.dto.response.EventInfoResponse;
 import dnd.danverse.domain.event.dto.response.EventWithProfileDto;
+import dnd.danverse.domain.event.service.EventDeleteService;
 import dnd.danverse.domain.event.service.EventFilterService;
 import dnd.danverse.domain.event.service.EventSaveComplexService;
 import dnd.danverse.domain.event.service.EventSearchComplexService;
@@ -16,12 +17,14 @@ import dnd.danverse.global.response.DataResponse;
 import dnd.danverse.global.response.MessageResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +46,7 @@ public class EventController {
   private final EventSaveComplexService eventSaveComplexService;
   private final EventSearchComplexService eventSearchComplexService;
   private final EventUpdateService eventUpdateService;
+  private final EventDeleteService eventDeleteService;
 
   /**
    * 이벤트 필터링과, 페이징을 적용한 이벤트 조회.
@@ -97,6 +101,7 @@ public class EventController {
 
   /**
    * 이벤트 모집 기한을 조기 마감 시킬 수 있다.
+   *
    * @return "조기 마감 성공" 메시지와 함께 200 상태코드가 나타납니다.
    */
   @PatchMapping("/deadline")
@@ -120,6 +125,22 @@ public class EventController {
     EventWithProfileDto responseDto = eventUpdateService.updateEventInfo(requestDto,
         sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 수정 성공", responseDto), HttpStatus.OK);
+  }
+
+  /**
+   * 이벤트 글 삭제할 수 있다.
+   */
+  @DeleteMapping("/{eventId}")
+  @ApiOperation(value = "이벤트 글 삭제", notes = "이벤트 글을 삭제할 수 있다.")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "eventId", value = "이벤트 고유 ID", required = true),
+      @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+          required = true, dataType = "string", paramType = "header")
+  })
+  public ResponseEntity<MessageResponse> deleteEvent(@PathVariable("eventId") Long eventId,
+      @AuthenticationPrincipal SessionUser sessionUser) {
+    eventDeleteService.deleteEvent(eventId, sessionUser.getId());
+    return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "이벤트 삭제 성공"), HttpStatus.OK);
   }
 
 }
