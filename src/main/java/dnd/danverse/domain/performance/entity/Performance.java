@@ -29,7 +29,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Parameter;
 
 /**
- * 공연 Entity
+ * 공연 Entity.
  */
 @Entity
 @NoArgsConstructor
@@ -46,14 +46,14 @@ import org.hibernate.annotations.Parameter;
 public class Performance extends BaseTimeEntity {
 
   /**
-   * 공연 고유 ID, 시퀀스 전략 사용
+   * 공연 고유 ID, 시퀀스 전략 사용.
    */
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERFORMANCE_SEQ_GENERATOR")
   private Long id;
 
   /**
-   * 공연 주최자
+   * 공연 주최자.
    */
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "profile_host_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PERFORMANCE_PROFILE_HOST"))
@@ -64,48 +64,48 @@ public class Performance extends BaseTimeEntity {
    * 공연 장르 목록 PerformGenre 의 삭제는 Performance 가 삭제될 때 함께 삭제된다. CascadeType.PERSIST 를 하지 않고, 추후
    * saveAll()를 통해서 한번의 네트워크 통신으로 처리한다.
    */
-  @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
   @JoinColumn(name = "performance_id", foreignKey = @ForeignKey(name = "FK_PERFORMGENRE_PERFORMANCE"))
   private List<PerformGenre> performGenres = new ArrayList<>();
 
   /**
-   * 공연 제목
+   * 공연 제목.
    */
   @Column(nullable = false)
   private String title;
 
   /**
-   * 공연 위치(지역)
+   * 공연 위치(지역).
    */
   @Column(nullable = false)
   private String location;
 
   /**
-   * 공연 구체적인 장소
+   * 공연 구체적인 장소.
    */
   @Column(nullable = false)
   private String address;
 
   /**
-   * 공연 시작 날짜 (년, 월, 일)
+   * 공연 시작 날짜 (년, 월, 일).
    */
   @Column(nullable = false)
   private LocalDate startDate;
 
   /**
-   * 공연 시작 시간 (년, 월, 일, 시, 분, 초)
+   * 공연 시작 시간 (년, 월, 일, 시, 분, 초).
    */
   @Column(nullable = false)
   private LocalDateTime startTime;
 
   /**
-   * 공연 포스터 이미지
+   * 공연 포스터 이미지.
    */
   @Embedded
   private Image performanceImg;
 
   /**
-   * 공연 설명
+   * 공연 설명.
    */
   @Column(nullable = false)
   private String description;
@@ -128,7 +128,8 @@ public class Performance extends BaseTimeEntity {
 
   /**
    * 공연 장르 목록을 문자열로 반환한다.
-   * @return 장르 목록
+   * 
+   * @return 장르 List
    */
   public List<String> getPerformGenres() {
     List<String> genres = new ArrayList<>();

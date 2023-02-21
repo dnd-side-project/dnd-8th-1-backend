@@ -42,4 +42,11 @@ public class PerformancePureService {
     return performanceRepository.findPerformanceWithProfile(performId)
         .orElseThrow(() -> new PerformanceNotFoundException(PERFORMANCE_NOT_FOUND));
   }
+
+  @Transactional
+  public Performance createPerform(Performance performance) {
+    return performanceRepository.save(performance);
+  }
+
+
 }
