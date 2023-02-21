@@ -2,6 +2,7 @@ package dnd.danverse.domain.performance.dto.request;
 
 import dnd.danverse.domain.common.Image;
 import dnd.danverse.domain.performance.entity.Performance;
+import dnd.danverse.domain.performgenre.entity.PerformGenre;
 import dnd.danverse.domain.profile.entity.Profile;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
@@ -72,10 +73,10 @@ public class PerformSavedRequestDto {
    * profile 을 통해 공연 주최자를 설정.
    * Dto 가 가지는 데이터를 통해서 공연을 생성.
    * Image 객체는 값 타입이다. 값 타입은 Immutable 하게 설계해야 한다. 따라서 새로운 Image 객체를 생성하여 값을 넣어준다.
-   * String 의 공연 장르 데이터를 통해 공연 장르를 생성 하는 책임은 Performance 에게 위임.
+   * Performance 로 반환하기 전에 , 모든 연관 관계를 설정해준다.
    *
    * @param profile 공연 주최자 프로필.
-   * @return dto 에서 변환된 entity.
+   * @return 공연 과 공연 장르가 연관 관계로 설정된 Performance Entity.
    */
   public Performance toPerform(Profile profile) {
     Performance performance = Performance.builder()
@@ -89,7 +90,11 @@ public class PerformSavedRequestDto {
         .profileHost(profile)
         .build();
 
-    performance.addPerformGenres(this.genres);
+    // 양방향 연관관계 설정
+    this.genres.stream()
+        .map(PerformGenre::new)
+        .forEach(performGenre -> performGenre.addPerform(performance));
+
     return performance;
   }
 
