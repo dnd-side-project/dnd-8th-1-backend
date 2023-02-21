@@ -41,6 +41,7 @@ public class PerformanceController {
    * @return 임박한 공연 목록
    */
   @GetMapping("/imminent")
+  @ApiOperation(value = "임박한 공연 조회", notes = "오늘 날짜 기준으로, 최근 공연 4개를 조회할 수 있다.")
   public ResponseEntity<DataResponse<List<ImminentPerformsDto>>> searchImminentPerformance() {
 
     List<ImminentPerformsDto> performs = performancePureService.searchImminentPerforms();
@@ -55,6 +56,7 @@ public class PerformanceController {
    * @return 페이징 처리된 공연 목록
    */
   @GetMapping()
+  @ApiOperation(value = "공연 전체 조회", notes = "공연 필터링(지역,장르)와 날짜(월,일별), 페이징을 적용한 공연 조회.")
   public ResponseEntity<DataResponse<PageDto<PerformInfoResponse>>> searchPerformanceWithCond(
       PerformCondDto performCondDto, Pageable pageable) {
 
