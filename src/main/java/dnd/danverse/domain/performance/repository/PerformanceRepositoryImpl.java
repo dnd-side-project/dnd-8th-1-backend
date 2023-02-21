@@ -2,6 +2,7 @@ package dnd.danverse.domain.performance.repository;
 
 import static dnd.danverse.domain.performance.entity.QPerformance.performance;
 import static dnd.danverse.domain.performgenre.entity.QPerformGenre.performGenre;
+import static dnd.danverse.domain.profile.entity.QProfile.profile;
 import static org.aspectj.util.LangUtil.isEmpty;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -121,6 +122,33 @@ public class PerformanceRepositoryImpl implements PerformFilterCustom {
         );
 
     return countQuery.fetch().size();
+  }
+
+  /**
+   * team name 을 통해서 예정된 공연, 마감된 공연 조회
+   * @param teamName 팀 이름
+   */
+  @Override
+  public List<Performance> searchPerformsByTeam(String teamName) {
+
+      List<Performance> performances = queryFactory
+          .select(performance)
+          .from(performance)
+          .join(performance.profileHost, profile).fetchJoin()
+          .where(teamNameEq(teamName))
+          .fetch();
+
+    return performances;
+  }
+
+  /**
+   * teamName 이 일치하는 경우 where 절에 추가
+   * teamName 이 null 인 경우 where 절에 추가하지 않음
+   * @param teamName 팀 이름
+   * @return teamName 이 일치하는 경우 where 절에 추가
+   */
+  private BooleanExpression teamNameEq(String teamName) {
+    return isEmpty(teamName) ? null : profile.profileName.eq(teamName);
   }
 
 

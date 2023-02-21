@@ -5,6 +5,7 @@ import dnd.danverse.domain.performance.dto.response.ImminentPerformsDto;
 import dnd.danverse.domain.performance.dto.response.PageDto;
 import dnd.danverse.domain.performance.dto.response.PerformDetailResponse;
 import dnd.danverse.domain.performance.dto.response.PerformInfoResponse;
+import dnd.danverse.domain.performance.dto.response.PerformListResponse;
 import dnd.danverse.domain.performance.service.PerformFilterService;
 import dnd.danverse.domain.performance.service.PerformSearchComplexService;
 import dnd.danverse.domain.performance.service.PerformancePureService;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -65,6 +67,14 @@ public class PerformanceController {
 
     return new ResponseEntity<>(
         DataResponse.of(HttpStatus.OK, "공연 조회 성공", performInfoResponsePageDto), HttpStatus.OK);
+  }
+
+  @GetMapping("/team")
+  @ApiOperation(value = "팀 이름으로 공연 조회", notes = "팀 이름으로 공연을 조회할 수 있다.")
+  @ApiImplicitParam(name = "name", value = "팀 이름", required = true)
+  public ResponseEntity<DataResponse<PerformListResponse>> searchPerformsByTeam(@RequestParam("name") String teamName) {
+    PerformListResponse performListResponse = performFilterService.searchPerformsByTeam(teamName);
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "팀 이름으로 공연 조회 성공", performListResponse), HttpStatus.OK);
   }
 
   @GetMapping("/{performId}")
