@@ -136,6 +136,7 @@ public class PerformanceRepositoryImpl implements PerformFilterCustom {
           .from(performance)
           .join(performance.profileHost, profile).fetchJoin()
           .where(teamNameEq(teamName))
+          .orderBy(performance.startDate.desc())
           .fetch();
 
     return performances;
