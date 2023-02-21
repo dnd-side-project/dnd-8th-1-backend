@@ -44,7 +44,7 @@ public class PerformInfoResponse {
     this.title = performance.getTitle();
     this.imgUrl = performance.getPerformanceImg().getImageUrl();
     this.startDate = performance.getStartDate();
-    this.genres = performance.getPerformGenres();
+    this.genres = performance.getStringOfPerformGenres();
     this.location = performance.getLocation();
     this.profile = new ProfileSimpleDto(performance.getProfileHost());
   }
