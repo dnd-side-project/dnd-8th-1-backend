@@ -1,5 +1,6 @@
 package dnd.danverse.domain.performance.dto.request;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,20 +16,30 @@ import lombok.Getter;
 public class PerformCondDto {
 
   /**
+   * 공연 시작하는 년도
+   */
+  @ApiModelProperty(value = "공연 시작하는 년도")
+  private Integer year;
+
+  /**
    * 공연 시작하는 월
    */
+  @ApiModelProperty(value = "공연 시작하는 월")
   private Integer month;
   /**
    * 공연 시작하는 일
    */
+  @ApiModelProperty(value = "공연 시작하는 일")
   private Integer day;
   /**
    * 공연 지역
    */
+  @ApiModelProperty(value = "공연 지역")
   private String location;
   /**
    * 공연 장르
    */
+  @ApiModelProperty(value = "공연 장르")
   private String genre;
 
 }
