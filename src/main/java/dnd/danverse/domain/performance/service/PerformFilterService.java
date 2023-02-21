@@ -3,7 +3,13 @@ package dnd.danverse.domain.performance.service;
 import dnd.danverse.domain.performance.dto.request.PerformCondDto;
 import dnd.danverse.domain.performance.dto.response.PageDto;
 import dnd.danverse.domain.performance.dto.response.PerformInfoResponse;
+import dnd.danverse.domain.performance.dto.response.PerformListResponse;
+import dnd.danverse.domain.performance.entity.Performance;
 import dnd.danverse.domain.performance.repository.PerformanceRepository;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,5 +32,21 @@ public class PerformFilterService {
         performCondDto, pageable);
 
     return new PageDto<>(performInfoResponses);
+  }
+
+  /**
+   * 팀 이름을 통해 예정된 , 마감된 공연을 조회한다.
+   * @param teamName 팀 이름
+   */
+  public PerformListResponse searchPerformsByTeam(String teamName) {
+    List<Performance> performances = performanceRepository.searchPerformsByTeam(teamName);
+
+    LocalDate today = LocalDate.now();
+
+    Map<Boolean, List<Performance>> performList = performances.stream()
+        .collect(Collectors.partitioningBy(
+            performance -> performance.getStartDate().isAfter(today)));
+
+    return new PerformListResponse(performList);
   }
 }
