@@ -35,19 +35,37 @@ import org.hibernate.annotations.Parameter;
 )
 public class PerformGenre extends BaseTimeEntity {
 
+  /**
+   * 공연 장르 고유 ID, 시퀀스 전략 사용.
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERFORM_GENRE_SEQ_GENERATOR")
   private Long id;
 
+  /**
+   * 공연 장르.
+   */
   @Column(nullable = false)
   private String genre;
 
+  /**
+   * 공연.
+   * 공연은 많은 장르를 가질 수 있으므로, ManyToOne 관계.
+   * OnDelete 옵션을 사용하여, 부모 Performance 가 삭제되면 자식 PerformGenre 도 삭제되도록 설정.
+   */
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "performance_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PERFORM_GENRE_PERFORM"))
   @OnDelete(action = OnDeleteAction.CASCADE)
   private Performance performance;
 
-  public PerformGenre(String genre) {
+  /**
+   * 생성자.
+   * Performance 와의 연관관계를 설정을 위해, 생성자에서 Performance 를 받아서 설정.
+   * @param genre 장르
+   * @param performance 공연
+   */
+  public PerformGenre(String genre, Performance performance) {
     this.genre = genre;
+    this.performance = performance;
   }
 }

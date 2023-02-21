@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -111,11 +112,10 @@ public class Performance extends BaseTimeEntity {
 
 
   @Builder
-  public Performance(Profile profileHost, List<PerformGenre> performGenres, String title,
+  public Performance(Profile profileHost, String title,
       String location, String address, LocalDate startDate, LocalDateTime startTime,
       Image performanceImg, String description) {
     this.profileHost = profileHost;
-    this.performGenres = performGenres;
     this.title = title;
     this.location = location;
     this.address = address;
@@ -139,4 +139,15 @@ public class Performance extends BaseTimeEntity {
   }
 
 
+  /**
+   * String List 의 공연 장르를 받아서 PerformGenre 객체로 변환하여 리스트 형태로 저장한다.
+   * Performance 의 Genres 에 저장 하여, CascadeType.PERSIST 를 사용하여, 영속성을 전이한다.
+   * PerformGenre 객체에도 Performance 를 할당 함으로써 외래키 제약조건을 만족시킨다.
+   * @param genres 장르 List
+   */
+  public void addPerformGenres(List<String> genres) {
+    this.performGenres = genres.stream()
+                            .map(genre -> new PerformGenre(genre, this))
+                            .collect(Collectors.toList());
+  }
 }
