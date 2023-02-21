@@ -60,12 +60,18 @@ public class PerformGenre extends BaseTimeEntity {
 
   /**
    * 생성자.
-   * Performance 와의 연관관계를 설정을 위해, 생성자에서 Performance 를 받아서 설정.
    * @param genre 장르
-   * @param performance 공연
    */
-  public PerformGenre(String genre, Performance performance) {
+  public PerformGenre(String genre) {
     this.genre = genre;
+  }
+
+  /**
+   * 양방향 연관관계 편의 메소드.
+   * @param performance 외래키로 들어갈 공연 객체
+   */
+  public void addPerform(Performance performance) {
     this.performance = performance;
+    performance.getPerformGenres().add(this);
   }
 }

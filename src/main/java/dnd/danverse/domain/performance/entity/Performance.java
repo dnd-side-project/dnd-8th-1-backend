@@ -130,7 +130,7 @@ public class Performance extends BaseTimeEntity {
    * 
    * @return 장르 List
    */
-  public List<String> getPerformGenres() {
+  public List<String> getStringOfPerformGenres() {
     List<String> genres = new ArrayList<>();
     for (PerformGenre genre : performGenres) {
       genres.add(genre.getGenre());
@@ -138,16 +138,4 @@ public class Performance extends BaseTimeEntity {
     return genres;
   }
 
-
-  /**
-   * String List 의 공연 장르를 받아서 PerformGenre 객체로 변환하여 리스트 형태로 저장한다.
-   * Performance 의 Genres 에 저장 하여, CascadeType.PERSIST 를 사용하여, 영속성을 전이한다.
-   * PerformGenre 객체에도 Performance 를 할당 함으로써 외래키 제약조건을 만족시킨다.
-   * @param genres 장르 List
-   */
-  public void addPerformGenres(List<String> genres) {
-    this.performGenres = genres.stream()
-                            .map(genre -> new PerformGenre(genre, this))
-                            .collect(Collectors.toList());
-  }
 }
