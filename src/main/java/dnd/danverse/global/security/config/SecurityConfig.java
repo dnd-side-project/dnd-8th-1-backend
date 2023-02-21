@@ -45,7 +45,7 @@ public class SecurityConfig {
         .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight Request 허용해주기
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
         .antMatchers(HttpMethod.POST, "/api/v1/events", "/api/v1/events/apply",
-            "/api/v1/events/image", "/api/v1/performances/image", "/api/v1/profiles/image")
+            "/api/v1/events/image", "/api/v1/performances/image", "/api/v1/profiles/image", "/api/v1/performances")
           .hasAuthority(userRole)
         .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply", "/api/v1/events/{eventId}")
           .hasAuthority(userRole)
