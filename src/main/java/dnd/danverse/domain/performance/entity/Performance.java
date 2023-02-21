@@ -64,8 +64,7 @@ public class Performance extends BaseTimeEntity {
    * 공연 장르 목록 PerformGenre 의 삭제는 Performance 가 삭제될 때 함께 삭제된다. CascadeType.PERSIST 를 하지 않고, 추후
    * saveAll()를 통해서 한번의 네트워크 통신으로 처리한다.
    */
-  @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
-  @JoinColumn(name = "performance_id", foreignKey = @ForeignKey(name = "FK_PERFORMGENRE_PERFORMANCE"))
+  @OneToMany(mappedBy = "performance", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<PerformGenre> performGenres = new ArrayList<>();
 
   /**

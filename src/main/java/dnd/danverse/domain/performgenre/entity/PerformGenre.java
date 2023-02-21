@@ -1,14 +1,21 @@
 package dnd.danverse.domain.performgenre.entity;
 
 import dnd.danverse.domain.common.BaseTimeEntity;
+import dnd.danverse.domain.performance.entity.Performance;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Parameter;
 
 /**
@@ -34,6 +41,11 @@ public class PerformGenre extends BaseTimeEntity {
 
   @Column(nullable = false)
   private String genre;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "performance_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PERFORM_GENRE_PERFORM"))
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Performance performance;
 
   public PerformGenre(String genre) {
     this.genre = genre;
