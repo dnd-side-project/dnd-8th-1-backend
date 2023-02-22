@@ -21,7 +21,7 @@ public class PerformInfoResponse {
   private final String title;
   @ApiModelProperty(value = "공연 이미지 URL")
   private final String imgUrl;
-  @ApiModelProperty(value = "공연 시작 날짜")
+  @ApiModelProperty(value = "공연 시작 날짜 ex) 2021-01-01")
   private final LocalDate startDate;
   @ApiModelProperty(value = "공연 장르")
   private final List<String> genres;

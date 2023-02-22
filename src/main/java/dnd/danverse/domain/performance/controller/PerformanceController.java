@@ -7,6 +7,7 @@ import dnd.danverse.domain.performance.dto.response.ImminentPerformsDto;
 import dnd.danverse.domain.performance.dto.response.PageDto;
 import dnd.danverse.domain.performance.dto.response.PerformDetailResponse;
 import dnd.danverse.domain.performance.dto.response.PerformInfoResponse;
+import dnd.danverse.domain.performance.dto.response.PerformListResponse;
 import dnd.danverse.domain.performance.service.PerformFilterService;
 import dnd.danverse.domain.performance.service.PerformSaveComplexService;
 import dnd.danverse.domain.performance.service.PerformSearchComplexService;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
