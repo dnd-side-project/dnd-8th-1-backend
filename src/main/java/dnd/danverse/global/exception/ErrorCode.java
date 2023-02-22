@@ -32,7 +32,6 @@ public enum ErrorCode {
 
   // 공연
   PERFORMANCE_NOT_FOUND(HttpStatus.NOT_FOUND, "PF001", "존재하지 않는 공연 정보입니다."),
-  PERFORM_GENRE_EXCEEDED(HttpStatus.BAD_REQUEST, "PG001", "장르는 최대 3개까지 선택 가능합니다."),
 
 
   // 회원 member

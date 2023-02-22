@@ -83,7 +83,7 @@ public class PerformDetailResponse {
     this.startDate = perform.getStartDate();
     this.startTime = perform.getStartTime();
     this.location = perform.getLocation();
-    this.genres = perform.getPerformGenres();
+    this.genres = perform.getStringOfPerformGenres();
     this.description = perform.getDescription();
     this.address = perform.getAddress();
     this.profile = new ProfileSimpleDto(perform.getProfileHost());

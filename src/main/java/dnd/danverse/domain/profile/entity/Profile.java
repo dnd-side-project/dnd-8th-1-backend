@@ -73,8 +73,7 @@ public class Profile extends BaseTimeEntity {
    * ProfileGenre 의 삭제는 Profile 이 삭제될 때 함께 삭제된다.
    * CascadeType.PERSIST 를 하지 않고, 추후 saveAll()를 통해서 한번의 네트워크 통신으로 처리한다.
    */
-  @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
-  @JoinColumn(name = "profile_id")
+  @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ProfileGenre> profileGenres = new ArrayList<>();
 
   /**

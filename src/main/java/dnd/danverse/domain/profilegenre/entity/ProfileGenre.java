@@ -1,14 +1,21 @@
 package dnd.danverse.domain.profilegenre.entity;
 
 import dnd.danverse.domain.common.BaseTimeEntity;
+import dnd.danverse.domain.profile.entity.Profile;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Parameter;
 
 /**
@@ -34,6 +41,12 @@ public class ProfileGenre extends BaseTimeEntity {
 
   @Column(nullable = false)
   private String genre;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "profile_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PROFILE_GENRE_PROFILE"))
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Profile profile;
+
 
   public ProfileGenre(String genre) {
     this.genre = genre;
