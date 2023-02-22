@@ -7,6 +7,7 @@ import dnd.danverse.domain.performance.dto.response.PerformListResponse;
 import dnd.danverse.domain.performance.entity.Performance;
 import dnd.danverse.domain.performance.repository.PerformanceRepository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,10 +43,12 @@ public class PerformFilterService {
     List<Performance> performances = performanceRepository.searchPerformsByTeam(teamName);
 
     LocalDate today = LocalDate.now();
+    LocalDateTime now = LocalDateTime.now();
 
     Map<Boolean, List<Performance>> performList = performances.stream()
         .collect(Collectors.partitioningBy(
-            performance -> performance.getStartDate().isAfter(today)));
+            performance -> performance.getStartDate().isAfter(today) ||
+                (performance.getStartDate().isEqual(today) && performance.getStartTime().isAfter(now))));
 
     return new PerformListResponse(performList);
   }
