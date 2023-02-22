@@ -29,7 +29,7 @@ public class SwaggerConfig {
   @Bean
   public Docket api(){
     return new Docket(DocumentationType.SWAGGER_2)
-        .protocols(new HashSet<>(List.of("https")))
+        .protocols(new HashSet<>(List.of("https","http")))
         .produces(DEFAULT_PRODUCES_AND_CONSUMES)
         .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
         .ignoredParameterTypes(SessionUser.class)
