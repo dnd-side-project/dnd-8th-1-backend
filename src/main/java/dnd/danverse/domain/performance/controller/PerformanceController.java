@@ -7,12 +7,12 @@ import dnd.danverse.domain.performance.dto.response.ImminentPerformsDto;
 import dnd.danverse.domain.performance.dto.response.PageDto;
 import dnd.danverse.domain.performance.dto.response.PerformDetailResponse;
 import dnd.danverse.domain.performance.dto.response.PerformInfoResponse;
-import dnd.danverse.domain.performance.dto.response.PerformListResponse;
 import dnd.danverse.domain.performance.service.PerformFilterService;
 import dnd.danverse.domain.performance.service.PerformSaveComplexService;
 import dnd.danverse.domain.performance.service.PerformSearchComplexService;
 import dnd.danverse.domain.performance.service.PerformancePureService;
 import dnd.danverse.global.response.DataResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -37,6 +36,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/performances")
+@Api(tags = "PerformanceController : 공연 관련 API")
 @ApiIgnore
 public class PerformanceController {
 
