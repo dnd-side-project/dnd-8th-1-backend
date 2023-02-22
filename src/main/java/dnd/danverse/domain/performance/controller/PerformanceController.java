@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 공연 관련 데이터를 처리하기 위한 Contorller.
@@ -37,7 +36,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/performances")
 @Api(tags = "PerformanceController : 공연 관련 API")
-@ApiIgnore
 public class PerformanceController {
 
   private final PerformancePureService performancePureService;

@@ -30,13 +30,13 @@ public class PerformDetailResponse {
   /**
    * 공연 정보글에 담기는 이미지 url.
    */
-  @ApiModelProperty(value = "공연의 imgUrl")
+  @ApiModelProperty(value = "공연의 이미지 Url")
   private final String imgUrl;
 
   /**
    * 공연의 시작 날짜.
    */
-  @ApiModelProperty(value = "공연 시작 날짜")
+  @ApiModelProperty(value = "공연 시작 날짜 ex) 2021-01-01")
   private final LocalDate startDate;
 
   /**
@@ -66,7 +66,7 @@ public class PerformDetailResponse {
   /**
    * 공연 진행 장소.
    */
-  @ApiModelProperty(value = "공연 장소")
+  @ApiModelProperty(value = "공연 상세 장소")
   private final String address;
 
   /**
