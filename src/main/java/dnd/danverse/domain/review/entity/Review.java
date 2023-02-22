@@ -1,8 +1,8 @@
 package dnd.danverse.domain.review.entity;
 
 import dnd.danverse.domain.common.BaseTimeEntity;
+import dnd.danverse.domain.member.entity.Member;
 import dnd.danverse.domain.performance.entity.Performance;
-import dnd.danverse.domain.profile.entity.Profile;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -52,12 +52,12 @@ public class Review extends BaseTimeEntity {
   private Performance performance;
 
   /**
-   * 리뷰 작성자 ID (프로필 ID)
+   * 리뷰 작성자 ID (멤버 ID)
    */
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "profile_id", nullable = false, foreignKey = @ForeignKey(name = "FK_REVIEW_PROFILE"))
+  @JoinColumn(name = "member_id", nullable = false, foreignKey = @ForeignKey(name = "FK_REVIEW_MEMBER"))
   @OnDelete(action = OnDeleteAction.CASCADE)
-  private Profile profile;
+  private Member member;
 
   /**
    * 리뷰 내용
