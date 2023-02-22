@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -64,5 +65,12 @@ public class Review extends BaseTimeEntity {
    */
   @Column(nullable = false)
   private String content;
+
+  @Builder
+  public Review(Performance performance, Member member, String content) {
+    this.performance = performance;
+    this.member = member;
+    this.content = content;
+  }
 
 }
