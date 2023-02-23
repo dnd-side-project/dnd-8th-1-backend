@@ -1,5 +1,6 @@
 package dnd.danverse.domain.matching.service;
 
+import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.matching.dto.response.ApplicantsResponseDto;
 import dnd.danverse.domain.matching.entity.EventMatch;
 import java.util.List;
@@ -26,8 +27,8 @@ public class EventMatchSearchService {
    * @param memberId 신청자 리스트를 조회하려고 하는 사용자 Id.
    */
   public List<ApplicantsResponseDto> getApplicants(Long eventId, Long memberId) {
-    eventWriterValidationService.validateEventWriter(eventId, memberId);
-    List<EventMatch> eventMatches = eventMatchPureService.getApplicants(eventId);
+    Event event = eventWriterValidationService.validateEventWriter(eventId, memberId);
+    List<EventMatch> eventMatches = eventMatchPureService.getApplicants(event);
     return eventMatches.stream().map(ApplicantsResponseDto::new).collect(Collectors.toList());
   }
 

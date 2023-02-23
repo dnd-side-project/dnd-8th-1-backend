@@ -24,14 +24,21 @@ public class EventUpdateService {
    * @param memberId API 요청자 아이디
    */
   public void updateDeadline(Long eventId, Long memberId) {
-    eventWriterValidationService.validateEventWriter(eventId, memberId);
-    eventPureService.updateDeadline(eventId);
+    Event event = eventWriterValidationService.validateEventWriter(eventId, memberId);
+    eventPureService.updateDeadline(event);
   }
 
+  /**
+   * 1. 이벤트 작성자가 맞는지 검증한다.
+   * 2. 이벤트 글의 정보를 수정한다.
+   * @param eventDto 수정하고자 하는 정보가 담긴 DTO
+   * @param memberId API 요청자 아이디
+   * @return 수정된 이벤트 글 정보
+   */
   public EventWithProfileDto updateEventInfo(EventUpdateRequestDto eventDto, Long memberId) {
     // 아래를 수행하면 Event , Profile 객체가 모두 영속화 된다. (전부 각각의 프록시를 가지고 있다)
-    eventWriterValidationService.validateEventWriter(eventDto.getId(), memberId);
-    Event event = eventPureService.updateEventInfo(eventDto.getId(), eventDto);
+    Event event = eventWriterValidationService.validateEventWriter(eventDto.getId(), memberId);
+    eventPureService.updateEventInfo(event, eventDto);
     return new EventWithProfileDto(event, event.getProfile());
   }
 }

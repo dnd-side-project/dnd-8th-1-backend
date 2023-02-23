@@ -22,8 +22,7 @@ public class EventDeleteService {
    * @param memberId 삭제 요청 보낸 멤버 Id.
    */
   public void deleteEvent(Long eventId, Long memberId) {
-    eventWriterValidationService.validateEventWriter(eventId, memberId);
-    Event event = eventPureService.checkIfDeleted(eventId);
+    Event event = eventWriterValidationService.validateEventWriter(eventId, memberId);
     eventPureService.deleteEvent(event);
   }
 
