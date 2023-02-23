@@ -3,6 +3,7 @@ package dnd.danverse.domain.performance.controller;
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.performance.dto.request.PerformCondDto;
 import dnd.danverse.domain.performance.dto.request.PerformSavedRequestDto;
+import dnd.danverse.domain.performance.dto.request.PerformUpdateRequestDto;
 import dnd.danverse.domain.performance.dto.response.ImminentPerformsDto;
 import dnd.danverse.domain.performance.dto.response.PageDto;
 import dnd.danverse.domain.performance.dto.response.PerformDetailResponse;
@@ -11,6 +12,7 @@ import dnd.danverse.domain.performance.dto.response.PerformListResponse;
 import dnd.danverse.domain.performance.service.PerformFilterService;
 import dnd.danverse.domain.performance.service.PerformSaveComplexService;
 import dnd.danverse.domain.performance.service.PerformSearchComplexService;
+import dnd.danverse.domain.performance.service.PerformUpdateComplexService;
 import dnd.danverse.domain.performance.service.PerformancePureService;
 import dnd.danverse.global.response.DataResponse;
 import io.swagger.annotations.Api;
@@ -23,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +46,7 @@ public class PerformanceController {
   private final PerformFilterService performFilterService;
   private final PerformSearchComplexService performSearchComplexService;
   private final PerformSaveComplexService performSaveComplexService;
+  private final PerformUpdateComplexService performUpdateComplexService;
 
   /**
    * 공연이 임박한 공연을 조회할 수 있다. 오늘 날짜 기준으로, 최근 공연 4개를 조회할 수 있다.
@@ -119,6 +123,23 @@ public class PerformanceController {
   public ResponseEntity<DataResponse<PerformDetailResponse>> postPerform(@RequestBody @Validated PerformSavedRequestDto performSavedDto, @AuthenticationPrincipal SessionUser sessionUser) {
     PerformDetailResponse response = performSaveComplexService.postPerform(performSavedDto, sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED, "공연 등록 성공", response), HttpStatus.CREATED);
+  }
+
+  /**
+   * 공연 글 수정.
+   *
+   * @param updateRequest 공연 글 수정을 위한 요청 Dto.
+   * @param sessionUser 글을 수정하려고 하는 사용자.
+   * @return 글 수정에 성공하면 200 상태코드와 함께 응답 Dto를 반환.
+   */
+  @PatchMapping("")
+  @ApiOperation(value = "공연 글 수정", notes = "작성자에 한하여 글을 수정할 수 있다.")
+  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+      required = true, dataType = "string", paramType = "header")
+  public ResponseEntity<DataResponse<PerformDetailResponse>> updatePerform(@RequestBody PerformUpdateRequestDto updateRequest
+      , @AuthenticationPrincipal SessionUser sessionUser) {
+    PerformDetailResponse response = performUpdateComplexService.updatePerform(updateRequest, sessionUser.getId());
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "공연 수정 성공", response), HttpStatus.OK);
   }
 
 }

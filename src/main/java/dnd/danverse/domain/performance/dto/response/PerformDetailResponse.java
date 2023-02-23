@@ -1,11 +1,14 @@
 package dnd.danverse.domain.performance.dto.response;
 
 import dnd.danverse.domain.performance.entity.Performance;
+import dnd.danverse.domain.performgenre.entity.PerformGenre;
 import dnd.danverse.domain.profile.dto.response.ProfileSimpleDto;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -84,6 +87,22 @@ public class PerformDetailResponse {
     this.startTime = perform.getStartTime();
     this.location = perform.getLocation();
     this.genres = perform.getStringOfPerformGenres();
+    this.description = perform.getDescription();
+    this.address = perform.getAddress();
+    this.profile = new ProfileSimpleDto(perform.getProfileHost());
+  }
+
+
+  public PerformDetailResponse(Performance perform, Set<PerformGenre> newGenres) {
+    this.id = perform.getId();
+    this.title = perform.getTitle();
+    this.imgUrl = perform.getPerformanceImg().getImageUrl();
+    this.startDate = perform.getStartDate();
+    this.startTime = perform.getStartTime();
+    this.location = perform.getLocation();
+    this.genres = newGenres.stream()
+        .map(PerformGenre::getGenre)
+        .collect(Collectors.toList());
     this.description = perform.getDescription();
     this.address = perform.getAddress();
     this.profile = new ProfileSimpleDto(perform.getProfileHost());
