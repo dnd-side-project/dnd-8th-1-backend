@@ -1,7 +1,6 @@
 package dnd.danverse.domain.validation;
 
 import dnd.danverse.domain.profile.entity.Profile;
-import dnd.danverse.global.exception.ErrorCode;
 
 public interface WriterValidationService<T> {
 
@@ -13,7 +12,7 @@ public interface WriterValidationService<T> {
     Profile profile = retrieveProfile(memberId);
 
     if (targetProfile.isNotSame(profile)) {
-      throw new IllegalArgumentException("작성자가 아닙니다.");
+      throwException();
     }
 
     return target;
@@ -25,6 +24,6 @@ public interface WriterValidationService<T> {
 
   Profile retrieveProfile(Long memberId);
 
-  void throwException(ErrorCode errorCode);
+  void throwException();
 
 }

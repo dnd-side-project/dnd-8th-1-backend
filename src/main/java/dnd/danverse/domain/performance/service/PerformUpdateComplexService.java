@@ -5,8 +5,10 @@ import dnd.danverse.domain.performance.dto.response.PerformDetailResponse;
 import dnd.danverse.domain.performance.entity.Performance;
 import dnd.danverse.domain.performgenre.entity.PerformGenre;
 import dnd.danverse.domain.performgenre.service.PerformGenrePureService;
+import dnd.danverse.domain.validation.WriterValidationService;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,9 +16,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PerformUpdateComplexService {
 
-  private final PerformWriterValidationService performWriterValidationService;
+  private final WriterValidationService<Performance> validatePerformWriter;
   private final PerformancePureService performancePureService;
   private final PerformGenrePureService performGenrePureService;
 
@@ -68,7 +71,7 @@ public class PerformUpdateComplexService {
     // 3번 b => 2번 => 3번 a
 
 
-    Performance performance = performWriterValidationService.validatePerformWriter(updateRequest.getId(), memberId); //같은 작성자인지 검증 및 performance 반환.
+    Performance performance = validatePerformWriter.validateWriter(updateRequest.getId(), memberId); //같은 작성자인지 검증 및 performance 반환.
 
     Performance newPerformance = performancePureService.updatePerform(performance, updateRequest); //장르를 제외한 나머지를 수정한다.
     if (newPerformance.containGenres(updateRequest.getGenres())) {
