@@ -7,7 +7,6 @@ import dnd.danverse.domain.event.service.EventPureService;
 import dnd.danverse.domain.matching.exception.NotEventWriterException;
 import dnd.danverse.domain.profile.entity.Profile;
 import dnd.danverse.domain.profile.service.ProfilePureService;
-import dnd.danverse.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,7 +36,7 @@ public class EventWriterValidationService implements WriterValidationService<Eve
   }
 
   @Override
-  public void throwException(ErrorCode errorCode) {
+  public void throwException() {
     throw new NotEventWriterException(EVENT_MATCH_NOT_WRITER);
   }
 }
