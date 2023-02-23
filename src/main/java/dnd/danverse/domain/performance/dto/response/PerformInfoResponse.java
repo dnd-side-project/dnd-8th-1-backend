@@ -3,7 +3,7 @@ package dnd.danverse.domain.performance.dto.response;
 import dnd.danverse.domain.performance.entity.Performance;
 import dnd.danverse.domain.profile.dto.response.ProfileSimpleDto;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
@@ -21,8 +21,8 @@ public class PerformInfoResponse {
   private final String title;
   @ApiModelProperty(value = "공연 이미지 URL")
   private final String imgUrl;
-  @ApiModelProperty(value = "공연 시작 날짜")
-  private final LocalDate startDate;
+  @ApiModelProperty(value = "공연 시작 날짜+시간 ex) 2021-01-01T12:00:00")
+  private final LocalDateTime startDate;
   @ApiModelProperty(value = "공연 장르")
   private final List<String> genres;
   @ApiModelProperty(value = "공연 장소")
@@ -43,7 +43,7 @@ public class PerformInfoResponse {
     this.id = performance.getId();
     this.title = performance.getTitle();
     this.imgUrl = performance.getPerformanceImg().getImageUrl();
-    this.startDate = performance.getStartDate();
+    this.startDate = performance.getStartTime();
     this.genres = performance.getStringOfPerformGenres();
     this.location = performance.getLocation();
     this.profile = new ProfileSimpleDto(performance.getProfileHost());

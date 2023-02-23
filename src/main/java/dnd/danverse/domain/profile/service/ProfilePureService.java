@@ -5,6 +5,7 @@ import static dnd.danverse.global.exception.ErrorCode.PROFILE_NOT_FOUND;
 import dnd.danverse.domain.profile.exception.NoProfileException;
 import dnd.danverse.domain.profile.ProfileRepository;
 import dnd.danverse.domain.profile.entity.Profile;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,14 @@ public class ProfilePureService {
     log.info("memberId: {} 를 통해서 프로필을 찾습니다.", memberId);
     return profileRepository.findByMember(memberId)
         .orElseThrow(() -> new NoProfileException(PROFILE_NOT_FOUND));
+  }
+
+  /**
+   * 모든 프로필 조회
+   * @return 모든 프로필
+   */
+  @Transactional(readOnly = true)
+  public List<Profile> searchProfileForHome() {
+    return profileRepository.findAllProfiles();
   }
 }

@@ -15,6 +15,7 @@ import dnd.danverse.domain.event.entitiy.EventType;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
@@ -34,10 +35,11 @@ public class EventRepositoryImpl implements EventFilterCustom {
   /**
    * 이벤트 필터링과, 페이징을 적용한 이벤트 조회.
    * @param eventCond 이벤트 필터링 조건
-   * @param pageable 페이징 조건
    * @return 페이징 처리된 이벤트 목록 (모집 기간이 지난 이벤트는 제외)
    */
-  public Page<EventInfoResponse> searchAllEventWithCond(EventCondDto eventCond, Pageable pageable) {
+  public Page<EventInfoResponse> searchAllEventWithCond(EventCondDto eventCond) {
+
+    Pageable page = PageRequest.of(eventCond.getPage(), 15);
 
     // dto 를 통해서 이벤트 및 프로필 정보만 조회
     List<EventInfoResponse> eventContent = queryFactory
@@ -60,12 +62,12 @@ public class EventRepositoryImpl implements EventFilterCustom {
             eventTypeEq(EventType.of(eventCond.getType()))
         )
         .orderBy(event.createdAt.desc())
-        .offset(pageable.getOffset())
-        .limit(pageable.getPageSize())
+        .offset(page.getOffset())
+        .limit(page.getPageSize())
         .fetch();
 
 
-    return PageableExecutionUtils.getPage(eventContent, pageable, () -> getTotalCount(eventCond));
+    return PageableExecutionUtils.getPage(eventContent, page, () -> getTotalCount(eventCond));
   }
 
 

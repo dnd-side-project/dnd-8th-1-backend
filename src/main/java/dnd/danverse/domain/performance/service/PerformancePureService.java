@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional(readOnly = true)
 public class PerformancePureService {
 
   private final PerformanceRepository performanceRepository;
@@ -29,9 +28,11 @@ public class PerformancePureService {
   /**
    * 임박한 공연을 4개까지 조회할 수 있다. 오늘 날짜 기준으로, 최근 공연 4개를 조회할 수 있다.
    */
+  @Transactional(readOnly = true)
   public List<ImminentPerformsDto> searchImminentPerforms() {
     LocalDate now = LocalDate.now();
 
+    log.info("임박한 공연을 4개 조회한다.");
     List<Performance> imminentPerforms = performanceRepository.findImminentPerforms(now);
 
     return imminentPerforms.stream()
@@ -42,13 +43,14 @@ public class PerformancePureService {
 
   @Transactional(readOnly = true)
   public Performance getPerformanceDetail(Long performId) {
-    log.info("performance와 작성자의 profile을 fetch join 하여 찾습니다. performId: {}", performId);
+    log.info("Performance 와 주최자 를 찾기 위해 performId 인 {} 를 찾는다.", performId);
     return performanceRepository.findPerformanceWithProfile(performId)
         .orElseThrow(() -> new PerformanceNotFoundException(PERFORMANCE_NOT_FOUND));
   }
 
   @Transactional
   public Performance createPerform(Performance performance) {
+    log.info("Performance 를 저장한다. 제목 : {} ", performance.getTitle());
     return performanceRepository.save(performance);
   }
 
@@ -65,4 +67,15 @@ public class PerformancePureService {
     return performance.updateInfo(request);
   }
 
+  /**
+   * Performance 만 찾기 위해 사용한다.
+   * @param performId Performance 의 id
+   * @return Performance
+   */
+  @Transactional(readOnly = true)
+  public Performance getPerformance(Long performId) {
+    log.info("Performance 만 찾기 위해 performId 인 {} 를 찾는다.", performId);
+    return performanceRepository.findById(performId)
+        .orElseThrow(() -> new PerformanceNotFoundException(PERFORMANCE_NOT_FOUND));
+  }
 }
