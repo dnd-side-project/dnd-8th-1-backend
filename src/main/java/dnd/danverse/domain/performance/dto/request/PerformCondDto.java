@@ -26,16 +26,19 @@ public class PerformCondDto {
    */
   @ApiModelProperty(value = "공연 시작하는 월")
   private Integer month;
+
   /**
    * 공연 시작하는 일
    */
   @ApiModelProperty(value = "공연 시작하는 일")
   private Integer day;
+
   /**
    * 공연 지역
    */
   @ApiModelProperty(value = "공연 지역")
   private String location;
+
   /**
    * 공연 장르
    */
@@ -46,6 +49,14 @@ public class PerformCondDto {
    * 공연 페이지
    */
   @ApiModelProperty(value = "공연 page 페이지")
-  private int page;
+  private Integer page;
+
+  /**
+   * 요청 Dto 에서 null 값으로 들어온 page 를 0으로 변환한다.
+   * @return page 값
+   */
+  public Integer getPage() {
+    return page == null ? 0 : page;
+  }
 
 }
