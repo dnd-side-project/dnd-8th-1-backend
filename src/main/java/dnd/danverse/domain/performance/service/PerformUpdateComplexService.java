@@ -6,7 +6,6 @@ import dnd.danverse.domain.performance.entity.Performance;
 import dnd.danverse.domain.performgenre.entity.PerformGenre;
 import dnd.danverse.domain.performgenre.service.PerformGenrePureService;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -69,29 +68,16 @@ public class PerformUpdateComplexService {
     // 3번 b => 2번 => 3번 a
 
 
-    Performance performance = performWriterValidationService.isSameUser(updateRequest.getId(), memberId);
+    Performance performance = performWriterValidationService.validatePerformWriter(updateRequest.getId(), memberId); //같은 작성자인지 검증 및 performance 반환.
 
-    Performance newPerformance = performancePureService.updatePerform(performance, updateRequest);
-    if (newPerformance.isSame(updateRequest.getGenres())) {
+    Performance newPerformance = performancePureService.updatePerform(performance, updateRequest); //장르를 제외한 나머지를 수정한다.
+    if (newPerformance.containGenres(updateRequest.getGenres())) {
       return new PerformDetailResponse(newPerformance);
     }
-    Set<PerformGenre> newGenres = stringToGenre(updateRequest, newPerformance);
+    Set<PerformGenre> newGenres = updateRequest.stringToGenre(newPerformance);
     performGenrePureService.deleteAndSaveAll(updateRequest.getId(), newGenres);
     return new PerformDetailResponse(newPerformance, newGenres);
   }
 
-  /**
-   * 기존의 요청 Dto 에서는 Set<String> 형태로 장르가 담겨있다.
-   * 그러나 실제 엔티티에서는 Set<PerformGenre>이기 때문에, 이를 변환한다.
-   * String -> PerformGenre
-   *
-   * @param updateRequest 요청 Dto.
-   * @param performance 장르를 바꾸려고 하는 공연 객체.
-   * @return Set<PerformGenre>
-   */
-  private Set<PerformGenre> stringToGenre(PerformUpdateRequestDto updateRequest, Performance performance) {
-    return updateRequest.getGenres().stream()
-        .map(genre -> new PerformGenre(genre, performance))
-        .collect(Collectors.toSet());
-  }
+
 }

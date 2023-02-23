@@ -9,6 +9,7 @@ import dnd.danverse.domain.profile.service.ProfilePureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 공연, 프로필 half 복합 서비스.
@@ -29,7 +30,8 @@ public class PerformWriterValidationService {
    * @param memberId 수정 요청 사용자 Id.
    * @return 수정하려는 Performance 객체.
    */
-  public Performance isSameUser(Long performId, Long memberId) {
+  @Transactional(readOnly = true)
+  public Performance validatePerformWriter(Long performId, Long memberId) {
     Performance performance = performancePureService.getPerformanceDetail(performId);
     Profile writer = performance.getProfileHost();
     Profile profile = profilePureService.retrieveProfile(memberId);
