@@ -30,6 +30,14 @@ public class EventCondDto {
    * 페이징 처리 시 필요한 page
    */
   @ApiModelProperty(value = "이벤트 page 페이지")
-  private int page;
+  private Integer page;
+
+  /**
+   * 요청 Dto 에서 null 값으로 들어온 page 를 0으로 변환한다.
+   * @return page 값
+   */
+  public Integer getPage() {
+    return page == null ? 0 : page;
+  }
 
 }
