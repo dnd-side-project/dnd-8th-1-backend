@@ -15,11 +15,6 @@ import lombok.NoArgsConstructor;
 public class ReviewContentDto {
 
   /**
-   * 공연 고유 ID
-   */
-  @ApiModelProperty(value = "공연 고유 ID")
-  private Long performId;
-  /**
    * 리뷰 내용
    */
   @ApiModelProperty(value = "후기 내용")
