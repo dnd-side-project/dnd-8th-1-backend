@@ -9,14 +9,17 @@ import dnd.danverse.domain.performance.dto.response.PageDto;
 import dnd.danverse.domain.performance.dto.response.PerformDetailResponse;
 import dnd.danverse.domain.performance.dto.response.PerformInfoResponse;
 import dnd.danverse.domain.performance.dto.response.PerformListResponse;
+import dnd.danverse.domain.performance.service.PerformDeleteService;
 import dnd.danverse.domain.performance.service.PerformFilterService;
 import dnd.danverse.domain.performance.service.PerformSaveComplexService;
 import dnd.danverse.domain.performance.service.PerformSearchComplexService;
 import dnd.danverse.domain.performance.service.PerformUpdateComplexService;
 import dnd.danverse.domain.performance.service.PerformancePureService;
 import dnd.danverse.global.response.DataResponse;
+import dnd.danverse.global.response.MessageResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +51,7 @@ public class PerformanceController {
   private final PerformSearchComplexService performSearchComplexService;
   private final PerformSaveComplexService performSaveComplexService;
   private final PerformUpdateComplexService performUpdateComplexService;
+  private final PerformDeleteService performDeleteService;
 
   /**
    * 공연이 임박한 공연을 조회할 수 있다. 오늘 날짜 기준으로, 최근 공연 4개를 조회할 수 있다.
@@ -136,10 +141,29 @@ public class PerformanceController {
   @ApiOperation(value = "공연 글 수정", notes = "작성자에 한하여 글을 수정할 수 있다.")
   @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
       required = true, dataType = "string", paramType = "header")
-  public ResponseEntity<DataResponse<PerformDetailResponse>> updatePerform(@RequestBody PerformUpdateRequestDto updateRequest
-      , @AuthenticationPrincipal SessionUser sessionUser) {
+  public ResponseEntity<DataResponse<PerformDetailResponse>> updatePerform(@RequestBody PerformUpdateRequestDto updateRequest, @AuthenticationPrincipal SessionUser sessionUser) {
     PerformDetailResponse response = performUpdateComplexService.updatePerform(updateRequest, sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "공연 수정 성공", response), HttpStatus.OK);
+  }
+
+  /**
+   * 공연 글 삭제.
+   *
+   * @param performId 삭제하려는 공연 고유 Id.
+   * @param sessionUser 삭제 요청 사용자 고유 Id.
+   * @return 글 삭제에 성공하면 200 상태코드와 함께 메시지를 반환.
+   */
+  @DeleteMapping("/{performId}")
+  @ApiOperation(value = "공연 글 삭제", notes = "작성자에 한하여 글을 삭제할 수 있다.")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "performId", value = "공연 고유 ID", required = true),
+      @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+          required = true, dataType = "string", paramType = "header")
+  })
+  public ResponseEntity<MessageResponse> deletePerform(@PathVariable("performId") Long performId,
+      @AuthenticationPrincipal SessionUser sessionUser) {
+    performDeleteService.deletePerform(performId, sessionUser.getId());
+    return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "공연 삭제 성공"), HttpStatus.OK);
   }
 
 }
