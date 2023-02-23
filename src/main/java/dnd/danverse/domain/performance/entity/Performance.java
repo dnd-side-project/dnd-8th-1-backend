@@ -141,7 +141,12 @@ public class Performance extends BaseTimeEntity {
     return genres;
   }
 
-
+  /**
+   * performGenre 를 제외한 performance 정보를 수정합니다.
+   *
+   * @param updateRequest 수정 요청 Dto.
+   * @return 수정된 Performance.
+   */
   public Performance updateInfo(PerformUpdateRequestDto updateRequest) {
     this.title = updateRequest.getTitle();
     this.location = updateRequest.getLocation();
@@ -156,7 +161,7 @@ public class Performance extends BaseTimeEntity {
   /**
    * PerformGenre -> String 으로 변환
    */
-  private Set<String> getOriginalGenres() {
+  private Set<String> toStringGenre() {
     return this.performGenres.stream()
         .map(PerformGenre::getGenre)
         .collect(Collectors.toSet());
@@ -169,7 +174,7 @@ public class Performance extends BaseTimeEntity {
    * @return 모두 포함한다면 true, 하나라도 중복되지 않는 값이 있다면 false.
    */
   public boolean isSame(Set<String> newGenres) {
-    return getOriginalGenres().containsAll(newGenres);
+    return toStringGenre().containsAll(newGenres);
   }
 
 }
