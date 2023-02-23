@@ -11,6 +11,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+/**
+ * 이벤트 작성자 와 API 요청자가 동일한지 검증하는 서비스.
+ * WriterValidationService 인터페이스를 구현합니다.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
