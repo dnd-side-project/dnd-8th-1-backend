@@ -3,6 +3,7 @@ package dnd.danverse.global.swagger;
 import dnd.danverse.domain.jwt.service.SessionUser;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ public class SwaggerConfig {
   @Bean
   public Docket api(){
     return new Docket(DocumentationType.SWAGGER_2)
+        .protocols(new HashSet<>(List.of("https")))
         .produces(DEFAULT_PRODUCES_AND_CONSUMES)
         .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
         .ignoredParameterTypes(SessionUser.class)

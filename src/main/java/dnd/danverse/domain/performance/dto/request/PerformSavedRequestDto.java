@@ -34,32 +34,32 @@ public class PerformSavedRequestDto {
   /**
    * 공연 장소.
    */
-  @ApiModelProperty(value = "공연 장소")
+  @ApiModelProperty(value = "공연 상세 장소")
   private String address;
 
   /**
    * 공연 시작 날짜.
    */
-  @ApiModelProperty(value = "공연 시작 날짜")
+  @ApiModelProperty(value = "공연 시작 날짜 ex) 2021-01-01")
   private LocalDate startDate;
 
   /**
    * 공연 시작 시간.
    */
-  @ApiModelProperty(value = "공연 시작 시간")
+  @ApiModelProperty(value = "공연 시작 시간 ex) 2021-01-01T12:00:00 or 2021-01-01 12:00:00")
   private LocalDateTime startTime;
 
   /**
    * 공연 장르 리스트(최대 3개까지).
    */
-  @ApiModelProperty(value = "공연 장르 리스트")
+  @ApiModelProperty(value = "공연 장르 리스트 (최소 1개에서 최대 3개)")
   @Size(max = 3, min = 1, message = "장르는 최대 3개, 최소 1개까지 선택 가능합니다.")
   private List<String> genres;
 
   /**
    * 공연 포스터 Url.
    */
-  @ApiModelProperty(value = "공연 포스터 Url")
+  @ApiModelProperty(value = "공연 이미지 Url")
   private String imgUrl;
 
   /**

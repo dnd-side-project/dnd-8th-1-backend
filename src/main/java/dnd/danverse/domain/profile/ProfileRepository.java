@@ -1,6 +1,7 @@
 package dnd.danverse.domain.profile;
 
 import dnd.danverse.domain.profile.entity.Profile;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,6 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
   @Query("select p from Profile p where p.member.id = :memberId")
   Optional<Profile> findByMember(@Param("memberId") Long memberId);
 
+  @Query("SELECT p FROM Profile p")
+  List<Profile> findAllProfiles();
 }

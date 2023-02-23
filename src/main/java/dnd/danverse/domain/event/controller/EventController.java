@@ -20,7 +20,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -52,14 +51,13 @@ public class EventController {
    * 이벤트 필터링과, 페이징을 적용한 이벤트 조회.
    *
    * @param eventCondDto 이벤트 필터링 조건
-   * @param pageable     페이징 조건
    * @return 페이징 처리된 이벤트 목록 (모집 기간이 지난 이벤트는 제외)
    */
   @GetMapping()
   @ApiOperation(value = "이벤트 전체 조회 & 필터링 조회", notes = "이벤트 필터링과, 페이징을 적용한 이벤트 조회")
   public ResponseEntity<DataResponse<PageDto<EventInfoResponse>>> searchAllEvent(
-      EventCondDto eventCondDto, Pageable pageable) {
-    PageDto<EventInfoResponse> events = eventFilterService.searchAllEventWithCond(eventCondDto, pageable);
+      EventCondDto eventCondDto) {
+    PageDto<EventInfoResponse> events = eventFilterService.searchAllEventWithCond(eventCondDto);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 조회 성공", events), HttpStatus.OK);
   }
 

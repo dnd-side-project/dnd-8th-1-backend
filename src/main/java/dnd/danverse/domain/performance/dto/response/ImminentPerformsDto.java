@@ -30,7 +30,7 @@ public class ImminentPerformsDto {
   /**
    * 공연 시작 날짜
    */
-  @ApiModelProperty(value = "공연 시작 날짜")
+  @ApiModelProperty(value = "공연 시작 날짜 , ex) 2021-01-01")
   private final LocalDate startDate;
   /**
    * 공연 이미지
