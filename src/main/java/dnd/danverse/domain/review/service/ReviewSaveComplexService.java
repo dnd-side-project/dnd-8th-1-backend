@@ -31,10 +31,10 @@ public class ReviewSaveComplexService {
    * @param memberId 후기 작성자 Id
    * @return 후기 정보
    */
-  public ReviewInfoDto saveReview(ReviewContentDto contentDto, Long memberId) {
+  public ReviewInfoDto saveReview(ReviewContentDto contentDto, Long performId, Long memberId) {
     // member Id를 통해서 우선 프로필이 있는지 확인한다.
     Member member = memberPureService.findMemberWithProfile(memberId);
-    Performance perform = performancePureService.getPerformance(contentDto.getPerformId());
+    Performance perform = performancePureService.getPerformance(performId);
     Review review = contentDto.toReview(member, perform);
     Review savedReview = reviewPureService.saveReview(review);
 

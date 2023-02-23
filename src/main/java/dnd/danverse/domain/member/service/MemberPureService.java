@@ -27,7 +27,7 @@ public class MemberPureService {
    */
   @Transactional(readOnly = true)
   public Member findMemberWithProfile(Long memberId) {
-    log.info("member 와 profile 을 찾기 위해 memberId 인 {} 를 찾는다.", memberId);
+    log.info("member 와 profile 을 찾기 위해 fetch join 으로 memberId 인 {} 를 찾는다.", memberId);
     return memberRepository.findMemberWithProfile(memberId).orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND));
   }
 }
