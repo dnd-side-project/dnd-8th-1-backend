@@ -19,7 +19,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Parameter;
 
 /**
- * 공연 - 장르, 중간 테이블 Entity
+ * 공연 - 장르, 중간 테이블 Entity.
  */
 @Entity
 @NoArgsConstructor
@@ -60,18 +60,26 @@ public class PerformGenre extends BaseTimeEntity {
 
   /**
    * 생성자.
+   *
    * @param genre 장르
    */
   public PerformGenre(String genre) {
     this.genre = genre;
   }
 
+  public PerformGenre(String genre, Performance performance) {
+    this.genre = genre;
+    this.performance = performance;
+  }
+
   /**
    * 양방향 연관관계 편의 메소드.
-   * @param performance 외래키로 들어갈 공연 객체
+   *
+   * @param performance 외래키로 들어갈 공연 객체.
    */
   public void addPerform(Performance performance) {
     this.performance = performance;
     performance.getPerformGenres().add(this);
   }
+
 }
