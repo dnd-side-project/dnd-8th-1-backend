@@ -33,6 +33,7 @@ public enum ErrorCode {
   // 공연
   PERFORMANCE_NOT_FOUND(HttpStatus.NOT_FOUND, "PF001", "존재하지 않는 공연 정보입니다."),
 
+  PERFORMANCE_NOT_WRITER(HttpStatus.FORBIDDEN, "PF002", "작성자 외에 접근 권한이 없습니다."),
 
   // 회원 member
   MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M001", "존재하지 않는 회원입니다."),
