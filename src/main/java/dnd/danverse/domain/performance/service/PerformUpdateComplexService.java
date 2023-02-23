@@ -77,7 +77,7 @@ public class PerformUpdateComplexService {
     if (newPerformance.containGenres(updateRequest.getGenres())) {
       return new PerformDetailResponse(newPerformance);
     }
-    Set<PerformGenre> newGenres = updateRequest.stringToGenre(newPerformance);
+    Set<PerformGenre> newGenres = updateRequest.getSetOfGenres(newPerformance);
     performGenrePureService.deleteAndSaveAll(updateRequest.getId(), newGenres);
     return new PerformDetailResponse(newPerformance, newGenres);
   }
