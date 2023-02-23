@@ -69,6 +69,7 @@ public class PerformancePureService {
 
   /**
    * Performance 만 찾기 위해 사용한다.
+   *
    * @param performId Performance 의 id
    * @return Performance
    */
@@ -78,4 +79,16 @@ public class PerformancePureService {
     return performanceRepository.findById(performId)
         .orElseThrow(() -> new PerformanceNotFoundException(PERFORMANCE_NOT_FOUND));
   }
+
+  /**
+   * 공연 정보를 삭제합니다.
+   *
+   * @param performance 삭제하려는 공연 정보.
+   */
+  @Transactional
+  public void deletePerform(Performance performance) {
+    log.info("performId가 {}인 공연글을 삭제합니다.", performance.getId());
+    performanceRepository.delete(performance);
+  }
+
 }
