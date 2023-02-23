@@ -14,6 +14,7 @@ import dnd.danverse.domain.performance.entity.Performance;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
@@ -32,12 +33,12 @@ public class PerformanceRepositoryImpl implements PerformFilterCustom {
    * 공연 필터링 조건을 통해 공연을 조회 (페이징 처리)
    *
    * @param performCondDto 공연 필터링 조건
-   * @param pageable 페이징 처리
    * @return 페이징 처리된 공연 정보
    */
   @Override
-  public Page<PerformInfoResponse> searchAllPerformWithCond(PerformCondDto performCondDto,
-      Pageable pageable) {
+  public Page<PerformInfoResponse> searchAllPerformWithCond(PerformCondDto performCondDto) {
+
+    Pageable page = PageRequest.of(performCondDto.getPage(), 15);
 
     List<Performance> performContent = queryFactory
         .select(performance)
@@ -51,14 +52,14 @@ public class PerformanceRepositoryImpl implements PerformFilterCustom {
             genreIn(performCondDto.getGenre())
         )
         .orderBy(performance.createdAt.desc())
-        .offset(pageable.getOffset())
-        .limit(pageable.getPageSize())
+        .offset(page.getOffset())
+        .limit(page.getPageSize())
         .fetch();
 
     // performContent to performInfoResponse
     List<PerformInfoResponse> performInfoResponse = PerformInfoResponse.of(performContent);
 
-    return PageableExecutionUtils.getPage(performInfoResponse, pageable,
+    return PageableExecutionUtils.getPage(performInfoResponse, page,
         () -> getTotalCount(performCondDto));
   }
 

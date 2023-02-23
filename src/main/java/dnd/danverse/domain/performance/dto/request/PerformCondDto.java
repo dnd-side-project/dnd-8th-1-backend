@@ -42,4 +42,10 @@ public class PerformCondDto {
   @ApiModelProperty(value = "공연 장르")
   private String genre;
 
+  /**
+   * 공연 페이지
+   */
+  @ApiModelProperty(value = "공연 page 페이지")
+  private int page;
+
 }
