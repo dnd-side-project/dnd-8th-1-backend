@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +27,14 @@ public class PerformFilterService {
   private final PerformanceRepository performanceRepository;
 
 
-  public PageDto<PerformInfoResponse> searchAllPerformWithCond(PerformCondDto performCondDto, Pageable pageable) {
+  /**
+   * 공연 필터링 조건을 통해 공연 전체를 조회한다.
+   * @param performCondDto 공연 필터링 조건
+   * @return 페이징 처리된 공연 목록
+   */
+  public PageDto<PerformInfoResponse> searchAllPerformWithCond(PerformCondDto performCondDto) {
     Page<PerformInfoResponse> performInfoResponses = performanceRepository.searchAllPerformWithCond(
-        performCondDto, pageable);
+        performCondDto);
 
     return new PageDto<>(performInfoResponses);
   }

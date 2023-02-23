@@ -26,4 +26,10 @@ public class EventCondDto {
   @ApiModelProperty(value = "콜라보 유형 (콜라보, 쉐어)")
   private String type;
 
+  /**
+   * 페이징 처리 시 필요한 page
+   */
+  @ApiModelProperty(value = "이벤트 page 페이지")
+  private int page;
+
 }

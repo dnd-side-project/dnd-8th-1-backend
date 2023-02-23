@@ -42,7 +42,7 @@ public class ReviewController {
   @ApiImplicitParams({
       @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
           required = true, dataType = "string", paramType = "header"),
-      @ApiImplicitParam(name = "performId", value = "공연 ID", required = true, dataType = "long", paramType = "path")
+      @ApiImplicitParam(name = "performId", value = "공연 고유 ID", required = true, dataType = "long", paramType = "path")
   })
   public ResponseEntity<DataResponse<ReviewInfoDto>> createReview(
       @PathVariable("performId") Long performId, @RequestBody ReviewContentDto contentDto,

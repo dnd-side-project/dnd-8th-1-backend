@@ -18,7 +18,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -62,16 +61,15 @@ public class PerformanceController {
    * 공연 필터링과, 페이징을 적용한 공연 조회.
    *
    * @param performCondDto 공연 필터링 조건
-   * @param pageable 페이징 조건
    * @return 페이징 처리된 공연 목록
    */
   @GetMapping()
   @ApiOperation(value = "공연 전체 조회", notes = "공연 필터링(지역,장르)와 날짜(년,월,일별), 페이징을 적용한 공연 조회.")
   public ResponseEntity<DataResponse<PageDto<PerformInfoResponse>>> searchPerformanceWithCond(
-      PerformCondDto performCondDto, Pageable pageable) {
+      PerformCondDto performCondDto) {
 
     PageDto<PerformInfoResponse> performInfoResponsePageDto = performFilterService.searchAllPerformWithCond(
-        performCondDto, pageable);
+        performCondDto);
 
     return new ResponseEntity<>(
         DataResponse.of(HttpStatus.OK, "공연 조회 성공", performInfoResponsePageDto), HttpStatus.OK);

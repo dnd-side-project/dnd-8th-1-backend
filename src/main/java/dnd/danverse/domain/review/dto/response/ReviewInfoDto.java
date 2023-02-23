@@ -69,8 +69,6 @@ public class ReviewInfoDto {
     }
   }
 
-
-
   /**
    * ReviewInfoDto 를 생성한다.
    * member 가 프로필을 등록한 경우, 프로필 정보를 담는다.
