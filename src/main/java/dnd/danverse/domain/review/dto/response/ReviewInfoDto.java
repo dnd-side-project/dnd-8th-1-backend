@@ -26,20 +26,6 @@ public class ReviewInfoDto {
 
 
   /**
-   * 후기 작성자 id 값
-   */
-  @ApiModelProperty(value = "후기 작성자 고유 Id 값")
-  private final Long writerId;
-
-
-  /**
-   * 후기 작성자 이름
-   */
-  @ApiModelProperty(value = "후기 작성자 이름")
-  private final String writerName;
-
-
-  /**
    * 후기 작성자가 프로필을 등록한지 여부
    */
   @ApiModelProperty(value = "후기 작성자가 프로필을 등록한지 여부")
@@ -53,6 +39,39 @@ public class ReviewInfoDto {
   private final LocalDateTime createdDate;
 
   /**
+   * 후기 작성자
+   */
+  @ApiModelProperty(value = "후기 작성자")
+  private final Writer writer;
+
+
+  /**
+   * 후기 작성자 정보를 담는다.
+   */
+  static class Writer {
+
+    /**
+     * 작성자 고유 ID
+     * 상황에 따라서 member 의 ID 또는 profile 의 ID 가 담긴다.
+     */
+    @ApiModelProperty(value = "작성자 고유 ID")
+    private final Long id;
+
+    /**
+     * 작성자 이름
+     * 상황에 따라서 member 의 이름 또는 profile 의 이름이 담긴다.
+     */
+    @ApiModelProperty(value = "작성자 이름")
+    private final String name;
+
+    public Writer(Long id, String name) {
+      this.id = id;
+      this.name = name;
+    }
+  }
+
+
+  /**
    * ReviewInfoDto 를 생성한다.
    * member 가 프로필을 등록한 경우, 프로필 정보를 담는다.
    * member 가 프로필을 등록하지 않은 경우, member 의 이름을 담는다.
@@ -64,12 +83,10 @@ public class ReviewInfoDto {
     this.content = review.getContent();
 
     if (hasProfile(member)) {
-      this.writerId = member.getProfile().getId();
-      this.writerName = member.getProfile().getProfileName();
+      this.writer = new Writer(member.getProfile().getId(), member.getProfile().getProfileName());
       this.hasProfile = true;
     } else {
-      this.writerId = review.getMember().getId();
-      this.writerName = review.getMember().getName();
+      this.writer = new Writer(member.getId(), member.getName());
       this.hasProfile = false;
     }
 
