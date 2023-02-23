@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -53,6 +54,7 @@ public class PerformUpdateRequestDto {
    * 공연 장르 리스트(최대 3개까지).
    */
   @ApiModelProperty(value = "공연 장르 리스트")
+  @Size(max = 3, min = 1, message = "장르는 최대 3개, 최소 1개까지 선택 가능합니다.")
   private Set<String> genres;
 
   /**
