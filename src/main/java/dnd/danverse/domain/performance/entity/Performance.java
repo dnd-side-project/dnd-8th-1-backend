@@ -173,7 +173,7 @@ public class Performance extends BaseTimeEntity {
    * @param newGenres 새로운 장르 Set<String>
    * @return 모두 포함한다면 true, 하나라도 중복되지 않는 값이 있다면 false.
    */
-  public boolean isSame(Set<String> newGenres) {
+  public boolean containGenres(Set<String> newGenres) {
     return toStringGenre().containsAll(newGenres);
   }
 
