@@ -24,6 +24,7 @@ public class ReviewInfoDto {
   @ApiModelProperty(value = "후기 내용")
   private final String content;
 
+
   /**
    * 후기 작성자가 프로필을 등록한지 여부
    */
@@ -68,7 +69,6 @@ public class ReviewInfoDto {
       this.name = name;
     }
   }
-
 
 
   /**
