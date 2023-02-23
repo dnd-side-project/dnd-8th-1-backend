@@ -5,21 +5,19 @@ import dnd.danverse.domain.event.dto.response.EventWithProfileDto;
 import dnd.danverse.domain.event.entitiy.Event;
 
 import dnd.danverse.domain.validation.WriterValidationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
  * Event 글을 수정하기 위한 복합 Service.
  */
 @Service
+@RequiredArgsConstructor
 public class EventUpdateService {
 
   private final EventPureService eventPureService;
   private final WriterValidationService<Event> validateEventWriter;
 
-  public EventUpdateService(EventPureService eventPureService, WriterValidationService<Event> validateEventWriter) {
-    this.eventPureService = eventPureService;
-    this.validateEventWriter = validateEventWriter;
-  }
 
   /**
    * 1. 이벤트 작성자가 맞는지 검증한다.

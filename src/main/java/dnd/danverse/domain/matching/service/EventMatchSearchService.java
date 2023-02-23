@@ -6,21 +6,18 @@ import dnd.danverse.domain.matching.entity.EventMatch;
 import dnd.danverse.domain.validation.WriterValidationService;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
  * Event Match 지원자를 찾기 위한 복합 Service.
  */
 @Service
+@RequiredArgsConstructor
 public class EventMatchSearchService {
 
   private final EventMatchPureService eventMatchPureService;
   private final WriterValidationService<Event> validateEventWriter;
-
-  public EventMatchSearchService(EventMatchPureService eventMatchPureService, WriterValidationService<Event> validateEventWriter) {
-    this.eventMatchPureService = eventMatchPureService;
-    this.validateEventWriter = validateEventWriter;
-  }
 
 
   /**
