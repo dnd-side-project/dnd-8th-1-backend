@@ -33,6 +33,8 @@ public class ReviewsSearchComplexService {
    * @return ReviewInfoWithPerformDto 리스트
    */
   public List<ReviewInfoWithPerformDto> findRecentReviews() {
-    return reviewPureService.findRecentReviews().subList(0, 6);
+    List<ReviewInfoWithPerformDto> recentReviews = reviewPureService.findRecentReviews();
+    recentReviews.subList(0, Math.min(6, recentReviews.size()));
+    return recentReviews;
   }
 }
