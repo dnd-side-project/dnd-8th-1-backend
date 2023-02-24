@@ -1,6 +1,7 @@
 package dnd.danverse.domain.review.service;
 
 import dnd.danverse.domain.review.dto.response.ReviewInfoDto;
+import dnd.danverse.domain.review.dto.response.ReviewInfoWithPerformDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,5 +25,14 @@ public class ReviewsSearchComplexService {
    */
   public List<ReviewInfoDto> findAllReviews(Long performId) {
     return reviewPureService.findAllReviewsWithWriter(performId);
+  }
+
+  /**
+   * 최근 리뷰를 조회한다.
+   * 메인 화면에서 보여질 공연 정보 및 후기 내용을 6개 조회한다.
+   * @return ReviewInfoWithPerformDto 리스트
+   */
+  public List<ReviewInfoWithPerformDto> findRecentReviews() {
+    return reviewPureService.findRecentReviews().subList(0, 6);
   }
 }
