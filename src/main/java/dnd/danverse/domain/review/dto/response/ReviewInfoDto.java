@@ -47,6 +47,7 @@ public class ReviewInfoDto {
   /**
    * 후기 작성자 정보를 담는다.
    */
+  @Getter
   static class Writer {
 
     /**
@@ -98,5 +99,38 @@ public class ReviewInfoDto {
    */
   private boolean hasProfile(Member member) {
     return member.getProfile() != null;
+  }
+
+
+  /**
+   * 해당 생성자는 공연 후기 조회 시, 응답에 필요한 데이터만을 조회하기 위해 만들었다.
+   * @param reviewId 후기 ID
+   * @param content 후기 내용
+   * @param createdDate 후기 작성 시간
+   * @param memberId 후기 작성자 ID
+   * @param memberName 후기 작성자 이름
+   * @param profileId 후기 작성자 프로필 ID
+   * @param profileName 후기 작성자 프로필 이름
+   */
+  public ReviewInfoDto(Long reviewId, String content, LocalDateTime createdDate,
+      Long memberId, String memberName, Long profileId, String profileName) {
+    this.reviewId = reviewId;
+    this.content = content;
+    this.createdDate = createdDate;
+    if (hasProfile(profileId)) {
+      this.writer = new Writer(profileId, profileName);
+    } else {
+      this.writer = new Writer(memberId, memberName);
+    }
+    this.hasProfile = profileId != null;
+  }
+
+  /**
+   * profileId 가 null 이 아닌지 여부를 반환한다.
+   * @param profileId 후기 작성자 프로필 ID
+   * @return profileId 가 null 이 아닌지 여부
+   */
+  private static boolean hasProfile(Long profileId) {
+    return profileId != null;
   }
 }
