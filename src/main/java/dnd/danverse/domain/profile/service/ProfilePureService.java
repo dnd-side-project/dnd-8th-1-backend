@@ -3,7 +3,7 @@ package dnd.danverse.domain.profile.service;
 import static dnd.danverse.global.exception.ErrorCode.PROFILE_NOT_FOUND;
 
 import dnd.danverse.domain.profile.exception.NoProfileException;
-import dnd.danverse.domain.profile.ProfileRepository;
+import dnd.danverse.domain.profile.repository.ProfileRepository;
 import dnd.danverse.domain.profile.entity.Profile;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

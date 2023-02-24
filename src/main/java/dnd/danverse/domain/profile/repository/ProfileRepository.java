@@ -1,4 +1,4 @@
-package dnd.danverse.domain.profile;
+package dnd.danverse.domain.profile.repository;
 
 import dnd.danverse.domain.profile.entity.Profile;
 import java.util.List;
@@ -19,4 +19,5 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
   @Query("SELECT p FROM Profile p")
   List<Profile> findAllProfiles();
+
 }

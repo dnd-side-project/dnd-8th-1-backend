@@ -7,6 +7,7 @@ import dnd.danverse.domain.performance.service.PerformancePureService;
 import dnd.danverse.domain.review.dto.request.ReviewContentDto;
 import dnd.danverse.domain.review.dto.response.ReviewInfoDto;
 import dnd.danverse.domain.review.entity.Review;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,14 +32,13 @@ public class ReviewSaveComplexService {
    * @param memberId 후기 작성자 Id
    * @return 후기 정보
    */
-  public ReviewInfoDto saveReview(ReviewContentDto contentDto, Long performId, Long memberId) {
+  public List<ReviewInfoDto> saveReview(ReviewContentDto contentDto, Long performId, Long memberId) {
     // member Id를 통해서 우선 프로필이 있는지 확인한다.
     Member member = memberPureService.findMemberWithProfile(memberId);
     Performance perform = performancePureService.getPerformance(performId);
     Review review = contentDto.toReview(member, perform);
-    Review savedReview = reviewPureService.saveReview(review);
+    reviewPureService.saveReview(review);
 
-    // 프로필이 있으면 응답 이름에 프로필 이름을 넣어서 리뷰를 응답한다.
-    return new ReviewInfoDto(savedReview, member);
+    return reviewPureService.findAllReviewsWithWriter(perform.getId());
   }
 }
