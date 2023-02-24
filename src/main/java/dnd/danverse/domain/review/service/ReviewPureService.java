@@ -1,6 +1,7 @@
 package dnd.danverse.domain.review.service;
 
 import dnd.danverse.domain.review.dto.response.ReviewInfoDto;
+import dnd.danverse.domain.review.dto.response.ReviewInfoWithPerformDto;
 import dnd.danverse.domain.review.entity.Review;
 import dnd.danverse.domain.review.repository.ReviewRepository;
 import java.util.List;
@@ -43,5 +44,15 @@ public class ReviewPureService {
   public List<ReviewInfoDto> findAllReviewsWithWriter(Long performId) {
     log.info("dto 로 응답, Review 와 Member 를  join , Member 와 Profile left  join 조회한다. 공연 ID : {} ", performId);
     return reviewRepository.findAllReviewsWithWriter(performId);
+  }
+
+  /**
+   * 최근 리뷰를 조회한다.
+   * Entity 를 그대로 응답하는 것이 아닌, 별도의 Dto 를 만들어, 응답에 필요한 데이터만을 조회하도록 했다.
+   * @return 최근 리뷰 리스트
+   */
+  @Transactional(readOnly = true)
+  public List<ReviewInfoWithPerformDto> findRecentReviews() {
+    return reviewRepository.findRecentReviews();
   }
 }

@@ -3,6 +3,7 @@ package dnd.danverse.domain.review.controller;
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.review.dto.request.ReviewContentDto;
 import dnd.danverse.domain.review.dto.response.ReviewInfoDto;
+import dnd.danverse.domain.review.dto.response.ReviewInfoWithPerformDto;
 import dnd.danverse.domain.review.service.ReviewSaveComplexService;
 import dnd.danverse.domain.review.service.ReviewsSearchComplexService;
 import dnd.danverse.global.response.DataResponse;
@@ -57,12 +58,29 @@ public class ReviewController {
         HttpStatus.CREATED);
   }
 
+  /**
+   * 공연에 대한 모든 후기를 조회한다.
+   * @param performId 공연 고유 ID
+   * @return 후기 정보
+   */
   @GetMapping("/{performId}/reviews")
   @ApiOperation(value = "공연에 대한 모든 후기를 조회한다.", notes = "공연에 대한 모든 후기를 조회한다.")
   @ApiImplicitParam(name = "performId", value = "공연 고유 ID", required = true, dataType = "long", paramType = "path")
   public ResponseEntity<DataResponse<List<ReviewInfoDto>>> findAllReviews(@PathVariable("performId") Long performId) {
     List<ReviewInfoDto> allReviews = reviewsSearchComplexService.findAllReviews(performId);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "리뷰 조회에 성공했습니다.", allReviews),
+        HttpStatus.OK);
+  }
+
+  /**
+   * 최근 등록된 공연 후기를 6개 조회한다.
+   * @return 후기 정보
+   */
+  @GetMapping("/recent/reviews")
+  @ApiOperation(value = "최근 등록된 공연 후기를 6개 조회한다.", notes = "최근 등록된 공연 후기를 6개 조회한다.")
+  public ResponseEntity<DataResponse<List<ReviewInfoWithPerformDto>>> findRecentReviews() {
+    List<ReviewInfoWithPerformDto> recentReviews = reviewsSearchComplexService.findRecentReviews();
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "최근 리뷰 조회에 성공했습니다.", recentReviews),
         HttpStatus.OK);
   }
 
