@@ -9,9 +9,9 @@ import dnd.danverse.domain.event.exception.EventNotAvailableException;
 import dnd.danverse.domain.member.entity.Member;
 import dnd.danverse.domain.profilegenre.entity.ProfileGenre;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -74,7 +74,7 @@ public class Profile extends BaseTimeEntity {
    * CascadeType.PERSIST 를 하지 않고, 추후 saveAll()를 통해서 한번의 네트워크 통신으로 처리한다.
    */
   @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<ProfileGenre> profileGenres = new ArrayList<>();
+  private Set<ProfileGenre> profileGenres = new HashSet<>();
 
   /**
    * 사용자 프로필의 종류. 팀인지 개인인지 구분한다.
@@ -128,7 +128,7 @@ public class Profile extends BaseTimeEntity {
 
 
   @Builder
-  public Profile(Member member, List<ProfileGenre> profileGenres, TeamType profileType, String profileName,
+  public Profile(Member member, Set<ProfileGenre> profileGenres, TeamType profileType, String profileName,
       Image profileImg, String location, LocalDate careerStartDay, String description,
       OpenChat openChatUrl, Portfolio portfolioUrl) {
     this.member = member;
