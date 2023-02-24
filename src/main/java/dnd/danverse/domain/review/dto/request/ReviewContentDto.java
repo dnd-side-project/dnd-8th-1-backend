@@ -18,7 +18,7 @@ public class ReviewContentDto {
    * 리뷰 내용
    */
   @ApiModelProperty(value = "후기 내용")
-  private String content;
+  private String review;
 
 
   /**
@@ -31,7 +31,7 @@ public class ReviewContentDto {
     return Review.builder()
         .member(member)
         .performance(performance)
-        .content(content)
+        .content(review)
         .build();
   }
 }
