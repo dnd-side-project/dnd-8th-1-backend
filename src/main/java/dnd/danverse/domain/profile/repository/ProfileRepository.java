@@ -20,4 +20,7 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
   @Query("SELECT p FROM Profile p")
   List<Profile> findAllProfiles();
 
+  @Query("select p from Profile p join fetch p.profileGenres where p.id = :profileId")
+  Optional<Profile> findProfileWithGenreById(@Param("profileId") Long profileId);
+
 }
