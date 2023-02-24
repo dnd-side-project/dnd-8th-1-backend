@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 /**
- * 프로필 컨트롤러
+ * 프로필 컨트롤러.
  */
 @Controller
 @RequestMapping("/api/v1/profiles")
@@ -25,13 +25,16 @@ public class ProfileController {
 
   private final ProfileSearchService profileSearchService;
 
-
-
+  /**
+   * 서비스 사용자는 실제 사용자의 프로필 6개를 랜덤으로 조회할 수 있습니다.
+   *
+   * @return 랜덤 프로필 6개를 반환한다.
+   */
   @GetMapping("/home")
   @ApiOperation(value = "프로필 6개 랜덤 조회", notes = "프로필 6개 랜덤 조회")
   public ResponseEntity<DataResponse<List<ProfileHomeDto>>> searchProfileForHome() {
     List<ProfileHomeDto> profileHomes = profileSearchService.searchProfileForHome();
-    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "프로필 6개 랜덤 조회 성공" ,profileHomes), HttpStatus.OK);
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "프로필 6개 랜덤 조회 성공", profileHomes), HttpStatus.OK);
   }
 
 
