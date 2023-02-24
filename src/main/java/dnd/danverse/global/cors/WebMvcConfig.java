@@ -16,7 +16,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
   public void addCorsMappings(CorsRegistry registry) {
     registry
         .addMapping("/**")
-        .allowedOrigins("http://localhost:3000", "http://localhost:6006", "https://danverse-git-*-allsilver.vercel.app")
+        .allowedOrigins("http://localhost:3000", "http://localhost:6006",
+            "https://danverse.vercel.app", "https://danverse-git-*-allsilver.vercel.app")
         .allowedMethods(
             HttpMethod.GET.name(),
             HttpMethod.POST.name(),
