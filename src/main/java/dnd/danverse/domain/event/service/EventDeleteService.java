@@ -1,7 +1,9 @@
 package dnd.danverse.domain.event.service;
 
 import dnd.danverse.domain.event.entitiy.Event;
-import dnd.danverse.domain.matching.service.EventWriterValidationService;
+
+import dnd.danverse.domain.validation.WriterValidationService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class EventDeleteService {
 
   private final EventPureService eventPureService;
-  private final EventWriterValidationService eventWriterValidationService;
+  private final WriterValidationService<Event> validateEventWriter;
 
   /**
    * 작성자가 이벤트를 삭제할 수 있습니다.
@@ -22,8 +24,7 @@ public class EventDeleteService {
    * @param memberId 삭제 요청 보낸 멤버 Id.
    */
   public void deleteEvent(Long eventId, Long memberId) {
-    eventWriterValidationService.validateEventWriter(eventId, memberId);
-    Event event = eventPureService.checkIfDeleted(eventId);
+    Event event = validateEventWriter.validateWriter(eventId, memberId);
     eventPureService.deleteEvent(event);
   }
 

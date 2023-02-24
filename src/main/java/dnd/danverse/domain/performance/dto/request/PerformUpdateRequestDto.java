@@ -80,7 +80,7 @@ public class PerformUpdateRequestDto {
    * @param performance 장르를 바꾸려고 하는 공연 객체.
    * @return Set<PerformGenre>
    */
-  public Set<PerformGenre> stringToGenre(Performance performance) {
+  public Set<PerformGenre> getSetOfGenres(Performance performance) {
     return this.getGenres().stream()
         .map(genre -> new PerformGenre(genre, performance))
         .collect(Collectors.toSet());

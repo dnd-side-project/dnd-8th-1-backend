@@ -73,12 +73,13 @@ public class EventMatchPureService {
   /**
    * 이벤트 신청자의 프로필을 가져온다.
    *
-   * @param eventId 신청자 리스트를 가진 이벤트 글 Id.
+   * @param event 이벤트
    * @return List<EventMatch> 이벤트 매치 객체 리스트
    */
   @Transactional(readOnly = true)
-  public List<EventMatch> getApplicants(Long eventId) {
-    return eventMatchRepository.findByEventId(eventId);
+  public List<EventMatch> getApplicants(Event event) {
+    log.info("EventMatch 를 가져오면서 profileGuest 와 fetch join, eventId: {}", event.getId());
+    return eventMatchRepository.findByEvent(event);
   }
 
   /**

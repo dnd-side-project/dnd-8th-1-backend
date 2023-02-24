@@ -1,7 +1,9 @@
 package dnd.danverse.domain.matching.service;
 
+import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.matching.dto.response.ApplicantsResponseDto;
 import dnd.danverse.domain.matching.entity.EventMatch;
+import dnd.danverse.domain.validation.WriterValidationService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class EventMatchSearchService {
 
   private final EventMatchPureService eventMatchPureService;
-  private final EventWriterValidationService eventWriterValidationService;
+  private final WriterValidationService<Event> validateEventWriter;
 
 
   /**
@@ -26,8 +28,8 @@ public class EventMatchSearchService {
    * @param memberId 신청자 리스트를 조회하려고 하는 사용자 Id.
    */
   public List<ApplicantsResponseDto> getApplicants(Long eventId, Long memberId) {
-    eventWriterValidationService.validateEventWriter(eventId, memberId);
-    List<EventMatch> eventMatches = eventMatchPureService.getApplicants(eventId);
+    Event event = validateEventWriter.validateWriter(eventId, memberId);
+    List<EventMatch> eventMatches = eventMatchPureService.getApplicants(event);
     return eventMatches.stream().map(ApplicantsResponseDto::new).collect(Collectors.toList());
   }
 

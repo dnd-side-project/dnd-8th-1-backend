@@ -89,24 +89,33 @@ public class EventPureService {
   /**
    * 지금 시간으로 마감 기한을 업데이트 한다.
    *
-   * @param eventId 이벤트 고유 ID
+   * @param event 마감 기한 업데이트 하려는 이벤트
    */
   @Transactional
-  public void updateDeadline(Long eventId) {
-    Event event = getEvent(eventId);
+  public void updateDeadline(Event event) {
+    log.info("이벤트 마감 기한을 업데이트 합니다. eventId: {}", event.getId());
     event.updateDeadline(LocalDateTime.now());
   }
 
+  /**
+   * 이벤트 정보를 업데이트 한다.
+   * @param event 이벤트
+   * @param requestDto 이벤트 정보 업데이트 요청 DTO
+   */
   @Transactional
-  public Event updateEventInfo(Long eventId, EventUpdateRequestDto requestDto) {
+  public void updateEventInfo(Event event, EventUpdateRequestDto requestDto) {
     // 이미 Event 는 영속화 되어 있기 때문에, 쿼리가 나가지 X
-    Event event = getEvent(eventId);
+    log.info("이벤트 정보를 업데이트 합니다. eventId: {}", event.getId());
     event.updateEventInfo(requestDto);
-    return event;
   }
 
+  /**
+   * 이벤트를 삭제한다.
+   * @param event 삭제하고자 하는 이벤트
+   */
   @Transactional
   public void deleteEvent(Event event) {
+    log.info("이벤트를 삭제합니다. eventId: {}", event.getId());
     eventRepository.delete(event);
   }
 }
