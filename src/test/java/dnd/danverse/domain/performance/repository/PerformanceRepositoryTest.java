@@ -19,7 +19,9 @@ import dnd.danverse.domain.profilegenre.entity.ProfileGenre;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,9 +45,9 @@ class PerformanceRepositoryTest {
   private PerformGenreRepository performGenreRepository;
 
   private List<Member> members;
-  private List<ProfileGenre> profileGenres;
+  private Set<ProfileGenre> profileGenres;
   private List<Profile> profiles;
-  private List<PerformGenre> performGenres;
+  private Set<PerformGenre> performGenres;
   private List<Performance> performances;
   private LocalDate localDate;
   private LocalTime localTime;
@@ -93,8 +95,8 @@ class PerformanceRepositoryTest {
    * @param profileGenres 저장할 ProfileGenre List
    * @return 저장된 ProfileGenre List
    */
-  private List<ProfileGenre> saveProfileGenres(List<ProfileGenre> profileGenres) {
-    return profileGenreRepository.saveAll(profileGenres);
+  private Set<ProfileGenre> saveProfileGenres(Set<ProfileGenre> profileGenres) {
+    return new HashSet<>(profileGenreRepository.saveAll(profileGenres));
   }
 
   /**
@@ -111,8 +113,8 @@ class PerformanceRepositoryTest {
    * @param performGenres 저장할 PerformGenre List
    * @return 저장된 PerformGenre List
    */
-  private List<PerformGenre> savePerformGenres(List<PerformGenre> performGenres) {
-    return performGenreRepository.saveAll(performGenres);
+  private Set<PerformGenre> savePerformGenres(Set<PerformGenre> performGenres) {
+    return new HashSet<>(performGenreRepository.saveAll(performGenres));
   }
 
   /**
@@ -136,7 +138,7 @@ class PerformanceRepositoryTest {
    * @return 객체로 생성된 Performance List
    */
   private List<Performance> createPerformances(LocalDate localDate, LocalTime localTime,
-      List<Profile> profiles, List<PerformGenre> performGenres) {
+      List<Profile> profiles, Set<PerformGenre> performGenres) {
 
     return profiles.stream()
         .flatMap(profile -> performGenres.stream()
@@ -153,10 +155,10 @@ class PerformanceRepositoryTest {
    * @param count 생성할 PerformGenre 객체의 개수
    * @return 객체로 생성된 PerformGenre List
    */
-  private List<PerformGenre> createPerformGenres(int count) {
+  private Set<PerformGenre> createPerformGenres(int count) {
     return IntStream.range(0, count)
         .mapToObj(i -> new PerformGenre("테스트공연장르" + i))
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 
 
@@ -168,7 +170,7 @@ class PerformanceRepositoryTest {
    * @param profileGenres 객체로 생성된 ProfileGenre List
    * @return 객체로 생성된 Profile List
    */
-  private List<Profile> createProfiles(List<Member> members, List<ProfileGenre> profileGenres) {
+  private List<Profile> createProfiles(List<Member> members, Set<ProfileGenre> profileGenres) {
     return members.stream()
         .map(member -> new Profile(member,
                 profileGenres,
@@ -192,10 +194,10 @@ class PerformanceRepositoryTest {
    * @param count 생성할 ProfileGenre 객체의 개수
    * @return 객체로 생성된 ProfileGenre List
    */
-  private List<ProfileGenre> createProfileGenres(int count) {
+  private Set<ProfileGenre> createProfileGenres(int count) {
     return IntStream.range(0, count)
         .mapToObj(i -> new ProfileGenre("테스트프로필장르" + i))
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 
   /**
