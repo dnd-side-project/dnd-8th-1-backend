@@ -10,7 +10,7 @@ import dnd.danverse.domain.oauth.info.OAuth2Provider;
 import dnd.danverse.domain.performance.entity.Performance;
 import dnd.danverse.domain.performgenre.repository.PerformGenreRepository;
 import dnd.danverse.domain.performgenre.entity.PerformGenre;
-import dnd.danverse.domain.profile.ProfileRepository;
+import dnd.danverse.domain.profile.repository.ProfileRepository;
 import dnd.danverse.domain.profile.entity.OpenChat;
 import dnd.danverse.domain.profile.entity.Portfolio;
 import dnd.danverse.domain.profile.entity.Profile;
