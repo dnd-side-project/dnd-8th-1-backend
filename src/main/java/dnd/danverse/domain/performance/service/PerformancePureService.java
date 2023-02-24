@@ -43,7 +43,7 @@ public class PerformancePureService {
 
   @Transactional(readOnly = true)
   public Performance getPerformanceDetail(Long performId) {
-    log.info("Performance 와 주최자 를 찾기 위해 performId 인 {} 를 찾는다.", performId);
+    log.info("Performance 와 주최자(profile) 를 찾기 위해 performId 인 {} 를 찾는다.", performId);
     return performanceRepository.findPerformanceWithProfile(performId)
         .orElseThrow(() -> new PerformanceNotFoundException(PERFORMANCE_NOT_FOUND));
   }
