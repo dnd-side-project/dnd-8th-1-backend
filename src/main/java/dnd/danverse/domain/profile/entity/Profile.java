@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -153,6 +154,17 @@ public class Profile extends BaseTimeEntity {
     if (this.profileType != recruitType) {
       throw new EventNotAvailableException(EVENT_TYPE_NOT_MATCH);
     }
+  }
+
+  /**
+   * 프로필 장르를 String 타입으로 변환한다.
+   *
+   * @return String 타입의 Set 반환
+   */
+  public Set<String> toStringProfileGenre() {
+    return this.profileGenres.stream()
+        .map(ProfileGenre::getGenre)
+        .collect(Collectors.toSet());
   }
 
   public boolean isNotSame(Profile stranger) {
