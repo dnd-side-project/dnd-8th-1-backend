@@ -41,6 +41,9 @@ public enum ErrorCode {
   // 프로필
   PROFILE_NOT_FOUND(HttpStatus.BAD_REQUEST, "P001", "프로필 등록이 필요한 서비스입니다."),
 
+  // 후기
+  REVIEW_NOT_WRITER(HttpStatus.FORBIDDEN, "R001", "작성자 외에 접근 권한이 없습니다."),
+
   // Enum Type
   TYPE_NOT_FOUND(HttpStatus.BAD_REQUEST, "T001", "해당 타입은 존재하지 않습니다."),
 
