@@ -3,7 +3,7 @@ package dnd.danverse.domain.profile.service;
 import dnd.danverse.domain.member.entity.Member;
 import dnd.danverse.domain.member.service.MemberPureService;
 import dnd.danverse.domain.profile.dto.request.ProfileSaveRequestDto;
-import dnd.danverse.domain.profile.dto.response.ProfileWithGenreDto;
+import dnd.danverse.domain.profile.dto.response.ProfileDetailResponseDto;
 import dnd.danverse.domain.profile.entity.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,11 +26,11 @@ public class ProfileSaveService {
    * @param memberId 프로필 등록 요청하는 멤버 Id.
    * @return 프로필 응답 Dto.
    */
-  public ProfileWithGenreDto saveProfile(ProfileSaveRequestDto request, Long memberId) {
+  public ProfileDetailResponseDto saveProfile(ProfileSaveRequestDto request, Long memberId) {
     Member member = memberPureService.findMemberWithProfile(memberId);
     profilePureService.checkIfHasProfile(memberId);
     Profile profile = profilePureService.saveProfile(request.toEntity(member));
-    return new ProfileWithGenreDto(profile);
+    return new ProfileDetailResponseDto(profile);
   }
 
 }

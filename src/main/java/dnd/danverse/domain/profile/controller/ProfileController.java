@@ -2,6 +2,7 @@ package dnd.danverse.domain.profile.controller;
 
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.profile.dto.request.ProfileSaveRequestDto;
+import dnd.danverse.domain.profile.dto.response.ProfileDetailResponseDto;
 import dnd.danverse.domain.profile.dto.response.ProfileHomeDto;
 import dnd.danverse.domain.profile.dto.response.ProfileWithGenreDto;
 import dnd.danverse.domain.profile.service.ProfileDetailService;
@@ -66,9 +67,9 @@ public class ProfileController {
   @ApiOperation(value = "프로필 등록", notes = "로그인한 사용자에 한하여 프로필 등록")
   @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
       required = true, dataType = "string", paramType = "header")
-  public ResponseEntity<DataResponse<ProfileWithGenreDto>> saveProfile(@RequestBody ProfileSaveRequestDto request,
+  public ResponseEntity<DataResponse<ProfileDetailResponseDto>> saveProfile(@RequestBody ProfileSaveRequestDto request,
       @AuthenticationPrincipal SessionUser sessionUser) {
-    ProfileWithGenreDto profileResponse = profileSaveService.saveProfile(request, sessionUser.getId());
+    ProfileDetailResponseDto profileResponse = profileSaveService.saveProfile(request, sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED, "프로필 등록 성공", profileResponse), HttpStatus.CREATED);
   }
 
