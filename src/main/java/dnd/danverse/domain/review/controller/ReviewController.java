@@ -95,20 +95,15 @@ public class ReviewController {
   /**
    * 후기를 수정한다.
    *
-   * @param performId 공연 고유 ID
    * @param updateDto 수정할 내용
    * @param user      API 요청자
    * @return 수정된 후기 정보
    */
-  @PatchMapping("/{performId}/reviews")
+  @PatchMapping("/reviews")
   @ApiOperation(value = "후기를 수정한다.", notes = "후기를 수정한다. 응답으로 수정된 후기 데이터 1건을 응답한다.")
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "performId", value = "공연 고유 ID", required = true, dataType = "long", paramType = "path"),
-      @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
-          required = true, dataType = "string", paramType = "header")
-  })
-  public ResponseEntity<DataResponse<ReviewInfoDto>> updateReview(
-      @PathVariable("performId") Long performId, @RequestBody ReviewUpdateDto updateDto,
+  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+      required = true, dataType = "string", paramType = "header")
+  public ResponseEntity<DataResponse<ReviewInfoDto>> updateReview(@RequestBody ReviewUpdateDto updateDto,
       @AuthenticationPrincipal SessionUser user) {
     ReviewInfoDto reviewInfoDto = reviewUpdateComplexService.updateReview(updateDto, user.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "리뷰가 성공적으로 수정되었습니다.", reviewInfoDto),
