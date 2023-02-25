@@ -3,6 +3,7 @@ package dnd.danverse.domain.member.entity;
 import dnd.danverse.domain.common.BaseTimeEntity;
 import dnd.danverse.domain.oauth.info.OAuth2Provider;
 import dnd.danverse.domain.profile.entity.Profile;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -120,10 +121,13 @@ public class Member extends BaseTimeEntity {
   }
 
 
-
-
-
-
-
+  /**
+   * 사용자가 같은지 비교한다.
+   * @param stranger 비교할 사용자
+   * @return 같으면 true, 다르면 false
+   */
+  public boolean isNotSame(Long stranger) {
+    return !Objects.equals(this.id, stranger);
+  }
 }
 

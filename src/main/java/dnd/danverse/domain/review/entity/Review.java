@@ -73,4 +73,14 @@ public class Review extends BaseTimeEntity {
     this.content = content;
   }
 
+  /**
+   * 리뷰 수정
+   * @param reviewContent 수정할 리뷰 내용
+   * @return 수정된 리뷰
+   */
+  public Review updateReview(String reviewContent) {
+    this.content = reviewContent;
+    return this;
+  }
+
 }

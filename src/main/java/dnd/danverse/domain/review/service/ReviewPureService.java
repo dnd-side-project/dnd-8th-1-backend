@@ -55,4 +55,28 @@ public class ReviewPureService {
   public List<ReviewInfoWithPerformDto> findRecentReviews() {
     return reviewRepository.findRecentReviews();
   }
+
+  /**
+   * 공연에 대한 리뷰를 조회한다
+   * Review, Member, Profile 을 fetch join 한다.
+   * @param reviewId 리뷰 ID
+   * @return 리뷰
+   */
+  @Transactional(readOnly = true)
+  public Review findReviewWithMemberById(Long reviewId) {
+    log.info("Review 와 Member 와 Profile 을 fetch join 조회한다. 리뷰 ID : {} ", reviewId);
+    return reviewRepository.findReviewWithMemberById(reviewId).orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다. reviewId = " + reviewId));
+  }
+
+  /**
+   * Review 를 수정 한다.
+   * @param review 수정하고자 하는 Review
+   * @param reviewContent 수정하고자 하는 Review 내용
+   * @return 수정된 Review
+   */
+  @Transactional
+  public Review updateReview(Review review, String reviewContent) {
+    log.info("Review 를 수정한다. 내용 : {} ", reviewContent);
+    return review.updateReview(reviewContent);
+  }
 }
