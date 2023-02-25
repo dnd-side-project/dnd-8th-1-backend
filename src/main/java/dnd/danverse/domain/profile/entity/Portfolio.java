@@ -1,6 +1,5 @@
 package dnd.danverse.domain.profile.entity;
 
-
 import javax.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +16,10 @@ public class Portfolio {
   private String youtubeUrl;
   private String instagramUrl;
   private String twitterUrl;
-
+  
   public Portfolio(String youtubeUrl, String instagramUrl, String twitterUrl) {
     this.youtubeUrl = youtubeUrl;
     this.instagramUrl = instagramUrl;
     this.twitterUrl = twitterUrl;
   }
-
 }

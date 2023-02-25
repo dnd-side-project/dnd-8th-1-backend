@@ -173,7 +173,6 @@ class PerformanceRepositoryTest {
   private List<Profile> createProfiles(List<Member> members, Set<ProfileGenre> profileGenres) {
     return members.stream()
         .map(member -> new Profile(member,
-                profileGenres,
                 TeamType.TEAM,
                 "테스트프로필이름",
                 new Image("imageUrl"),

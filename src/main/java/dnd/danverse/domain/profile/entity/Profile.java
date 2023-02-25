@@ -129,11 +129,10 @@ public class Profile extends BaseTimeEntity {
 
 
   @Builder
-  public Profile(Member member, Set<ProfileGenre> profileGenres, TeamType profileType, String profileName,
+  public Profile(Member member, TeamType profileType, String profileName,
       Image profileImg, String location, LocalDate careerStartDay, String description,
       OpenChat openChatUrl, Portfolio portfolioUrl) {
     this.member = member;
-    this.profileGenres = profileGenres;
     this.profileType = profileType;
     this.profileName = profileName;
     this.profileImg = profileImg;

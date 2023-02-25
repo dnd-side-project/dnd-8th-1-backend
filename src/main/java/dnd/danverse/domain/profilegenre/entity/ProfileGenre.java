@@ -52,5 +52,14 @@ public class ProfileGenre extends BaseTimeEntity {
     this.genre = genre;
   }
 
+  /**
+   * 양방향 관계 편의 메서드.
+   *
+   * @param profile 장르를 저장하려는 프로필.
+   */
+  public void addProfile(Profile profile) {
+    this.profile = profile;
+    profile.getProfileGenres().add(this);
+  }
 
 }
