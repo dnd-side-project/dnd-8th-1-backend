@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,7 +46,7 @@ public class Member extends BaseTimeEntity {
   /**
    * 사용자의 프로필 정보. OneToOne 관계이며, Member 의 프로필 정보를 조회할 때 사용한다.
    */
-  @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
   private Profile profile;
 
   /**
