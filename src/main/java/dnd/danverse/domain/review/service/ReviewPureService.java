@@ -1,8 +1,11 @@
 package dnd.danverse.domain.review.service;
 
+import static dnd.danverse.global.exception.ErrorCode.REVIEW_NOT_FOUND;
+
 import dnd.danverse.domain.review.dto.response.ReviewInfoDto;
 import dnd.danverse.domain.review.dto.response.ReviewInfoWithPerformDto;
 import dnd.danverse.domain.review.entity.Review;
+import dnd.danverse.domain.review.exception.ReviewNotFoundException;
 import dnd.danverse.domain.review.repository.ReviewRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +68,7 @@ public class ReviewPureService {
   @Transactional(readOnly = true)
   public Review findReviewWithMemberById(Long reviewId) {
     log.info("Review 와 Member 와 Profile 을 fetch join 조회한다. 리뷰 ID : {} ", reviewId);
-    return reviewRepository.findReviewWithMemberById(reviewId).orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다. reviewId = " + reviewId));
+    return reviewRepository.findReviewWithMemberById(reviewId).orElseThrow(() -> new ReviewNotFoundException(REVIEW_NOT_FOUND));
   }
 
   /**

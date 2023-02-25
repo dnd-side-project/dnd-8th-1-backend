@@ -43,6 +43,7 @@ public enum ErrorCode {
 
   // 후기
   REVIEW_NOT_WRITER(HttpStatus.FORBIDDEN, "R001", "작성자 외에 접근 권한이 없습니다."),
+  REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "R002", "존재하지 않는 후기입니다."),
 
   // Enum Type
   TYPE_NOT_FOUND(HttpStatus.BAD_REQUEST, "T001", "해당 타입은 존재하지 않습니다."),
