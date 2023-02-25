@@ -1,6 +1,7 @@
 package dnd.danverse.domain.profile.entity;
 
 
+import dnd.danverse.domain.profile.dto.request.ProfileSaveRequestDto.PortfolioUrl;
 import javax.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,14 @@ public class Portfolio {
     this.twitterUrl = twitterUrl;
   }
 
+  /**
+   * 포트폴리오 정보를 담는 dto를 엔티티로 변환한다.
+   *
+   * @param portfolio 포트폴리오 정보를 담은 Dto.
+   */
+  public Portfolio(PortfolioUrl portfolio) {
+    this.youtubeUrl = portfolio.getYoutube();
+    this.instagramUrl = portfolio.getInstagram();
+    this.twitterUrl = portfolio.getTwitter();
+  }
 }
