@@ -1,8 +1,11 @@
 package dnd.danverse.domain.review.service;
 
+import static dnd.danverse.global.exception.ErrorCode.REVIEW_NOT_FOUND;
+
 import dnd.danverse.domain.review.dto.response.ReviewInfoDto;
 import dnd.danverse.domain.review.dto.response.ReviewInfoWithPerformDto;
 import dnd.danverse.domain.review.entity.Review;
+import dnd.danverse.domain.review.exception.ReviewNotFoundException;
 import dnd.danverse.domain.review.repository.ReviewRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -54,5 +57,29 @@ public class ReviewPureService {
   @Transactional(readOnly = true)
   public List<ReviewInfoWithPerformDto> findRecentReviews() {
     return reviewRepository.findRecentReviews();
+  }
+
+  /**
+   * 공연에 대한 리뷰를 조회한다
+   * Review, Member, Profile 을 fetch join 한다.
+   * @param reviewId 리뷰 ID
+   * @return 리뷰
+   */
+  @Transactional(readOnly = true)
+  public Review findReviewWithMemberById(Long reviewId) {
+    log.info("Review 와 Member 와 Profile 을 fetch join 조회한다. 리뷰 ID : {} ", reviewId);
+    return reviewRepository.findReviewWithMemberById(reviewId).orElseThrow(() -> new ReviewNotFoundException(REVIEW_NOT_FOUND));
+  }
+
+  /**
+   * Review 를 수정 한다.
+   * @param review 수정하고자 하는 Review
+   * @param reviewContent 수정하고자 하는 Review 내용
+   * @return 수정된 Review
+   */
+  @Transactional
+  public Review updateReview(Review review, String reviewContent) {
+    log.info("Review 를 수정한다. 내용 : {} ", reviewContent);
+    return review.updateReview(reviewContent);
   }
 }

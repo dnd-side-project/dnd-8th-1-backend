@@ -4,6 +4,7 @@ import dnd.danverse.domain.review.dto.response.ReviewInfoDto;
 import dnd.danverse.domain.review.dto.response.ReviewInfoWithPerformDto;
 import dnd.danverse.domain.review.entity.Review;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
       + "ReviewInfoWithPerformDto(r.id,r.content, r.createdAt, m.id,m.name, p.id,p.profileName, pe.id, pe.title, pe.performanceImg.imageUrl)"
       + " from Review r join r.member m left join m.profile p join r.performance pe order by r.createdAt desc")
   List<ReviewInfoWithPerformDto> findRecentReviews();
+
+  @Query("select r from Review r join fetch r.member m left join fetch m.profile p where r.id = :reviewId")
+  Optional<Review> findReviewWithMemberById(@Param("reviewId") Long reviewId);
 }
