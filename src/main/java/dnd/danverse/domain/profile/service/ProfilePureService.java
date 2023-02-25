@@ -67,7 +67,7 @@ public class ProfilePureService {
    */
   @Transactional
   public Profile saveProfile(Profile profile) {
-    log.info("memberId: {}의 프로필을 저장합니다.", profile.getMember().getId());
+    log.info("저장되는 프로필 이름 {}", profile.getProfileName());
     return profileRepository.save(profile);
   }
 
