@@ -3,6 +3,7 @@ package dnd.danverse.domain.profile.dto.request;
 import dnd.danverse.domain.common.Image;
 import dnd.danverse.domain.common.TeamType;
 import dnd.danverse.domain.member.entity.Member;
+import dnd.danverse.domain.profile.dto.response.PortfolioUrl;
 import dnd.danverse.domain.profile.entity.OpenChat;
 import dnd.danverse.domain.profile.entity.Portfolio;
 import dnd.danverse.domain.profile.entity.Profile;
@@ -14,6 +15,9 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 프로필 등록을 위한 요청 Dto.
+ */
 @Getter
 @NoArgsConstructor
 public class ProfileSaveRequestDto {
@@ -49,32 +53,6 @@ public class ProfileSaveRequestDto {
   @ApiModelProperty(value = "프로필의 포트폴리오 정보")
   private PortfolioUrl portfolioUrl;
 
-  /**
-   * 프로필의 작성자의 포트폴리오 URL Dto.
-   */
-  @Getter
-  public static class PortfolioUrl {
-
-    /**
-     * 프로필의 작성자의 유튜브 URL.
-     */
-    @ApiModelProperty(value = "포트폴리오의 유튜브 URL")
-    private String youtube;
-
-    /**
-     * 프로필의 작성자의 인스타그램 URL.
-     */
-    @ApiModelProperty(value = "포트폴리오의 인스타 URL")
-    private String instagram;
-
-    /**
-     * 프로필의 작성자의 트위터 URL.
-     */
-    @ApiModelProperty(value = "포트폴리오의 트위터 URL")
-    private String twitter;
-
-  }
-
   public Profile toEntity(Member member) {
     Profile profile = Profile.builder()
         .member(member)
@@ -85,7 +63,8 @@ public class ProfileSaveRequestDto {
         .careerStartDay(this.careerStartDate)
         .description(this.description)
         .openChatUrl(new OpenChat(this.openChatUrl))
-        .portfolioUrl(new Portfolio(this.portfolioUrl))
+        .portfolioUrl(new Portfolio(this.portfolioUrl.getYoutube(),
+            this.portfolioUrl.getInstagram(), this.portfolioUrl.getTwitter()))
         .build();
 
     this.genres.stream()
