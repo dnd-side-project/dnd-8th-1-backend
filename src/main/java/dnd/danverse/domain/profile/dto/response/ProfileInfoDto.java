@@ -1,6 +1,5 @@
 package dnd.danverse.domain.profile.dto.response;
 
-import dnd.danverse.domain.profile.entity.Portfolio;
 import dnd.danverse.domain.profile.entity.Profile;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
@@ -66,36 +65,6 @@ public class ProfileInfoDto {
   @ApiModelProperty(value = "프로필의 포트폴리오 정보")
   private final PortfolioUrl portfolioUrl;
 
-  /**
-   * 프로필의 작성자의 포트폴리오 URL Dto.
-   */
-  @Getter
-  public static class PortfolioUrl {
-
-    /**
-     * 프로필의 작성자의 유튜브 URL.
-     */
-    @ApiModelProperty(value = "포트폴리오의 유튜브 URL")
-    private final String youtube;
-
-    /**
-     * 프로필의 작성자의 인스타그램 URL.
-     */
-    @ApiModelProperty(value = "포트폴리오의 인스타 URL")
-    private final String instagram;
-
-    /**
-     * 프로필의 작성자의 트위터 URL.
-     */
-    @ApiModelProperty(value = "포트폴리오의 트위터 URL")
-    private final String twitter;
-
-    public PortfolioUrl(Portfolio portfolio) {
-      this.youtube = portfolio.getYoutubeUrl();
-      this.instagram = portfolio.getInstagramUrl();
-      this.twitter = portfolio.getTwitterUrl();
-    }
-  }
 
   /**
    * Profile 객체를 이용하여 ProfileInfoDto 를 생성한다.
