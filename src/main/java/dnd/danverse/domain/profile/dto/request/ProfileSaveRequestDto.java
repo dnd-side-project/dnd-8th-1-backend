@@ -43,14 +43,37 @@ public class ProfileSaveRequestDto {
   @ApiModelProperty(value = "프로필 오픈챗 url")
   private String openChatUrl;
 
-  @ApiModelProperty(value = "포트폴리오 인스타 url")
-  private String instagramUrl;
+  /**
+   * 프로필의 작성자의 포트폴리오 URL Dto.
+   */
+  @ApiModelProperty(value = "프로필의 포트폴리오 정보")
+  private PortfolioUrl portfolioUrl;
 
-  @ApiModelProperty(value = "포트폴리오 유튜브 url")
-  private String youtubeUrl;
+  /**
+   * 프로필의 작성자의 포트폴리오 URL Dto.
+   */
+  @Getter
+  public static class PortfolioUrl {
 
-  @ApiModelProperty(value = "포트폴리오 트위터 url")
-  private String twitterUrl;
+    /**
+     * 프로필의 작성자의 유튜브 URL.
+     */
+    @ApiModelProperty(value = "포트폴리오의 유튜브 URL")
+    private String youtube;
+
+    /**
+     * 프로필의 작성자의 인스타그램 URL.
+     */
+    @ApiModelProperty(value = "포트폴리오의 인스타 URL")
+    private String instagram;
+
+    /**
+     * 프로필의 작성자의 트위터 URL.
+     */
+    @ApiModelProperty(value = "포트폴리오의 트위터 URL")
+    private String twitter;
+
+  }
 
   public Profile toEntity(Member member) {
     Profile profile = Profile.builder()
@@ -62,7 +85,7 @@ public class ProfileSaveRequestDto {
         .careerStartDay(this.careerStartDate)
         .description(this.description)
         .openChatUrl(new OpenChat(this.openChatUrl))
-        .portfolioUrl(new Portfolio(this.instagramUrl, this.youtubeUrl, this.twitterUrl))
+        .portfolioUrl(new Portfolio(this.portfolioUrl))
         .build();
 
     this.genres.stream()
