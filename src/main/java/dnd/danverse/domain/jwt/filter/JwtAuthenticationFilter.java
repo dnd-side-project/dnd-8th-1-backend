@@ -6,6 +6,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import dnd.danverse.domain.jwt.service.JwtTokenProvider;
 import dnd.danverse.domain.jwt.exception.JwtException;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 /**
  * 모든 요청이 해당 Filter 를 통해서 들어오지만, Header에 Authorization 이 없으면 바로 다음 필터로 넘어간다.
  * 최종적으로 securityConfig 에서 설정한 권한을 검증한다.
- *
  * Header 에 Authorization 이 있는 경우, 토큰을 검증하고 SecurityContextHolder 에 Authentication 객체를 저장한다.
  * 객체를 저장 하더라도 최종적으로 securityConfig 에서 설정한 권한을 검증한다.
  */
@@ -32,6 +32,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private final JwtTokenProvider tokenProvider;
+
+  private static final List<String> EXCLUDE_URL = List.of(
+      "/api/v1/member/oauth/google/login");
+
 
 
   @Override
@@ -78,6 +82,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       return true;
     }
     throw new JwtException(JWT_INVALID_TOKEN);
+  }
+
+  @Override
+  protected boolean shouldNotFilter(HttpServletRequest request) {
+    return EXCLUDE_URL.stream().anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
   }
 
 }
