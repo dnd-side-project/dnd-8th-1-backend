@@ -1,5 +1,6 @@
 package dnd.danverse.domain.profile.service;
 
+import static dnd.danverse.global.exception.ErrorCode.NO_EXISTS_PROFILE;
 import static dnd.danverse.global.exception.ErrorCode.PROFILE_ALREADY_EXISTS;
 import static dnd.danverse.global.exception.ErrorCode.PROFILE_NOT_FOUND;
 
@@ -57,7 +58,7 @@ public class ProfilePureService {
   public Profile getProfileDetail(Long profileId) {
     log.info("profileId: {}를 통해서 profile 과 profileGenre 를 fetch join 하여 찾습니다.", profileId);
     return profileRepository.findProfileWithGenreById(profileId)
-        .orElseThrow(() -> new NoProfileException(PROFILE_NOT_FOUND));
+        .orElseThrow(() -> new NoProfileException(NO_EXISTS_PROFILE));
   }
 
   /**

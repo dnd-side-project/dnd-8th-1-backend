@@ -41,6 +41,7 @@ public enum ErrorCode {
   // 프로필
   PROFILE_NOT_FOUND(HttpStatus.BAD_REQUEST, "P001", "프로필 등록이 필요한 서비스입니다."),
   PROFILE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "P002", "이미 프로필이 존재합니다."),
+  NO_EXISTS_PROFILE(HttpStatus.BAD_REQUEST, "P003", "프로필이 존재하지 않습니다."),
 
   // 후기
   REVIEW_NOT_WRITER(HttpStatus.FORBIDDEN, "R001", "작성자 외에 접근 권한이 없습니다."),
