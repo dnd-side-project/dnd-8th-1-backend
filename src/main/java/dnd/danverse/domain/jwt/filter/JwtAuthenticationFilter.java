@@ -34,7 +34,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private final JwtTokenProvider tokenProvider;
 
   private static final List<String> EXCLUDE_URL = List.of(
-      "/api/v1/member/oauth/google/login");
+      "/api/v1/oauth/jwt/refresh");
+
 
 
 
