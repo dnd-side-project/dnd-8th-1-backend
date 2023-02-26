@@ -53,6 +53,12 @@ public class ProfileSaveRequestDto {
   @ApiModelProperty(value = "프로필의 포트폴리오 정보")
   private PortfolioUrl portfolioUrl;
 
+  /**
+   * request dto를 profile entity로 변환.
+   *
+   * @param member 프로필 저장하려는 member.
+   * @return 변환된 profile entity.
+   */
   public Profile toEntity(Member member) {
     Profile profile = Profile.builder()
         .member(member)
@@ -64,7 +70,7 @@ public class ProfileSaveRequestDto {
         .description(this.description)
         .openChatUrl(new OpenChat(this.openChatUrl))
         .portfolioUrl(new Portfolio(this.portfolioUrl.getYoutube(),
-            this.portfolioUrl.getInstagram(), this.portfolioUrl.getTwitter()))
+            this.portfolioUrl.getInstagram(), this.portfolioUrl.getTiktok()))
         .build();
 
     this.genres.stream()
