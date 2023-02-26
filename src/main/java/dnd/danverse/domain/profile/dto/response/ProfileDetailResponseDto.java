@@ -15,8 +15,11 @@ public class ProfileDetailResponseDto {
   @ApiModelProperty(name = "프로필의 고유 Id")
   private final Long id;
 
+  @ApiModelProperty(name = "프로필 유형")
+  private final String type;
+
   @ApiModelProperty(name = "프로필 이름")
-  private final String profileName;
+  private final String name;
 
   @ApiModelProperty(name = "프로필 이미지 url")
   private final String imgUrl;
@@ -46,7 +49,8 @@ public class ProfileDetailResponseDto {
    */
   public ProfileDetailResponseDto(Profile profile) {
     this.id = profile.getId();
-    this.profileName = profile.getProfileName();
+    this.type = profile.getProfileType().getType();
+    this.name = profile.getProfileName();
     this.imgUrl = profile.getProfileImg().getImageUrl();
     this.location = profile.getLocation();
     this.genres = profile.toStringProfileGenre();

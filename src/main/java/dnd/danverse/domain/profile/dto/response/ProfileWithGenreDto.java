@@ -8,7 +8,7 @@ import java.util.Set;
 import lombok.Getter;
 
 /**
- * 프로필 상세 조회 정보를 담은 Dto.
+ * 프로필 상세 조회 정보를 담은 응답 Dto.
  * - 프로필 고유 id
  * - 프로필 이름
  * - 프로필 이미지 url
@@ -26,7 +26,10 @@ public class ProfileWithGenreDto {
   private final Long id;
 
   @ApiModelProperty(name = "프로필 이름")
-  private final String profileName;
+  private final String name;
+
+  @ApiModelProperty(name = "프로필 유형")
+  private final String type;
 
   @ApiModelProperty(name = "프로필 이미지 url")
   private final String imgUrl;
@@ -49,10 +52,15 @@ public class ProfileWithGenreDto {
   @ApiModelProperty(name = "프로필의 포트폴리오 url")
   private final Portfolio portfolio;
 
-
+  /**
+   * profile entity를 응답 dto로 변환하는 생성자.
+   *
+   * @param profile 프로필.
+   */
   public ProfileWithGenreDto(Profile profile) {
     this.id = profile.getId();
-    this.profileName = profile.getProfileName();
+    this.name = profile.getProfileName();
+    this.type = profile.getProfileType().getType();
     this.imgUrl = profile.getProfileImg().getImageUrl();
     this.location = profile.getLocation();
     this.genres = profile.toStringProfileGenre();
