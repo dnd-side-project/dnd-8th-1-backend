@@ -182,7 +182,7 @@ class PerformanceRepositoryTest {
                 new OpenChat("openChatUrl"),
                 new Portfolio("youtubeUrl",
                     "instagramUrl",
-                    "twitterUrl"))
+                    "tiktokUrl"))
         )
         .collect(Collectors.toList());
   }

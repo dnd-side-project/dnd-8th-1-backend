@@ -25,10 +25,10 @@ public class PortfolioUrl {
   private String instagram;
 
   /**
-   * 프로필의 작성자의 트위터 URL.
+   * 프로필의 작성자의 틱톡 URL.
    */
-  @ApiModelProperty(value = "포트폴리오의 트위터 URL")
-  private String twitter;
+  @ApiModelProperty(value = "포트폴리오의 틱톡 URL")
+  private String tiktok;
 
   /**
    * 포트폴리오의 실제 url 데이터를 dto 데이터로 매핑한다.
@@ -38,6 +38,6 @@ public class PortfolioUrl {
   public PortfolioUrl(Portfolio portfolio) {
     this.youtube = portfolio.getYoutubeUrl();
     this.instagram = portfolio.getInstagramUrl();
-    this.twitter = portfolio.getTwitterUrl();
+    this.tiktok = portfolio.getTiktokUrl();
   }
 }

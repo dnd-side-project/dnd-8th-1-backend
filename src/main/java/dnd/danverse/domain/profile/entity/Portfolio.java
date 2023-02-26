@@ -15,11 +15,11 @@ public class Portfolio {
 
   private String youtubeUrl;
   private String instagramUrl;
-  private String twitterUrl;
+  private String tiktokUrl;
   
-  public Portfolio(String youtubeUrl, String instagramUrl, String twitterUrl) {
+  public Portfolio(String youtubeUrl, String instagramUrl, String tiktokUrl) {
     this.youtubeUrl = youtubeUrl;
     this.instagramUrl = instagramUrl;
-    this.twitterUrl = twitterUrl;
+    this.tiktokUrl = tiktokUrl;
   }
 }
