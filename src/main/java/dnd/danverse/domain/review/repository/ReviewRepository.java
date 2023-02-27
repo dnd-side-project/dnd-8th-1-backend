@@ -30,6 +30,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
   Optional<Review> findReviewWithMemberById(@Param("reviewId") Long reviewId);
 
   @Query("select new dnd.danverse.domain.mypage.dto.response."
-      + "MyReviewDto(r.id, r.content, r.createdAt, pe.id, pe.title) from Review r join r.performance pe where r.member.id = :memberId")
+      + "MyReviewDto(r.id, r.content, r.createdAt, pe.id, pe.title) from Review r join r.performance pe where r.member.id = :memberId "
+      + "order by r.createdAt desc")
   List<MyReviewDto> findReviewsWithMemberId(@Param("memberId") Long memberId);
 }
