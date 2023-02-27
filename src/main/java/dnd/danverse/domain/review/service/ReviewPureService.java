@@ -55,7 +55,7 @@ public class ReviewPureService {
   /**
    * 최근 리뷰를 조회한다.
    * Entity 를 그대로 응답하는 것이 아닌, 별도의 Dto 를 만들어, 응답에 필요한 데이터만을 조회하도록 했다.
-   * 
+   *
    * @return 최근 리뷰 리스트.
    */
   @Transactional(readOnly = true)
