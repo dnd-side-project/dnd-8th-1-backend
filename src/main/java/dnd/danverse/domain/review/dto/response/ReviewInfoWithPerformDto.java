@@ -57,7 +57,8 @@ public class ReviewInfoWithPerformDto {
     /**
      * 작성자 고유 ID 상황에 따라서 member 의 ID 또는 profile 의 ID 가 담긴다.
      */
-    @ApiModelProperty(value = "작성자 고유 ID")
+    // TODO : 무조권 Member 의 ID 를 담도록 수정 (수정완료)
+    @ApiModelProperty(value = "작성자 멤버 고유 ID")
     private final Long id;
 
     /**
@@ -66,8 +67,8 @@ public class ReviewInfoWithPerformDto {
     @ApiModelProperty(value = "작성자 이름")
     private final String name;
 
-    public Writer(Long id, String name) {
-      this.id = id;
+    public Writer(Long memberId, String name) {
+      this.id = memberId;
       this.name = name;
     }
   }
@@ -105,8 +106,11 @@ public class ReviewInfoWithPerformDto {
     this.content = content;
     this.createdDate = createdDate;
 
+    // TODO : 무조권 Member 의 ID 를 담도록 수정
+    // TODO : 112 번째 줄은 필요가 없다. 아니다. 필요하다. 왜냐하면, 프로필을 등록하지 않은 경우에는 프로필 이름이 있어야 하기 때문에 (수정완료)
+    // TODO : 116번째 줄을 if 문 탈출하면 된다. 아니다 if 분기문 여전히 필요하다 (수정완료)
     if (hasProfile(profileId)) {
-      this.writer = new Writer(profileId, profileName);
+      this.writer = new Writer(memberId, profileName);
       this.hasProfile = true;
     } else {
       this.writer = new Writer(memberId, memberName);
