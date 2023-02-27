@@ -18,7 +18,8 @@ public class MemberResponse {
   /**
    * 사용자의 고유 ID.
    */
-  @ApiModelProperty(value = "사용자의 고유 ID")
+  // TODO : 이건 어차피 멤버 ID 이다. (수정 완료)
+  @ApiModelProperty(value = "사용자의 멤버 고유 ID")
   private Long id;
 
   /**
