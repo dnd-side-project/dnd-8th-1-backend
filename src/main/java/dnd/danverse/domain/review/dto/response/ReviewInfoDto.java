@@ -54,7 +54,6 @@ public class ReviewInfoDto {
      * 작성자 고유 ID
      * 상황에 따라서 member 의 ID 또는 profile 의 ID 가 담긴다.
      */
-    // TODO : 무조권 Member 의 ID 를 담도록 수정 (수정완료)
     @ApiModelProperty(value = "작성자 멤버 고유 ID")
     private final Long id;
 
@@ -81,8 +80,6 @@ public class ReviewInfoDto {
   public ReviewInfoDto(Review review, Member member) {
     this.reviewId = review.getId();
     this.content = review.getContent();
-    // TODO : 이젠 Writer 에는 Member 의 ID 만 담도록 수정 (수정완료)
-    // TODO : 따라서, 87번째 줄은 필요가 없다. (필요하다. 프로필이 있으면, 프로필 이름으로 반환해야 하기 때문에, (수정완료)
     if (hasProfile(member)) {
       this.writer = new Writer(member.getId(), member.getProfile().getProfileName());
       this.hasProfile = true;
@@ -119,8 +116,6 @@ public class ReviewInfoDto {
     this.reviewId = reviewId;
     this.content = content;
     this.createdDate = createdDate;
-    // TODO : 이젠 Writer 에는 Member 의 ID 만 담도록 수정 (수정완료)
-    // TODO : 따라서, 125 번째 줄은 필요가 없다. 아니다, 필요하다. 프로필이 있으면, 프로필 이름으로 반환해야 하기 때문에, (수정완료)
     if (hasProfile(profileId)) {
       this.writer = new Writer(memberId, profileName);
       this.hasProfile = true;

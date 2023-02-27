@@ -114,7 +114,6 @@ public class EventMatchController {
   })
   public ResponseEntity<MessageResponse> acceptApplicant(@PathVariable("eventId") Long eventId,
       @RequestBody ProfileIdRequestDto requestDto) {
-    // TODO : requestDto.getMemberID로 변경 필요성이 있다.
     eventAcceptComplexService.acceptApplicant(eventId, requestDto.getMemberId());
     return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "신청자 수락 성공"), HttpStatus.OK);
   }

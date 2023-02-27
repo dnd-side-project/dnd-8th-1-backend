@@ -26,8 +26,6 @@ public class EventAcceptComplexService {
    * @param memberId 지원자 ID
    */
   public void acceptApplicant(Long eventId, Long memberId) {
-    // TODO : memberID 를 통해서 Profile 을 찾는 과정이 27번쨰 라인에 필요하다. (수정 완료)
-    // TODO : 찾은 profile id 를 뽑아서, checkIfEventSupported 의 2번째 파라미터 값으로 넣어야한다. (수정완료)
     Member member = memberPureService.findMemberWithProfile(memberId);
     EventMatch eventMatch = eventMatchPureService.checkIfEventSupported(eventId, member.getProfile().getId());
     eventMatchPureService.acceptApplicant(eventMatch);

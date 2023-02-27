@@ -21,25 +21,25 @@ import lombok.Getter;
 public class ProfileWithGenreDto {
 
   @ApiModelProperty(value = "사용자의 멤버 고유 ID")
-  private Long id;
+  private final Long id;
 
   /**
    * 사용자의 이름.
    */
   @ApiModelProperty(value = "사용자의 이름")
-  private String name;
+  private final String name;
 
   /**
    * 사용자의 이메일.
    */
   @ApiModelProperty(value = "사용자의 이메일")
-  private String email;
+  private final String email;
 
   /**
    * 사용자의 소셜 프로필 이미지.
    */
   @ApiModelProperty(value = "사용자의 소셜 프로필 이미지")
-  private String imgUrl;
+  private final String imgUrl;
 
   /**
    * 사용자의 프로필
@@ -56,7 +56,6 @@ public class ProfileWithGenreDto {
    * @param profile 프로필.
    */
   public ProfileWithGenreDto(Member member, Profile profile) {
-    // TODO : 프로필 ID가 아니라, 멤버 고유 ID를 반환해야 할 것 같다. (수정 완료)
     this.id = member.getId();
     this.name = member.getName();
     this.email = member.getEmail();

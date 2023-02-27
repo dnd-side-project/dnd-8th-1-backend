@@ -1,5 +1,6 @@
 package dnd.danverse.domain.review.service;
 
+import dnd.danverse.domain.performance.service.PerformancePureService;
 import dnd.danverse.domain.review.dto.response.ReviewInfoDto;
 import dnd.danverse.domain.review.dto.response.ReviewInfoWithPerformDto;
 import java.util.List;
@@ -16,14 +17,17 @@ import org.springframework.stereotype.Service;
 public class ReviewsSearchComplexService {
 
   private final ReviewPureService reviewPureService;
+  private final PerformancePureService performancePureService;
 
   /**
+   * performId 를 통해서 공연이 존재하는지 확인한다.
    * 모든 리뷰를 조회한다.
    *
    * @param performId 공연 ID
    * @return ReviewInfoDto 리스트
    */
   public List<ReviewInfoDto> findAllReviews(Long performId) {
+    performancePureService.getPerformance(performId);
     return reviewPureService.findAllReviewsWithWriter(performId);
   }
 

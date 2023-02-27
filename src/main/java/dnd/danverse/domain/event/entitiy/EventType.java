@@ -1,8 +1,9 @@
 package dnd.danverse.domain.event.entitiy;
 
 
-import static org.springframework.util.StringUtils.hasText;
+import static dnd.danverse.global.exception.ErrorCode.EVENT_TYPE_ENUM_NOT_SUPPORTED;
 
+import dnd.danverse.domain.event.exception.TypeNotSupportException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -28,16 +29,12 @@ public enum EventType {
    */
   public static EventType of(String type) {
 
-    if (!hasText(type)) {
-      return null;
-    }
-
     for (EventType eventType : EventType.values()) {
       if (eventType.getType().equals(type)) {
         return eventType;
       }
     }
-    // TODO : TypeNotSupported Exception 으로 변경 필요 (작성일 : 2023-02-13 03:00)
-    throw new IllegalArgumentException("해당 type은 존재하지 않습니다. type=" + type);
+
+    throw new TypeNotSupportException(EVENT_TYPE_ENUM_NOT_SUPPORTED);
   }
 }

@@ -50,7 +50,6 @@ public class EventInfoResponse {
     }
   }
 
-  // TODO : 어디서 쓰고 있는지 확인 필요 (QueryDSL에서 사용 확인완료 및 수정 완료)
   @QueryProjection
   public EventInfoResponse(Long eventId, String title, String location, EventType type,
       String eventImg, LocalDateTime eventDeadline, LocalDateTime eventCreatedAt, Long memberId,

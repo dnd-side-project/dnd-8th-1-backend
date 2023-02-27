@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProfileIdRequestDto {
 
-  // TODO : profileId -> memberId 로 변경해야함. (수정완료)
   @ApiModelProperty(value = "지원자 맴버 고유 ID", example = "1")
   private Long memberId;
 
