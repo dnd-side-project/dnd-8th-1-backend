@@ -15,7 +15,8 @@ public class ProfileHomeDto {
   /**
    * 프로필 ID
    */
-  @ApiModelProperty(value = "프로필 고유 ID")
+  // TODO : 프로필 ID가 아니라, 멤버 고유 ID를 반환해야 할 것 같다. (수정완료)
+  @ApiModelProperty(value = "프로필을 소유하고 있는 멤버 고유 ID")
   private final Long id;
   /**
    * 프로필 이름
@@ -34,7 +35,8 @@ public class ProfileHomeDto {
   private final String type;
 
   public ProfileHomeDto(Profile profile) {
-    this.id = profile.getId();
+    // TODO : profile Id 가 아닌 Member Id로 변경될 필요성이 있다. (수정완료)
+    this.id = profile.getMember().getId();
     this.name = profile.getProfileName();
     this.imgUrl = profile.getProfileImg().getImageUrl();
     this.type = profile.getProfileType().getType();

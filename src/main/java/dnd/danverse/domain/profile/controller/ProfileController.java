@@ -53,10 +53,10 @@ public class ProfileController {
   /**
    * 서비스 사용자는 다른 사용자의 프로필을 조회할 수 있습니다.
    */
-  @GetMapping("/{profileId}")
+  @GetMapping("/{memberId}")
   @ApiOperation(value = "프로필 상세 조회", notes = "다른 사용자의 프로필 상세 조회")
-  public ResponseEntity<DataResponse<ProfileWithGenreDto>> getProfile(@PathVariable("profileId") Long profileId) {
-    ProfileWithGenreDto profileWithGenreDto = profileDetailService.getProfile(profileId);
+  public ResponseEntity<DataResponse<ProfileWithGenreDto>> getProfile(@PathVariable("memberId") Long memberId) {
+    ProfileWithGenreDto profileWithGenreDto = profileDetailService.getProfile(memberId);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "프로필 상세 조회 성공", profileWithGenreDto), HttpStatus.OK);
   }
 

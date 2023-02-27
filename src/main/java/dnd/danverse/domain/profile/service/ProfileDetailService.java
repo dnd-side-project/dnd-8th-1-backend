@@ -1,7 +1,8 @@
 package dnd.danverse.domain.profile.service;
 
+import dnd.danverse.domain.member.entity.Member;
+import dnd.danverse.domain.member.service.MemberPureService;
 import dnd.danverse.domain.profile.dto.response.ProfileWithGenreDto;
-import dnd.danverse.domain.profile.entity.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +13,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProfileDetailService {
 
-  private final ProfilePureService profilePureService;
+  private final MemberPureService memberPureService;
 
   /**
-   * 프로필 순수 서비스에서 프로필 아이디를 통해서 프로필의 상세 정보를 가져옵니다.
+   * 멤버 ID 를 통해 프로필을 조회한다.
    *
-   * @param profileId 조회하려고 하는 profileId.
+   * @param memberId 멤버 Id.
    * @return profile 과 genre 를 함께 반환하는 응답 Dto.
    */
-  public ProfileWithGenreDto getProfile(Long profileId) {
-    Profile profile = profilePureService.getProfileDetail(profileId);
-    return new ProfileWithGenreDto(profile);
+  public ProfileWithGenreDto getProfile(Long memberId) {
+    Member member = memberPureService.findMemberWithProfile(memberId);
+    return new ProfileWithGenreDto(member, member.getProfile());
   }
 
 }
