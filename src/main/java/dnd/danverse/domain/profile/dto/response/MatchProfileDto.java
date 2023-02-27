@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MatchProfileDto {
-  @ApiModelProperty(value = "신청자 프로필 고유 Id")
+
+  // TODO : Swagger 문서에는 profile Id가 아니라, 멤버 고유 ID를 반환해야 할 것 같다. (수정완료)
+  @ApiModelProperty(value = "신청자의 멤버 고유 Id")
   private Long id;
 
   @ApiModelProperty(value = "신청자 프로필 이름")
@@ -33,7 +35,8 @@ public class MatchProfileDto {
 
   @Builder
   public MatchProfileDto(Profile profile) {
-    this.id = profile.getId();
+    // TODO : profile Id 가 아닌 Member Id로 변경될 필요성이 있다. (수정완료)
+    this.id = profile.getMember().getId();
     this.name = profile.getProfileName();
     this.imgUrl = profile.getProfileImg().getImageUrl();
     this.description = profile.getDescription();
