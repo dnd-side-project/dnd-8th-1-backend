@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProfileIdRequestDto {
 
-  @ApiModelProperty(value = "지원자 프로필 고유 ID", example = "1")
-  private Long profileId;
+  @ApiModelProperty(value = "지원자 맴버 고유 ID", example = "1")
+  private Long memberId;
 
 }

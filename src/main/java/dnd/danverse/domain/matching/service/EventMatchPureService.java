@@ -53,7 +53,7 @@ public class EventMatchPureService {
    */
   @Transactional(readOnly = true)
   public EventMatch checkIfEventSupported(Long eventId, Long profileId) {
-    log.info("이벤트 지원 확인 위해 eventId: {}, memberId: {} 데이터를 통해서 찾습니다.", eventId, profileId);
+    log.info("이벤트 지원 확인 위해 eventId: {}, profileId: {} 데이터를 통해서 찾습니다.", eventId, profileId);
     return eventMatchRepository.findByEventAndProfileGuest(eventId, profileId)
         .orElseThrow(() -> new EventMatchNotFoundException(EVENT_MATCH_NOT_FOUND));
   }
@@ -78,7 +78,7 @@ public class EventMatchPureService {
    */
   @Transactional(readOnly = true)
   public List<EventMatch> getApplicants(Event event) {
-    log.info("EventMatch 를 가져오면서 profileGuest 와 fetch join, eventId: {}", event.getId());
+    log.info("eventId 를 통해 EventMatch 를 가져오면서 profileGuest 와 fetch join, eventId: {}", event.getId());
     return eventMatchRepository.findByEvent(event);
   }
 

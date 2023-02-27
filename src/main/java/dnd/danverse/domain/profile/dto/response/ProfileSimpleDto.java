@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProfileSimpleDto {
 
-  @ApiModelProperty(value = "프로필 고유 ID")
+  @ApiModelProperty(value = "프로필을 가지고 있는 멤버의 고유 ID")
   private Long id;
   @ApiModelProperty(value = "프로필 이름")
   private String name;
@@ -30,7 +30,7 @@ public class ProfileSimpleDto {
    */
   @Builder
   public ProfileSimpleDto(Profile profile) {
-    this.id = profile.getId();
+    this.id = profile.getMember().getId();
     this.name = profile.getProfileName();
     this.imgUrl = profile.getProfileImg().getImageUrl();
   }

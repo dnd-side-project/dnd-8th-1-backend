@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class ProfileDetailResponseDto {
 
-  @ApiModelProperty(name = "프로필의 고유 Id")
+  @ApiModelProperty(name = "프로필을 가지고 있는 멤버의 고유 Id")
   private final Long id;
 
   @ApiModelProperty(name = "프로필 유형")
@@ -48,7 +48,7 @@ public class ProfileDetailResponseDto {
    * @param profile 정보 반환을 원하는 프로필 객체.
    */
   public ProfileDetailResponseDto(Profile profile) {
-    this.id = profile.getId();
+    this.id = profile.getMember().getId();
     this.type = profile.getProfileType().getType();
     this.name = profile.getProfileName();
     this.imgUrl = profile.getProfileImg().getImageUrl();

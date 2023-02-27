@@ -57,7 +57,7 @@ public class ReviewInfoWithPerformDto {
     /**
      * 작성자 고유 ID 상황에 따라서 member 의 ID 또는 profile 의 ID 가 담긴다.
      */
-    @ApiModelProperty(value = "작성자 고유 ID")
+    @ApiModelProperty(value = "작성자 멤버 고유 ID")
     private final Long id;
 
     /**
@@ -66,8 +66,8 @@ public class ReviewInfoWithPerformDto {
     @ApiModelProperty(value = "작성자 이름")
     private final String name;
 
-    public Writer(Long id, String name) {
-      this.id = id;
+    public Writer(Long memberId, String name) {
+      this.id = memberId;
       this.name = name;
     }
   }
@@ -106,7 +106,7 @@ public class ReviewInfoWithPerformDto {
     this.createdDate = createdDate;
 
     if (hasProfile(profileId)) {
-      this.writer = new Writer(profileId, profileName);
+      this.writer = new Writer(memberId, profileName);
       this.hasProfile = true;
     } else {
       this.writer = new Writer(memberId, memberName);

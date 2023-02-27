@@ -4,7 +4,7 @@ import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.profile.dto.request.ProfileSaveRequestDto;
 import dnd.danverse.domain.profile.dto.response.ProfileDetailResponseDto;
 import dnd.danverse.domain.profile.dto.response.ProfileHomeDto;
-import dnd.danverse.domain.profile.dto.response.ProfileWithGenreDto;
+import dnd.danverse.domain.profile.dto.response.MemberWithProfileDto;
 import dnd.danverse.domain.profile.service.ProfileDetailService;
 import dnd.danverse.domain.profile.service.ProfileSaveService;
 import dnd.danverse.domain.profile.service.ProfileSearchService;
@@ -53,11 +53,12 @@ public class ProfileController {
   /**
    * 서비스 사용자는 다른 사용자의 프로필을 조회할 수 있습니다.
    */
-  @GetMapping("/{profileId}")
+  @GetMapping("/{memberId}")
   @ApiOperation(value = "프로필 상세 조회", notes = "다른 사용자의 프로필 상세 조회")
-  public ResponseEntity<DataResponse<ProfileWithGenreDto>> getProfile(@PathVariable("profileId") Long profileId) {
-    ProfileWithGenreDto profileWithGenreDto = profileDetailService.getProfile(profileId);
-    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "프로필 상세 조회 성공", profileWithGenreDto), HttpStatus.OK);
+  @ApiImplicitParam(name = "memberId", value = "멤버 고유 ID", required = true)
+  public ResponseEntity<DataResponse<MemberWithProfileDto>> getProfile(@PathVariable("memberId") Long memberId) {
+    MemberWithProfileDto memberWithProfileDto = profileDetailService.getProfile(memberId);
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "프로필 상세 조회 성공", memberWithProfileDto), HttpStatus.OK);
   }
 
   /**

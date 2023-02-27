@@ -51,7 +51,7 @@ public class EventRepositoryImpl implements EventFilterCustom {
             event.eventImg.imageUrl,
             event.deadline,
             event.createdAt,
-            profile.id,
+            profile.member.id,
             profile.profileName,
             profile.profileImg.imageUrl
         ))

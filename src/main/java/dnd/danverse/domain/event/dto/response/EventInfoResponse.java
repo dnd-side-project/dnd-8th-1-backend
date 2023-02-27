@@ -35,7 +35,7 @@ public class EventInfoResponse {
   @Getter
   static class ProfileSimpleInfo {
 
-    @ApiModelProperty(value = "이벤트 주최자 프로필 고유 ID")
+    @ApiModelProperty(value = "이벤트 주최자 멤버 고유 ID")
     private final Long id;
     @ApiModelProperty(value = "이벤트 주최자 프로필 이름")
     private final String name;
@@ -43,8 +43,8 @@ public class EventInfoResponse {
     private final String imgUrl;
 
     @QueryProjection
-    public ProfileSimpleInfo(Long id, String name, String imgUrl) {
-      this.id = id;
+    public ProfileSimpleInfo(Long memberId, String name, String imgUrl) {
+      this.id = memberId;
       this.name = name;
       this.imgUrl = imgUrl;
     }
@@ -52,7 +52,7 @@ public class EventInfoResponse {
 
   @QueryProjection
   public EventInfoResponse(Long eventId, String title, String location, EventType type,
-      String eventImg, LocalDateTime eventDeadline, LocalDateTime eventCreatedAt, Long profileId,
+      String eventImg, LocalDateTime eventDeadline, LocalDateTime eventCreatedAt, Long memberId,
       String profileName, String profileImg) {
     this.id = eventId;
     this.title = title;
@@ -61,6 +61,6 @@ public class EventInfoResponse {
     this.imgUrl = eventImg;
     this.deadline = eventDeadline;
     this.createdAt = eventCreatedAt;
-    this.profile = new ProfileSimpleInfo(profileId, profileName, profileImg);
+    this.profile = new ProfileSimpleInfo(memberId, profileName, profileImg);
   }
 }
