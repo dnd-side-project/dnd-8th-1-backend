@@ -2,6 +2,7 @@ package dnd.danverse.domain.event.entitiy;
 
 
 import static dnd.danverse.global.exception.ErrorCode.EVENT_TYPE_ENUM_NOT_SUPPORTED;
+import static org.springframework.util.StringUtils.hasText;
 
 import dnd.danverse.domain.event.exception.TypeNotSupportException;
 import lombok.Getter;
@@ -28,6 +29,10 @@ public enum EventType {
    * @return enum type
    */
   public static EventType of(String type) {
+
+    if (!hasText(type)) {
+      return null;
+    }
 
     for (EventType eventType : EventType.values()) {
       if (eventType.getType().equals(type)) {
