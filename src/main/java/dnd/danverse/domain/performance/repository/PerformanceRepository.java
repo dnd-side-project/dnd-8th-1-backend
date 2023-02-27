@@ -22,8 +22,11 @@ public interface PerformanceRepository extends JpaRepository<Performance, Long>,
    * 공연 주최자의 프로필과 공연을 fetch join하여 반환.
    *
    * @param performId 조회하고자 하는 공연 정보글의 Id.
-   * @return Performance 를 반환함. 만약 없다면 PerformanceNotFoundException 반환.
+   * @return Performance
    */
   @Query("select p from Performance p join fetch p.profileHost where p.id = :performId")
   Optional<Performance> findPerformanceWithProfile(@Param("performId") Long performId);
+
+  @Query("select p from Performance p where p.profileHost.id = :profileId order by p.createdAt desc")
+  List<Performance> findAllByProfileId(@Param("profileId") Long profileId);
 }

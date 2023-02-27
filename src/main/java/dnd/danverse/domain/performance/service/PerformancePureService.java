@@ -41,6 +41,12 @@ public class PerformancePureService {
         .collect(Collectors.toList());
   }
 
+  /**
+   * performId 를 통해서 주최자와 공연 정보를 함께 찾는다.
+   *
+   * @param performId 조회하려고 하는 performId.
+   * @return Performance.
+   */
   @Transactional(readOnly = true)
   public Performance getPerformanceDetail(Long performId) {
     log.info("Performance 와 주최자(profile) 를 찾기 위해 performId 인 {} 를 찾는다.", performId);
@@ -48,6 +54,12 @@ public class PerformancePureService {
         .orElseThrow(() -> new PerformanceNotFoundException(PERFORMANCE_NOT_FOUND));
   }
 
+  /**
+   * performance 를 저장한다.
+   *
+   * @param performance 저장하려고 하는 Performance.
+   * @return Performance.
+   */
   @Transactional
   public Performance createPerform(Performance performance) {
     log.info("Performance 를 저장한다. 제목 : {} ", performance.getTitle());
@@ -89,6 +101,18 @@ public class PerformancePureService {
   public void deletePerform(Performance performance) {
     log.info("performId가 {}인 공연글을 삭제합니다.", performance.getId());
     performanceRepository.delete(performance);
+  }
+
+  /**
+   * 내가 등록한 공연 정보 리스트를 조회합니다.
+   *
+   * @param profileId 조회 요청하는 사용자의 프로필 Id.
+   * @return 공연 정보 리스트.
+   */
+  @Transactional(readOnly = true)
+  public List<Performance> getMyPerforms(Long profileId) {
+    log.info("profileId 인 {} 를 통해서 공연 정보들을 찾는다. ", profileId);
+    return performanceRepository.findAllByProfileId(profileId);
   }
 
 }
