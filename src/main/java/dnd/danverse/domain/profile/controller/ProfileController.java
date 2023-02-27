@@ -55,6 +55,7 @@ public class ProfileController {
    */
   @GetMapping("/{memberId}")
   @ApiOperation(value = "프로필 상세 조회", notes = "다른 사용자의 프로필 상세 조회")
+  @ApiImplicitParam(name = "memberId", value = "멤버 고유 ID", required = true)
   public ResponseEntity<DataResponse<ProfileWithGenreDto>> getProfile(@PathVariable("memberId") Long memberId) {
     ProfileWithGenreDto profileWithGenreDto = profileDetailService.getProfile(memberId);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "프로필 상세 조회 성공", profileWithGenreDto), HttpStatus.OK);
