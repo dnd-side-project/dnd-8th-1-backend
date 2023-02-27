@@ -18,7 +18,7 @@ import lombok.Getter;
  * - 포트폴리오 url(유튜브, 인스타, 트위터)
  */
 @Getter
-public class ProfileWithGenreDto {
+public class MemberWithProfileDto {
 
   @ApiModelProperty(value = "사용자의 멤버 고유 ID")
   private final Long id;
@@ -55,7 +55,7 @@ public class ProfileWithGenreDto {
    *
    * @param profile 프로필.
    */
-  public ProfileWithGenreDto(Member member, Profile profile) {
+  public MemberWithProfileDto(Member member, Profile profile) {
     this.id = member.getId();
     this.name = member.getName();
     this.email = member.getEmail();

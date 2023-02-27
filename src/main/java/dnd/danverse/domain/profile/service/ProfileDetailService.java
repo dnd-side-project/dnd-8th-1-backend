@@ -2,7 +2,7 @@ package dnd.danverse.domain.profile.service;
 
 import dnd.danverse.domain.member.entity.Member;
 import dnd.danverse.domain.member.service.MemberPureService;
-import dnd.danverse.domain.profile.dto.response.ProfileWithGenreDto;
+import dnd.danverse.domain.profile.dto.response.MemberWithProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +21,9 @@ public class ProfileDetailService {
    * @param memberId 멤버 Id.
    * @return profile 과 genre 를 함께 반환하는 응답 Dto.
    */
-  public ProfileWithGenreDto getProfile(Long memberId) {
+  public MemberWithProfileDto getProfile(Long memberId) {
     Member member = memberPureService.findMemberWithProfile(memberId);
-    return new ProfileWithGenreDto(member, member.getProfile());
+    return new MemberWithProfileDto(member, member.getProfile());
   }
 
 }
