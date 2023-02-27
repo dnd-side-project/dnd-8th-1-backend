@@ -51,7 +51,8 @@ public class EventRepositoryImpl implements EventFilterCustom {
             event.eventImg.imageUrl,
             event.deadline,
             event.createdAt,
-            profile.id,
+            // TODO : 프로필 ID 가 아닌, 멤버 ID로 가져와야 한다.
+            profile.member.id,
             profile.profileName,
             profile.profileImg.imageUrl
         ))
