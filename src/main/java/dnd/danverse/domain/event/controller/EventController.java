@@ -91,8 +91,8 @@ public class EventController {
   @ApiOperation(value = "이벤트 글 조회", notes = "이벤트 글을 조회할 수 있다.")
   @ApiImplicitParam(name = "eventId", value = "이벤트 고유 ID", required = true)
   public ResponseEntity<DataResponse<EventWithProfileDto>> getEvent(
-      @PathVariable("eventId") Long eventId) {
-    EventWithProfileDto response = eventSearchComplexService.searchDetail(eventId);
+      @PathVariable("eventId") Long eventId, @AuthenticationPrincipal SessionUser sessionUser) {
+    EventWithProfileDto response = eventSearchComplexService.searchDetail(eventId, sessionUser);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이벤트 상세 조회 성공", response),
         HttpStatus.OK);
   }
