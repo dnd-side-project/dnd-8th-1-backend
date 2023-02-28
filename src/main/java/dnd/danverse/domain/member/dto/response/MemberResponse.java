@@ -66,8 +66,8 @@ public class MemberResponse {
    * @param signUpResult 회원가입 결과를 담은 객체
    */
   public MemberResponse(SignUpResult signUpResult) {
-    Member member = signUpResult.getMember();
-    Profile signedProfile = signUpResult.getProfile();
+    final Member member = signUpResult.getMember();
+    final Profile signedProfile = signUpResult.getProfile();
 
     this.id = member.getId();
     this.name = member.getName();
@@ -75,7 +75,7 @@ public class MemberResponse {
     this.imgUrl = member.getSocialImg();
     this.role = member.getRole().getAuthority();
     this.isSignUp = signUpResult.isSignUp();
-    this.profile = profile != null ? new ProfileDetailResponseDto(signedProfile) : null;
+    this.profile = signedProfile != null ? new ProfileDetailResponseDto(signedProfile) : null;
   }
 
 
