@@ -28,7 +28,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
             HttpMethod.OPTIONS.name()
         )
         //allow to use Authorization header
-        .allowedHeaders("Authorization")
+        .allowedHeaders("*")
         // allow to use cookies
         .allowCredentials(true);
 
