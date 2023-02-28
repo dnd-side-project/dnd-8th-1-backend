@@ -89,7 +89,7 @@ public class MyPageController {
    * @param sessionUser 자신이 지원한 이벤트 정보 조회를 요청하는 사용자.
    * @return 사용자가 지원한 이벤트 전체 조회.
    */
-  @GetMapping("/events/apply")
+  @GetMapping("/events/applications")
   @ApiOperation(value = "지원한 이벤트 조회", notes = "자신이 지원한 이벤트 리스트를 조회할 수 있다.")
   @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
       required = true, dataType = "string", paramType = "header")
