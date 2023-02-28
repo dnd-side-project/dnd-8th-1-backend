@@ -56,6 +56,7 @@ public class MemberResponse {
   /**
    * 사용자의 프로필 정보를 담는 Dto.
    */
+  // TODO : ProfileDetailResponseDto 로 변경 필요 (팽팽이 담당)
   @ApiModelProperty(value = "사용자의 프로필 정보를 담는 Dto")
   private ProfileInfoDto profile;
 

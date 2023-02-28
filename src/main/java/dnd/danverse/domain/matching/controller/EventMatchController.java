@@ -2,7 +2,7 @@ package dnd.danverse.domain.matching.controller;
 
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.matching.dto.request.EventIdRequestDto;
-import dnd.danverse.domain.matching.dto.request.ProfileIdRequestDto;
+import dnd.danverse.domain.matching.dto.request.MemberIdRequestDto;
 import dnd.danverse.domain.matching.dto.response.ApplicantsResponseDto;
 import dnd.danverse.domain.matching.service.EventAcceptComplexService;
 import dnd.danverse.domain.matching.service.EventMatchComplexService;
@@ -101,6 +101,7 @@ public class EventMatchController {
 
   /**
    * 이벤트 지원자 요청을 수락한다.
+   *
    * @param eventId 이벤트 글 아이디
    * @param requestDto 수락하려는 사용자의 프로필 아이디
    * @return MessageResponse 상태 메시지 담은 dto
@@ -113,7 +114,7 @@ public class EventMatchController {
           required = true, dataType = "string", paramType = "header")
   })
   public ResponseEntity<MessageResponse> acceptApplicant(@PathVariable("eventId") Long eventId,
-      @RequestBody ProfileIdRequestDto requestDto) {
+      @RequestBody MemberIdRequestDto requestDto) {
     eventAcceptComplexService.acceptApplicant(eventId, requestDto.getMemberId());
     return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "신청자 수락 성공"), HttpStatus.OK);
   }
