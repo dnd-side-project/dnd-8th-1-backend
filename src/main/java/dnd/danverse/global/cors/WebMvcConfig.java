@@ -30,7 +30,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //allow to use Authorization header
         .allowedHeaders("*")
         // allow to use cookies
-        .allowCredentials(true);
+        .allowCredentials(true)
+        // allow to read response headers and cookies
+        .exposedHeaders("Authorization", "Set-Cookie");
 
   }
 
