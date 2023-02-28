@@ -142,7 +142,7 @@ public class EventMatchPureService {
    */
   @Transactional(readOnly = true)
   public List<EventMatch> findAppliedEvents(Long profileId) {
-    log.info("프로필 id를 통하여 지원한 event 들을 찾습니다. profileId: {}", profileId);
+    log.info("프로필 id를 통하여 eventMatch 들을 찾습니다. profileId: {}", profileId);
     return eventMatchRepository.findAppliesEventsByProfileId(profileId);
   }
 }
