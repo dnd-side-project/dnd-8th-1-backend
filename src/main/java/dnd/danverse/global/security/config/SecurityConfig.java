@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsUtils;
 
 /**
  * Spring Security 설정 권한이 필요한 요청에 대해서 정의할 수 있게 한다.
@@ -42,6 +43,7 @@ public class SecurityConfig {
 
     final String userRole = "ROLE_USER";
     http.authorizeRequests()
+        .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() //PreFlight 요청 무시하기
         .mvcMatchers(HttpMethod.OPTIONS, "/**/*").permitAll() // Preflight Request 허용해주기 CORS
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
         .antMatchers(HttpMethod.POST, "/api/v1/events", "/api/v1/events/apply",
