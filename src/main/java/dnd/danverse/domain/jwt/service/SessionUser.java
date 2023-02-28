@@ -21,6 +21,7 @@ public class SessionUser implements Serializable {
   private final String profileImage;
   private final String authority;
   private final String provider;
+  private final Long profileId;
 
   public SessionUser(Member member) {
     this.id = member.getId();
@@ -31,6 +32,7 @@ public class SessionUser implements Serializable {
     this.profileImage = member.getSocialImg();
     this.authority = member.getRole().getAuthority();
     this.provider = member.getOauth2Provider().name();
+    this.profileId = member.getProfile().getId();
   }
 
 }
