@@ -82,6 +82,7 @@ public class EventPureService {
    */
   @Transactional(readOnly = true)
    public Event getEventDetail(Long eventId) {
+    log.info("Event 와 Profile 을 fetch join 으로 함께 가져옵니다 eventId : {}", eventId);
     return eventRepository.findProfileJoinFetch(eventId)
         .orElseThrow(() -> new EventNotFoundException(EVENT_NOT_FOUND));
   }
@@ -99,6 +100,7 @@ public class EventPureService {
 
   /**
    * 이벤트 정보를 업데이트 한다.
+   *
    * @param event 이벤트
    * @param requestDto 이벤트 정보 업데이트 요청 DTO
    */
@@ -111,6 +113,7 @@ public class EventPureService {
 
   /**
    * 이벤트를 삭제한다.
+   *
    * @param event 삭제하고자 하는 이벤트
    */
   @Transactional
