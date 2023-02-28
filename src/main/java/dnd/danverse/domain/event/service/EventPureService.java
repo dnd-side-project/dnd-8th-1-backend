@@ -7,6 +7,7 @@ import dnd.danverse.domain.event.entitiy.Event;
 import dnd.danverse.domain.event.exception.EventNotFoundException;
 import dnd.danverse.domain.event.repository.EventRepository;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -82,6 +83,7 @@ public class EventPureService {
    */
   @Transactional(readOnly = true)
    public Event getEventDetail(Long eventId) {
+    log.info("Event 와 Profile 을 fetch join 으로 함께 가져옵니다 eventId : {}", eventId);
     return eventRepository.findProfileJoinFetch(eventId)
         .orElseThrow(() -> new EventNotFoundException(EVENT_NOT_FOUND));
   }
@@ -99,6 +101,7 @@ public class EventPureService {
 
   /**
    * 이벤트 정보를 업데이트 한다.
+   *
    * @param event 이벤트
    * @param requestDto 이벤트 정보 업데이트 요청 DTO
    */
@@ -111,11 +114,24 @@ public class EventPureService {
 
   /**
    * 이벤트를 삭제한다.
+   *
    * @param event 삭제하고자 하는 이벤트
    */
   @Transactional
   public void deleteEvent(Event event) {
     log.info("이벤트를 삭제합니다. eventId: {}", event.getId());
     eventRepository.delete(event);
+  }
+
+  /**
+   * 프로필 id를 통해 자신이 작성한 이벤트를 모두 조회한다.
+   *
+   * @param profileId 프로필 id
+   * @return 자신이 작성한 모든 이벤트 리스트
+   */
+  @Transactional(readOnly = true)
+  public List<Event> searchAllEventsByProfileId(Long profileId) {
+    log.info("프로필 id를 통해 자신이 작성한 이벤트를 모두 조회합니다. profileId: {}", profileId);
+    return eventRepository.searchAllEventsByProfileId(profileId);
   }
 }

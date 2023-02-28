@@ -44,7 +44,7 @@ public class SecurityConfig {
     final String userRole = "ROLE_USER";
     http.authorizeRequests()
         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() //PreFlight 요청 무시하기
-        .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight Request 허용해주기 CORS
+        .mvcMatchers(HttpMethod.OPTIONS, "/**/*").permitAll() // Preflight Request 허용해주기 CORS
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
         .antMatchers(HttpMethod.POST, "/api/v1/events", "/api/v1/events/apply",
             "/api/v1/events/image", "/api/v1/performances/image", "/api/v1/profiles/image", "/api/v1/performances",
@@ -52,7 +52,8 @@ public class SecurityConfig {
           .hasAuthority(userRole)
         .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply", "/api/v1/events/{eventId}", "/api/v1/performances/{performId}")
           .hasAuthority(userRole)
-        .antMatchers(HttpMethod.GET, "/api/v1/events/{eventId}/applicants", "/api/v1/mypage/performances/reviews", "/api/v1/mypage/performances").hasAuthority(userRole)
+        .antMatchers(HttpMethod.GET, "/api/v1/events/{eventId}/applicants", "/api/v1/mypage/performances/reviews", "/api/v1/mypage/performances",
+            "/api/v1/mypage/events").hasAuthority(userRole)
         .antMatchers(HttpMethod.PATCH, "/api/v1/events/{eventId}/accept", "/api/v1/events/deadline", "/api/v1/performances",
             "/api/v1/performances/reviews")
           .hasAuthority(userRole)

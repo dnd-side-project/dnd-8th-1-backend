@@ -1,8 +1,10 @@
 package dnd.danverse.domain.mypage.controller;
 
 import dnd.danverse.domain.jwt.service.SessionUser;
+import dnd.danverse.domain.mypage.dto.response.MyEventsDto;
 import dnd.danverse.domain.mypage.dto.response.MyPerformsDto;
 import dnd.danverse.domain.mypage.dto.response.MyReviewDto;
+import dnd.danverse.domain.mypage.service.MyEventsSearchService;
 import dnd.danverse.domain.mypage.service.MyPerformSearchService;
 import dnd.danverse.domain.mypage.service.MyReviewSearchService;
 import dnd.danverse.global.response.DataResponse;
@@ -31,6 +33,7 @@ public class MyPageController {
 
   private final MyReviewSearchService myReviewSearchService;
   private final MyPerformSearchService myPerformSearchService;
+  private final MyEventsSearchService myEventsSearchService;
 
   /**
    * 사용자가 작성한 후기들을 전체 조회할 수 있는 컨트롤러.
@@ -60,6 +63,21 @@ public class MyPageController {
   public ResponseEntity<DataResponse<List<MyPerformsDto>>> searchMyPerforms(@AuthenticationPrincipal SessionUser sessionUser) {
     List<MyPerformsDto> myPerforms = myPerformSearchService.findMyPerforms(sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "작성한 공연 조회 성공", myPerforms), HttpStatus.OK);
+  }
+
+  /**
+   * 사용자가 작성한 이벤트들을 전체 조회할 수 있는 컨트롤러.
+   *
+   * @param sessionUser 자신이 작성한 이벤트 정보 조회를 요청하는 사용자.
+   * @return 내가 작성한 이벤트 전체 조회
+   */
+  @GetMapping("/events")
+  @ApiOperation(value = "이벤트 조회", notes = "자신이 작성한 이벤트 리스트를 조회할 수 있다.")
+  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+      required = true, dataType = "string", paramType = "header")
+  public ResponseEntity<DataResponse<List<MyEventsDto>>> searchMyEvents(@AuthenticationPrincipal SessionUser sessionUser) {
+    List<MyEventsDto> myEvents = myEventsSearchService.findMyEvents(sessionUser.getId());
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "작성한 이벤트 조회 성공", myEvents), HttpStatus.OK);
   }
 
 }
