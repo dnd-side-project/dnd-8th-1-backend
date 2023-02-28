@@ -27,10 +27,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
             HttpMethod.HEAD.name(),
             HttpMethod.OPTIONS.name()
         )
-        //allow to use Authorization header
+
+        // Set the list of headers that a pre-flight request can list as allowed for use during an actual request.
         .allowedHeaders("*")
         // allow to use cookies
-        .allowCredentials(true);
+        .allowCredentials(true)
+        // allow to read response headers and cookies
+        .exposedHeaders("Authorization", "Set-Cookie");
 
   }
 
