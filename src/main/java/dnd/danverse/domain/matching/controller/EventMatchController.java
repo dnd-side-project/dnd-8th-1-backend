@@ -102,8 +102,8 @@ public class EventMatchController {
   /**
    * 이벤트 지원자 요청을 수락한다.
    *
-   * @param eventId 이벤트 글 아이디
-   * @param requestDto 수락하려는 사용자의 프로필 아이디
+   * @param eventId 이벤트 글 아이디.
+   * @param requestDto 수락하려는 사용자의 프로필 아이디.
    * @return MessageResponse 상태 메시지 담은 dto
    */
   @PatchMapping("/{eventId}/accept")
