@@ -17,4 +17,7 @@ public interface EventMatchRepository extends JpaRepository<EventMatch, Long> {
 
   @Query("select em from EventMatch em join fetch em.profileGuest p where em.event = :event")
   List<EventMatch> findByEvent(@Param("event") Event event);
+
+  @Query("SELECT DISTINCT em.event.id FROM EventMatch em WHERE em.event.id IN :eventIds AND em.isMatched = true")
+  List<Long> findDistinctEventIdsByEventIdIn(@Param("eventIds") List<Long> eventIds);
 }

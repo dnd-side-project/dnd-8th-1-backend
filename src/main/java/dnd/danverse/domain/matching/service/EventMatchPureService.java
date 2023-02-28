@@ -106,4 +106,17 @@ public class EventMatchPureService {
   public void acceptApplicant(EventMatch eventMatch) {
     eventMatch.accept();
   }
+
+  /**
+   * 파라미터로 받은 이벤트 id 들 중에서
+   * 실제로 매칭된 이벤트 id 들을 가져온다.
+   *
+   * @param eventIds 사용자가 작성한 모든 이벤트 id 리스트
+   * @return 실제로 매칭된 이벤트 id 리스트
+   */
+  @Transactional(readOnly = true)
+  public List<Long> findTrueEventIds(List<Long> eventIds) {
+    log.info("이벤트 ids를 통해서 EventMatch 가 true 인 모든 것을 가져옵니다. eventIds: {}", eventIds);
+    return eventMatchRepository.findDistinctEventIdsByEventIdIn(eventIds);
+  }
 }
