@@ -49,6 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //      return;
 //    }
 
+
     // header 에서 Authorization 이 없으면 바로 다음 필터로 넘어간다. 최종적으로 securityConfig 에서 설정한 권한을 검증한다.
     String header = request.getHeader(AUTHORIZATION);
     if (hasAuthorization(header)) {
