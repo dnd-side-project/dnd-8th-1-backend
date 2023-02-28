@@ -109,6 +109,20 @@ public class EventMatchPureService {
   }
 
   /**
+   * 파라미터로 받은 이벤트 id 들 중에서
+   * 실제로 매칭된 이벤트 id 들을 가져온다.
+   *
+   * @param eventIds 사용자가 작성한 모든 이벤트 id 리스트
+   * @return 실제로 매칭된 이벤트 id 리스트
+   */
+  @Transactional(readOnly = true)
+  public List<Long> findTrueEventIds(List<Long> eventIds) {
+    log.info("이벤트 ids를 통해서 EventMatch 가 true 인 모든 것을 가져옵니다. eventIds: {}", eventIds);
+    return eventMatchRepository.findDistinctEventIdsByEventIdIn(eventIds);
+  }
+
+
+  /**
    * 이벤트 Id 와 프로필 Id 를 통해서 지원을 확인한다.
    *
    * @param eventId 이벤트 Id.
@@ -117,7 +131,7 @@ public class EventMatchPureService {
    */
   public boolean checkIfApplied(Long eventId, Long profileId) {
     log.info("이벤트 지원 확인 위해 eventId: {}, profileId: {} 데이터를 통해서 찾습니다.", eventId, profileId);
-    return eventMatchRepository.findByEventAndProfileGuest(
-        eventId, profileId).isPresent();
+    return eventMatchRepository.findByEventAndProfileGuest(eventId, profileId).isPresent();
   }
+  
 }
