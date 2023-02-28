@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Event Match Entity 에 대한 순수 Service
+ * Event Match Entity 에 대한 순수 Service.
  */
 @Service
 @RequiredArgsConstructor
@@ -83,7 +83,7 @@ public class EventMatchPureService {
   }
 
   /**
-   * 이벤트 신청 중복 확인
+   * 이벤트 신청 중복 확인.
    *
    * @param targetEvent 신청하고자 하는 이벤트
    * @param applier     신청자
@@ -100,6 +100,7 @@ public class EventMatchPureService {
    * 이벤트 지원자에 대한 요청을 수락한다.
    * isMatched = true 로 변경한다.
    * Dirty Checking 을 통해 DB 에 반영한다.
+   *
    * @param eventMatch 이벤트 매치 객체
    */
   @Transactional
@@ -119,4 +120,18 @@ public class EventMatchPureService {
     log.info("이벤트 ids를 통해서 EventMatch 가 true 인 모든 것을 가져옵니다. eventIds: {}", eventIds);
     return eventMatchRepository.findDistinctEventIdsByEventIdIn(eventIds);
   }
+
+
+  /**
+   * 이벤트 Id 와 프로필 Id 를 통해서 지원을 확인한다.
+   *
+   * @param eventId 이벤트 Id.
+   * @param profileId 프로필 Id.
+   * @return 해당 이벤트에 지원한 이력이 있다면 true, 없다면 false.
+   */
+  public boolean checkIfApplied(Long eventId, Long profileId) {
+    log.info("이벤트 지원 확인 위해 eventId: {}, profileId: {} 데이터를 통해서 찾습니다.", eventId, profileId);
+    return eventMatchRepository.findByEventAndProfileGuest(eventId, profileId).isPresent();
+  }
+  
 }

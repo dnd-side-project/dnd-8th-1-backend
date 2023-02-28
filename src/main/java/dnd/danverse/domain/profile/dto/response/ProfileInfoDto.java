@@ -45,7 +45,7 @@ public class ProfileInfoDto {
    * 프로필의 작성자의 활동 시작일.
    */
   @ApiModelProperty(value = "프로필의 작성자의 활동 시작일")
-  private final LocalDate careerStartDay;
+  private final LocalDate careerStartDate;
 
   /**
    * 프로필의 작성자의 자기소개.
@@ -63,7 +63,7 @@ public class ProfileInfoDto {
    * 프로필의 작성자의 포트폴리오 URL Dto.
    */
   @ApiModelProperty(value = "프로필의 포트폴리오 정보")
-  private final PortfolioUrl portfolioUrl;
+  private final PortfolioUrl portfolio;
 
 
   /**
@@ -77,10 +77,10 @@ public class ProfileInfoDto {
     this.name = profile.getProfileName();
     this.imgUrl = profile.getProfileImg().getImageUrl();
     this.location = profile.getLocation();
-    this.careerStartDay = profile.getCareerStartDay();
+    this.careerStartDate = profile.getCareerStartDay();
     this.description = profile.getDescription();
     this.openChatUrl = profile.getOpenChatUrl().getOpenChatUrl();
-    this.portfolioUrl = new PortfolioUrl(profile.getPortfolioUrl());
+    this.portfolio = new PortfolioUrl(profile.getPortfolioUrl());
   }
 
 }

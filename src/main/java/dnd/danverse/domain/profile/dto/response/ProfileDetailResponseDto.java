@@ -31,7 +31,7 @@ public class ProfileDetailResponseDto {
   private final Set<String> genres;
 
   @ApiModelProperty(name = "커리어 시작 날짜")
-  private final LocalDate startDate;
+  private final LocalDate careerStartDate;
 
   @ApiModelProperty(name = "프로필 상세 설명")
   private final String description;
@@ -54,7 +54,7 @@ public class ProfileDetailResponseDto {
     this.imgUrl = profile.getProfileImg().getImageUrl();
     this.location = profile.getLocation();
     this.genres = profile.toStringProfileGenre();
-    this.startDate = profile.getCareerStartDay();
+    this.careerStartDate = profile.getCareerStartDay();
     this.description = profile.getDescription();
     this.openChatUrl = profile.getOpenChatUrl().getOpenChatUrl();
     this.portfolio = new PortfolioUrl(profile.getPortfolioUrl());

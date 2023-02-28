@@ -2,7 +2,7 @@ package dnd.danverse.domain.member.dto.response;
 
 import dnd.danverse.domain.member.entity.Member;
 import dnd.danverse.domain.member.service.SignUpResult;
-import dnd.danverse.domain.profile.dto.response.ProfileInfoDto;
+import dnd.danverse.domain.profile.dto.response.ProfileDetailResponseDto;
 import dnd.danverse.domain.profile.entity.Profile;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -57,7 +57,7 @@ public class MemberResponse {
    * 사용자의 프로필 정보를 담는 Dto.
    */
   @ApiModelProperty(value = "사용자의 프로필 정보를 담는 Dto")
-  private ProfileInfoDto profile;
+  private ProfileDetailResponseDto profile;
 
   /**
    * SignUpResult 가 가지고 있는 member , profile 정보를 이용하여 MemberResponse 를 생성한다.
@@ -66,8 +66,8 @@ public class MemberResponse {
    * @param signUpResult 회원가입 결과를 담은 객체
    */
   public MemberResponse(SignUpResult signUpResult) {
-    Member member = signUpResult.getMember();
-    Profile resultProfile = signUpResult.getProfile();
+    final Member member = signUpResult.getMember();
+    final Profile signedProfile = signUpResult.getProfile();
 
     this.id = member.getId();
     this.name = member.getName();
@@ -75,7 +75,7 @@ public class MemberResponse {
     this.imgUrl = member.getSocialImg();
     this.role = member.getRole().getAuthority();
     this.isSignUp = signUpResult.isSignUp();
-    this.profile = resultProfile != null ? new ProfileInfoDto(resultProfile) : null;
+    this.profile = signedProfile != null ? new ProfileDetailResponseDto(signedProfile) : null;
   }
 
 

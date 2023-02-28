@@ -51,7 +51,7 @@ public class ProfileSaveRequestDto {
    * 프로필의 작성자의 포트폴리오 URL Dto.
    */
   @ApiModelProperty(value = "프로필의 포트폴리오 정보")
-  private PortfolioUrl portfolioUrl;
+  private PortfolioUrl portfolio;
 
   /**
    * request dto를 profile entity로 변환.
@@ -69,8 +69,8 @@ public class ProfileSaveRequestDto {
         .careerStartDay(this.careerStartDate)
         .description(this.description)
         .openChatUrl(new OpenChat(this.openChatUrl))
-        .portfolioUrl(new Portfolio(this.portfolioUrl.getYoutube(),
-            this.portfolioUrl.getInstagram(), this.portfolioUrl.getTiktok()))
+        .portfolioUrl(new Portfolio(this.portfolio.getYoutube(),
+            this.portfolio.getInstagram(), this.portfolio.getTiktok()))
         .build();
 
     this.genres.stream()

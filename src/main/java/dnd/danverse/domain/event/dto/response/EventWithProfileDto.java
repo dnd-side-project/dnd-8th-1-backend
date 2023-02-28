@@ -44,12 +44,35 @@ public class EventWithProfileDto {
   private String description;
   @ApiModelProperty(value = "이벤트 이미지 url")
   private String imgUrl;
+  @ApiModelProperty(value = "이벤트 지원 여부")
+  private boolean isApplied;
 
+
+  /**
+   * 이벤트와 프로필 정보, 이벤트 지원 여부를 함께 반환하는 response dto.
+   *
+   * @param event   이벤트
+   * @param profile 프로필
+   * @param isApplied 이벤트 지원 여부
+   */
+  public EventWithProfileDto(Event event, Profile profile, boolean isApplied) {
+    this.id = event.getId();
+    this.profile = new ProfileSimpleDto(profile);
+    this.type = event.getEventType().getType();
+    this.title = event.getTitle();
+    this.recruitType = event.getRecruitType().getType();
+    this.recruitCount = event.getRecruitCount();
+    this.deadline = event.getDeadline();
+    this.location = event.getLocation();
+    this.description = event.getDescription();
+    this.imgUrl = event.getEventImg().getImageUrl();
+    this.isApplied = isApplied;
+  }
 
   /**
    * 이벤트와 프로필 정보를 함께 반환하는 response dto.
    *
-   * @param event 이벤트
+   * @param event   이벤트
    * @param profile 프로필
    */
   public EventWithProfileDto(Event event, Profile profile) {
@@ -63,5 +86,6 @@ public class EventWithProfileDto {
     this.location = event.getLocation();
     this.description = event.getDescription();
     this.imgUrl = event.getEventImg().getImageUrl();
+    this.isApplied = false;
   }
 }
