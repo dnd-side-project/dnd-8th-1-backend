@@ -34,7 +34,7 @@ public class EventSearchComplexService {
     Event event = eventPureService.getEventDetail(eventId);
 
     // 로그인을 안한 경우 및 프로필 없는 경우
-    if (sessionUser == null || sessionUser.getProfileId() == null) {
+    if (isNull(sessionUser)) {
       return new EventWithProfileDto(event, event.getProfile());
     }
 
@@ -43,6 +43,16 @@ public class EventSearchComplexService {
     boolean isApplied = eventMatchPureService.checkIfApplied(event.getId(), profileId);
 
     return new EventWithProfileDto(event, event.getProfile(), isApplied);
+  }
+
+  /**
+   * 조회 요청하는 사용자가 로그인을 하지 않은 사용자인지 혹은 프로필이 없는지 체크합니다.
+   *
+   * @param sessionUser 조회 요청하는 session User.
+   * @return 로그인하지 않거나 혹은 프로필이 없다면 true 반환.
+   */
+  private boolean isNull(SessionUser sessionUser) {
+    return sessionUser == null || sessionUser.getProfileId() == null;
   }
 
 }
