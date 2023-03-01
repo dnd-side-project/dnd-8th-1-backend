@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import lombok.Getter;
 
 /**
- * MyPage 에서 사용자가 참여한 이벤트 목록을 조회하기 위한 응답 DTO.
+ * MyPage 에서 사용자가 등록한 이벤트 목록을 조회하기 위한 응답 DTO.
  */
 @Getter
 public class MyEventsDto {

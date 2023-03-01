@@ -133,5 +133,16 @@ public class EventMatchPureService {
     log.info("이벤트 지원 확인 위해 eventId: {}, profileId: {} 데이터를 통해서 찾습니다.", eventId, profileId);
     return eventMatchRepository.findByEventAndProfileGuest(eventId, profileId).isPresent();
   }
-  
+
+  /**
+   * 파라미터로 받은 profileId를 통해서 지원한 이벤트 내역을 찾습니다.
+   *
+   * @param profileId 지원한 프로필 Id.
+   * @return 지원 내역 리스트.
+   */
+  @Transactional(readOnly = true)
+  public List<EventMatch> findAppliedEvents(Long profileId) {
+    log.info("프로필 id를 통하여 eventMatch 들을 찾습니다. profileId: {}", profileId);
+    return eventMatchRepository.findAppliesEventsByProfileId(profileId);
+  }
 }
