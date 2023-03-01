@@ -18,6 +18,6 @@ public interface EventRepository extends JpaRepository<Event, Long>, EventFilter
   @Query("select e from Event e join fetch e.profile where e.id = :eventId")
   Optional<Event> findProfileJoinFetch(@Param("eventId") Long eventId);
 
-  @Query("select e from Event e where e.profile.id = :profileId")
+  @Query("select e from Event e where e.profile.id = :profileId order by e.createdAt desc")
   List<Event> searchAllEventsByProfileId(@Param("profileId") Long profileId);
 }
