@@ -27,6 +27,6 @@ public interface EventMatchRepository extends JpaRepository<EventMatch, Long> {
    * @param profileId 지원한 이벤트를 조회하려고 하는 사용자의 프로필 Id.
    * @return List<EventMatch>
    */
-  @Query("select em from EventMatch em join fetch em.event e where em.profileGuest.id = :profileId")
+  @Query("select em from EventMatch em join fetch em.event e where em.profileGuest.id = :profileId order by em.createdAt desc")
   List<EventMatch> findAppliesEventsByProfileId(@Param("profileId") Long profileId);
 }
