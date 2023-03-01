@@ -16,8 +16,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
   public void addCorsMappings(CorsRegistry registry) {
     registry
         .addMapping("/**")
-        .allowedOrigins("http://localhost:3000", "http://localhost:6006",
-            "https://danverse.vercel.app")
+        .allowedOrigins("http://localhost:3000", "https://localhost:3001" ,"http://localhost:6006",
+            "https://danverse.vercel.app" , "https://danverse-*-allsilver.vercel.app",
+            "https://danverse-git-*-allsilver.vercel.app")
         .allowedMethods(
             HttpMethod.GET.name(),
             HttpMethod.POST.name(),
@@ -30,10 +31,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         // Set the list of headers that a pre-flight request can list as allowed for use during an actual request.
         .allowedHeaders("*")
-        // allow to use cookies
+        // allow to use cookies (쿠키 사용을 허용할지 여부)
         .allowCredentials(true)
-        // allow to read response headers and cookies
-        .exposedHeaders("Authorization", "Set-Cookie");
+        // allow to read response Authorization header
+        .exposedHeaders("Authorization");
 
   }
 

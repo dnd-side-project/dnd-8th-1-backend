@@ -45,7 +45,7 @@ public class SecurityConfig {
     http.authorizeRequests()
 
         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() //PreFlight 요청 무시하기
-        .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll() // Preflight Request 허용해주기 CORS
+        //.antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll() // Preflight Request 허용해주기 CORS
 
         .antMatchers("/api/manager/resource").hasAuthority("ROLE_MANAGER")
         .antMatchers(HttpMethod.POST, "/api/v1/events", "/api/v1/events/apply",
