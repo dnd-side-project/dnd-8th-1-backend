@@ -32,7 +32,7 @@ public class SessionUser implements Serializable {
     this.profileImage = member.getSocialImg();
     this.authority = member.getRole().getAuthority();
     this.provider = member.getOauth2Provider().name();
-    this.profileId = member.getProfile().getId();
+    this.profileId = member.getProfile() == null ? null : member.getProfile().getId();
   }
 
 }
