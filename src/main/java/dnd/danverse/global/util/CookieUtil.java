@@ -38,6 +38,7 @@ public class CookieUtil {
         .secure(true)
         .maxAge(REFRESH_TOKEN_EXPIRE_LENGTH_MS)
         .path("/")
+        .sameSite("None")
         .build();
 
     httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
