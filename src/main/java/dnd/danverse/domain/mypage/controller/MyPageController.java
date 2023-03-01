@@ -21,7 +21,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 활동 내역 관련 컨트롤러.
@@ -29,7 +28,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/mypage")
-@ApiIgnore
 @Api(tags = "MyPageController : 활동 내역 관련 API")
 public class MyPageController {
 
