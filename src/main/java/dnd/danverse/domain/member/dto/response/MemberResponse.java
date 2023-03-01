@@ -94,7 +94,7 @@ public class MemberResponse {
     this.email = member.getEmail();
     this.imgUrl = member.getSocialImg();
     this.role = member.getRole().getAuthority();
-    this.isSignUp = true;
+    this.isSignUp = false;
     this.profile = profileResult != null ? new ProfileDetailResponseDto(profileResult) : null;
   }
 }
