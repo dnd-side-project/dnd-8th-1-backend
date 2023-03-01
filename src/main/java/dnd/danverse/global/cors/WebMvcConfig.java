@@ -34,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // allow to use cookies (쿠키 사용을 허용할지 여부)
         .allowCredentials(true)
         // allow to read response Authorization header
-        .exposedHeaders("Authorization");
+        .exposedHeaders("Authorization", "Set-Cookie");
 
   }
 
