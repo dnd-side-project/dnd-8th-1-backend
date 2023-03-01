@@ -79,5 +79,22 @@ public class MemberResponse {
   }
 
 
-
+  /**
+   * 이미 로그인 이후 시점에서 사용자의 정보를 반환하는 생성자이므로,
+   * isSignup 의 값을 true 로 고정하였습니다.
+   * 사용자의 프로필이 null 이라면, 프로필 dto 없이 null 을 반환합니다.
+   * null 이 아니라면, dto 에 프로필을 담아 반환합니다.
+   *
+   * @param member 사용자.
+   * @param profileResult 프로필 정보를 담은 Dto.
+   */
+  public MemberResponse(Member member, Profile profileResult) {
+    this.id = member.getId();
+    this.name = member.getName();
+    this.email = member.getEmail();
+    this.imgUrl = member.getSocialImg();
+    this.role = member.getRole().getAuthority();
+    this.isSignUp = true;
+    this.profile = profileResult != null ? new ProfileDetailResponseDto(profileResult) : null;
+  }
 }
