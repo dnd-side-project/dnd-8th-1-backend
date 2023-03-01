@@ -3,6 +3,7 @@ package dnd.danverse.domain.member.controller;
 
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.member.dto.response.MemberResponse;
+import dnd.danverse.domain.member.service.MemberInfoSearchService;
 import dnd.danverse.domain.oauth.dto.OAuth2LoginResponseDTO;
 import dnd.danverse.domain.oauth.service.OAuth2Service;
 import dnd.danverse.global.response.DataResponse;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
   private final OAuth2Service oAuth2Service;
+  private final MemberInfoSearchService memberInfoSearchService;
 
   /**
    * 클라이언트 Request 으로부터 Header 에 있는 Authorization 에 담긴 토큰을 받아서
@@ -59,6 +61,21 @@ public class MemberController {
 
     return ResponseEntity.ok(email);
 
+  }
+
+  /**
+   * 액세스 토큰을 통해서 본인의 정보를 모두 조회할 수 있습니다.
+   *
+   * @param sessionUser sessionUser.
+   * @return 사용자의 정보를 담은 Dto.
+   */
+  @GetMapping("/info")
+  @ApiOperation(value = "본인의 정보 조회", notes = "액세스 토큰을 통해 본인의 정보를 받을 수 있습니다.")
+  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+      required = true, dataType = "string", paramType = "header")
+  public ResponseEntity<DataResponse<MemberResponse>> searchMyInfo(@AuthenticationPrincipal SessionUser sessionUser) {
+    MemberResponse memberResponse = memberInfoSearchService.searchMyInfo(sessionUser.getId());
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "본인 정보 조회 성공", memberResponse), HttpStatus.OK);
   }
 
 
