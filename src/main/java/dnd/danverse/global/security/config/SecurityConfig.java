@@ -51,7 +51,8 @@ public class SecurityConfig {
             "/api/v1/events/image", "/api/v1/performances/image", "/api/v1/profiles/image", "/api/v1/performances",
             "/api/v1/performances/{performId}/reviews", "/api/v1/profiles")
           .hasAuthority(userRole)
-        .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply", "/api/v1/events/{eventId}", "/api/v1/performances/{performId}")
+        .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply", "/api/v1/events/{eventId}", "/api/v1/performances/{performId}"
+        ,"/api/v1/performances/reviews/{reviewId}")
           .hasAuthority(userRole)
         .antMatchers(HttpMethod.GET, "/api/v1/events/{eventId}/applicants", "/api/v1/mypage/performances/reviews", "/api/v1/mypage/performances",
             "/api/v1/mypage/events", "/api/v1/mypage/events/applications", "/api/v1/member/info").hasAuthority(userRole)
