@@ -85,4 +85,14 @@ public class ProfilePureService {
       throw new ProfileAlreadyException(PROFILE_ALREADY_EXISTS);
     });
   }
+
+  /**
+   * 자신이 가지고 있는 프로필을 삭제합니다.
+   *
+   * @param profile 삭제하려는 프로필.
+   */
+  @Transactional
+  public void deleteProfile(Profile profile) {
+    profileRepository.delete(profile);
+  }
 }

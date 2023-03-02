@@ -52,7 +52,7 @@ public class SecurityConfig {
             "/api/v1/performances/{performId}/reviews", "/api/v1/profiles")
           .hasAuthority(userRole)
         .antMatchers(HttpMethod.DELETE, "/api/v1/events/{eventId}/cancel-apply", "/api/v1/events/{eventId}", "/api/v1/performances/{performId}"
-        ,"/api/v1/performances/reviews/{reviewId}")
+        ,"/api/v1/performances/reviews/{reviewId}", "/api/v1/profiles")
           .hasAuthority(userRole)
         .antMatchers(HttpMethod.GET, "/api/v1/events/{eventId}/applicants", "/api/v1/mypage/performances/reviews", "/api/v1/mypage/performances",
             "/api/v1/mypage/events", "/api/v1/mypage/events/applications", "/api/v1/member/info").hasAuthority(userRole)
