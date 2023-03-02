@@ -72,6 +72,12 @@ public class ProfileUpdateRequestDto {
   @ApiModelProperty(value = "프로필 오픈챗 url")
   private String openChatUrl;
 
+  /**
+   * 요청 dto 가 가지고 있는 String 장르 값을 profile 과 연관 관계 매핑이 이루어진
+   * ProfileGenre 객체로 변환하여 반환.
+   * @param profile 연관 관계 매핑을 위한 profile 객체
+   * @return Profile 과 연관 관계 매핑이 이루어진 ProfileGenre 객체로 변환된 Set
+   */
   public Set<ProfileGenre> getSetOfGenres(Profile profile) {
     return this.getGenres().stream()
         .map(genre -> new ProfileGenre(genre, profile))
