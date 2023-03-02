@@ -37,7 +37,7 @@ public class ProfileUpdateService {
       return new ProfileDetailResponseDto(updatedProfile);
     }
     Set<ProfileGenre> newProfileGenres = request.getSetOfGenres(updatedProfile);
-    profileGenrePureService.deleteAndSaveAll(request.getId(), newProfileGenres);
+    profileGenrePureService.deleteAndSaveAll(profile.getId(), newProfileGenres);
     return new ProfileDetailResponseDto(updatedProfile, newProfileGenres);
   }
 
