@@ -2,12 +2,14 @@ package dnd.danverse.domain.profile.controller;
 
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.profile.dto.request.ProfileSaveRequestDto;
+import dnd.danverse.domain.profile.dto.request.ProfileUpdateRequestDto;
 import dnd.danverse.domain.profile.dto.response.ProfileDetailResponseDto;
 import dnd.danverse.domain.profile.dto.response.ProfileHomeDto;
 import dnd.danverse.domain.profile.dto.response.MemberWithProfileDto;
 import dnd.danverse.domain.profile.service.ProfileDetailService;
 import dnd.danverse.domain.profile.service.ProfileSaveService;
 import dnd.danverse.domain.profile.service.ProfileSearchService;
+import dnd.danverse.domain.profile.service.ProfileUpdateService;
 import dnd.danverse.global.response.DataResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +40,7 @@ public class ProfileController {
   private final ProfileSearchService profileSearchService;
   private final ProfileDetailService profileDetailService;
   private final ProfileSaveService profileSaveService;
+  private final ProfileUpdateService profileUpdateService;
 
   /**
    * 서비스 사용자는 실제 사용자의 프로필 6개를 랜덤으로 조회할 수 있습니다.
@@ -74,5 +78,16 @@ public class ProfileController {
     return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED, "프로필 등록 성공", profileResponse), HttpStatus.CREATED);
   }
 
-
+  /**
+   * 프로필을 등록한 사용자는 프로필을 수정할 수 있습니다.
+   */
+  @PatchMapping()
+  @ApiOperation(value = "프로필 수정", notes = "프로필을 등록한 사용자에 한하여 프로필 수정")
+  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+      required = true, dataType = "string", paramType = "header")
+  public ResponseEntity<DataResponse<ProfileDetailResponseDto>> updateProfile(@RequestBody ProfileUpdateRequestDto profileUpdateRequest,
+      @AuthenticationPrincipal SessionUser sessionUser) {
+    ProfileDetailResponseDto detailResponse = profileUpdateService.updateProfile(profileUpdateRequest, sessionUser.getId());
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "프로필 수정 성공", detailResponse), HttpStatus.OK);
+  }
 }
