@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -85,7 +86,7 @@ public class ProfileController {
   @ApiOperation(value = "프로필 수정", notes = "프로필을 등록한 사용자에 한하여 프로필 수정")
   @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
       required = true, dataType = "string", paramType = "header")
-  public ResponseEntity<DataResponse<ProfileDetailResponseDto>> updateProfile(@RequestBody ProfileUpdateRequestDto profileUpdateRequest,
+  public ResponseEntity<DataResponse<ProfileDetailResponseDto>> updateProfile(@RequestBody @Validated ProfileUpdateRequestDto profileUpdateRequest,
       @AuthenticationPrincipal SessionUser sessionUser) {
     ProfileDetailResponseDto detailResponse = profileUpdateService.updateProfile(profileUpdateRequest, sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "프로필 수정 성공", detailResponse), HttpStatus.OK);
