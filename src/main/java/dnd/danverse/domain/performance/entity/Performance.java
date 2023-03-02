@@ -174,7 +174,7 @@ public class Performance extends BaseTimeEntity {
    * @return 모두 포함한다면 true, 하나라도 중복되지 않는 값이 있다면 false.
    */
   public boolean containGenres(Set<String> newGenres) {
-    return newGenres.containsAll(toStringGenre());
+    return this.toStringGenre().containsAll(newGenres);
   }
 
   /**
