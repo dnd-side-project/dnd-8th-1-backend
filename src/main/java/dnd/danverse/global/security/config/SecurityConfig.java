@@ -55,7 +55,7 @@ public class SecurityConfig {
         ,"/api/v1/performances/reviews/{reviewId}", "/api/v1/profiles", "/api/v1/member")
           .hasAuthority(userRole)
         .antMatchers(HttpMethod.GET, "/api/v1/events/{eventId}/applicants", "/api/v1/mypage/performances/reviews", "/api/v1/mypage/performances",
-            "/api/v1/mypage/events", "/api/v1/mypage/events/applications", "/api/v1/member/info").hasAuthority(userRole)
+            "/api/v1/mypage/events", "/api/v1/mypage/events/applications", "/api/v1/member/info", "/api/v1/member/logout").hasAuthority(userRole)
         .antMatchers(HttpMethod.PATCH, "/api/v1/events/{eventId}/accept", "/api/v1/events/deadline", "/api/v1/performances",
             "/api/v1/performances/reviews")
           .hasAuthority(userRole)
