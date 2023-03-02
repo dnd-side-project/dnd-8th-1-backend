@@ -161,7 +161,7 @@ public class Performance extends BaseTimeEntity {
   /**
    * PerformGenre -> String 으로 변환.
    */
-  private Set<String> toStringGenre() {
+  private Set<String> toStringPerformGenre() {
     return this.performGenres.stream()
         .map(PerformGenre::getGenre)
         .collect(Collectors.toSet());
@@ -174,7 +174,7 @@ public class Performance extends BaseTimeEntity {
    * @return 모두 포함한다면 true, 하나라도 중복되지 않는 값이 있다면 false.
    */
   public boolean containGenres(Set<String> newGenres) {
-    return this.toStringGenre().containsAll(newGenres);
+    return this.toStringPerformGenre().containsAll(newGenres);
   }
 
   /**
