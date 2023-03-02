@@ -130,7 +130,7 @@ public class Performance extends BaseTimeEntity {
 
   /**
    * 공연 장르 목록을 문자열로 반환한다.
-   * 
+   *
    * @return 장르 List.
    */
   public List<String> getStringOfPerformGenres() {
@@ -159,9 +159,9 @@ public class Performance extends BaseTimeEntity {
   }
 
   /**
-   * PerformGenre -> String 으로 변환
+   * PerformGenre -> String 으로 변환.
    */
-  private Set<String> toStringGenre() {
+  private Set<String> toStringPerformGenre() {
     return this.performGenres.stream()
         .map(PerformGenre::getGenre)
         .collect(Collectors.toSet());
@@ -174,7 +174,17 @@ public class Performance extends BaseTimeEntity {
    * @return 모두 포함한다면 true, 하나라도 중복되지 않는 값이 있다면 false.
    */
   public boolean containGenres(Set<String> newGenres) {
-    return toStringGenre().containsAll(newGenres);
+    return this.toStringPerformGenre().containsAll(newGenres);
+  }
+
+  /**
+   * 기존 장르 데이터 set 의 사이즈와 새로운 장르 데이터 set 의 사이즈를 비교합니다.
+   *
+   * @param newGenres 새로운 장르 set.
+   * @return 사이즈가 같다면 true, 다르면 false.
+   */
+  public boolean compareSize(Set<String> newGenres) {
+    return this.performGenres.size() == newGenres.size();
   }
 
 }

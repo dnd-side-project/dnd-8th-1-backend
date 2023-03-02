@@ -7,6 +7,7 @@ import dnd.danverse.domain.common.Image;
 import dnd.danverse.domain.common.TeamType;
 import dnd.danverse.domain.event.exception.EventNotAvailableException;
 import dnd.danverse.domain.member.entity.Member;
+import dnd.danverse.domain.profile.dto.request.ProfileUpdateRequestDto;
 import dnd.danverse.domain.profilegenre.entity.ProfileGenre;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -166,7 +167,51 @@ public class Profile extends BaseTimeEntity {
         .collect(Collectors.toSet());
   }
 
+  /**
+   * Profile 객체의 ID 와 파라미터로 넘어온 Profile 객체의 ID 가 같은지 확인한다.
+   *
+   * @param stranger 비교할 Profile 객체
+   * @return 같지 않으면 true, 같으면 false 반환
+   */
   public boolean isNotSame(Profile stranger) {
     return !Objects.equals(this.id, stranger.getId());
+  }
+
+  /**
+   * Profile 객체를 Dirty Checking 을 통해 업데이트한다.
+   *
+   * @param request 프로필 수정 요청 dto
+   * @return 수정된 Profile 객체
+   */
+  public Profile update(ProfileUpdateRequestDto request) {
+    this.profileType = TeamType.of(request.getType());
+    this.profileImg = new Image(request.getImgUrl());
+    this.profileName = request.getName();
+    this.location = request.getLocation();
+    this.careerStartDay = request.getCareerStartDate();
+    this.description = request.getDescription();
+    this.openChatUrl = new OpenChat(request.getOpenChatUrl());
+
+    return this;
+  }
+
+  /**
+   * 수정하려는 장르의 Set 과 기존 장르의 Set 을 containsAll 메서드로 비교합니다.
+   *
+   * @param newGenres 새로운 장르 Set<String>
+   * @return 모두 포함한다면 true, 하나라도 중복되지 않는 값이 있다면 false.
+   */
+  public boolean containGenres(Set<String> newGenres) {
+    return this.toStringProfileGenre().containsAll(newGenres);
+  }
+
+  /**
+   * 기존 장르 데이터 set 의 사이즈와 새로운 장르 데이터 set 의 사이즈를 비교합니다.
+   *
+   * @param newGenres 새로운 장르 set.
+   * @return 사이즈가 같다면 true, 다르면 false.
+   */
+  public boolean compareSize(Set<String> newGenres) {
+    return this.profileGenres.size() == newGenres.size();
   }
 }

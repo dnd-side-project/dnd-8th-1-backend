@@ -62,4 +62,9 @@ public class ProfileGenre extends BaseTimeEntity {
     profile.getProfileGenres().add(this);
   }
 
+  public ProfileGenre(String genre, Profile profile) {
+    this.genre = genre;
+    this.profile = profile;
+  }
+
 }

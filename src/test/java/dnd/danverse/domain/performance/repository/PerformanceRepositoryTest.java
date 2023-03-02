@@ -14,7 +14,7 @@ import dnd.danverse.domain.profile.repository.ProfileRepository;
 import dnd.danverse.domain.profile.entity.OpenChat;
 import dnd.danverse.domain.profile.entity.Portfolio;
 import dnd.danverse.domain.profile.entity.Profile;
-import dnd.danverse.domain.profilegenre.ProfileGenreRepository;
+import dnd.danverse.domain.profilegenre.repository.ProfileGenreRepository;
 import dnd.danverse.domain.profilegenre.entity.ProfileGenre;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
