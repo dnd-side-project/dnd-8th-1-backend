@@ -30,4 +30,15 @@ public class MemberPureService {
     log.info("member 와 profile 을 찾기 위해 fetch join 으로 memberId 인 {} 를 찾는다.", memberId);
     return memberRepository.findMemberWithProfile(memberId).orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND));
   }
+
+  /**
+   * Member 를 탈퇴시킨다.
+   *
+   * @param member 탈퇴시키고자 하는 Member
+   */
+  @Transactional
+  public void withDrawMember(Member member) {
+    log.info("memberId 인 {} 를 탈퇴시킨다.", member.getId());
+    memberRepository.delete(member);
+  }
 }

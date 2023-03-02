@@ -4,9 +4,11 @@ package dnd.danverse.domain.member.controller;
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.member.dto.response.MemberResponse;
 import dnd.danverse.domain.member.service.MemberInfoSearchService;
+import dnd.danverse.domain.member.service.MemberWithDrawService;
 import dnd.danverse.domain.oauth.dto.OAuth2LoginResponseDTO;
 import dnd.danverse.domain.oauth.service.OAuth2Service;
 import dnd.danverse.global.response.DataResponse;
+import dnd.danverse.global.response.MessageResponse;
 import dnd.danverse.global.util.CookieUtil;
 import dnd.danverse.global.util.HttpHeaderUtil;
 import io.swagger.annotations.Api;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +36,7 @@ public class MemberController {
 
   private final OAuth2Service oAuth2Service;
   private final MemberInfoSearchService memberInfoSearchService;
+  private final MemberWithDrawService memberWithDrawService;
 
   /**
    * 클라이언트 Request 으로부터 Header 에 있는 Authorization 에 담긴 토큰을 받아서
@@ -77,6 +81,20 @@ public class MemberController {
     MemberResponse memberResponse = memberInfoSearchService.searchMyInfo(sessionUser.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "본인 정보 조회 성공", memberResponse), HttpStatus.OK);
   }
+
+  /**
+   * 회원 탈퇴를 할 수 있다.
+   *
+   */
+  @DeleteMapping()
+  @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴를 할 수 있습니다.")
+  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+      required = true, dataType = "string", paramType = "header")
+  public ResponseEntity<MessageResponse> withdrawMember(@AuthenticationPrincipal SessionUser sessionUser) {
+    memberWithDrawService.withdrawMember(sessionUser.getId());
+    return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "회원 탈퇴 성공"), HttpStatus.OK);
+  }
+
 
 
 
