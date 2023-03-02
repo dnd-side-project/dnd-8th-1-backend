@@ -168,4 +168,21 @@ public class JwtTokenProvider {
   }
 
 
+  /**
+   * 로그 아웃 요청한 시점에서 Access Token 의 남은 유효시간을 반환한다.
+   *
+   * @param accessToken 남은 유효기간 확인을 위한 Access Token
+   * @return 남은 유효시간 (초)
+   */
+  public Long getExpiration(String accessToken) {
+    // accessToken 남은 유효시간
+    Date expiration = Jwts.parserBuilder().setSigningKey(secretKey).build()
+        .parseClaimsJws(accessToken).getBody().getExpiration();
+
+    // 현재 시간을 구합니다.
+    long currentTimeMillis = System.currentTimeMillis();
+
+    // expiration 에서 현재 시간을 빼서 초 단위의 long 값을 구합니다.
+    return (expiration.getTime() - currentTimeMillis) / 1000;
+  }
 }

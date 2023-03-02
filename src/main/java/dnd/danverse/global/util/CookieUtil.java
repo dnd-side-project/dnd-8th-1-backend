@@ -43,4 +43,16 @@ public class CookieUtil {
 
     httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
   }
+
+  public static void resetRefreshToken(HttpHeaders headers) {
+    ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
+        .httpOnly(true)
+        .secure(true)
+        .maxAge(0)
+        .path("/")
+        .sameSite("None")
+        .build();
+
+    headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
+  }
 }
