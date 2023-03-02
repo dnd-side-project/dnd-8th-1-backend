@@ -1,9 +1,12 @@
 package dnd.danverse.domain.member.controller;
 
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 import dnd.danverse.domain.jwt.service.SessionUser;
 import dnd.danverse.domain.member.dto.response.MemberResponse;
 import dnd.danverse.domain.member.service.MemberInfoSearchService;
+import dnd.danverse.domain.member.service.MemberLogOutService;
 import dnd.danverse.domain.member.service.MemberWithDrawService;
 import dnd.danverse.domain.oauth.dto.OAuth2LoginResponseDTO;
 import dnd.danverse.domain.oauth.service.OAuth2Service;
@@ -14,6 +17,7 @@ import dnd.danverse.global.util.HttpHeaderUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,6 +41,7 @@ public class MemberController {
   private final OAuth2Service oAuth2Service;
   private final MemberInfoSearchService memberInfoSearchService;
   private final MemberWithDrawService memberWithDrawService;
+  private final MemberLogOutService memberLogOutService;
 
   /**
    * 클라이언트 Request 으로부터 Header 에 있는 Authorization 에 담긴 토큰을 받아서
@@ -93,6 +98,30 @@ public class MemberController {
   public ResponseEntity<MessageResponse> withdrawMember(@AuthenticationPrincipal SessionUser sessionUser) {
     memberWithDrawService.withdrawMember(sessionUser.getId());
     return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "회원 탈퇴 성공"), HttpStatus.OK);
+  }
+
+
+  /**
+   * 로그아웃을 할 수 있다.
+   *
+   * @param request request 로 부터 Access Token 을 받아온다.
+   * @param sessionUser API 요청을 한 사용자의 정보를 받아온다.
+   * @return 로그아웃 성공 메시지.
+   */
+  @GetMapping("/logout")
+  @ApiOperation(value = "로그아웃", notes = "로그아웃을 할 수 있습니다.")
+  @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+      required = true, dataType = "string", paramType = "header")
+  public ResponseEntity<MessageResponse> logout(HttpServletRequest request, @AuthenticationPrincipal SessionUser sessionUser) {
+
+    String accessToken = request.getHeader(AUTHORIZATION).substring(7);
+
+    memberLogOutService.logout(accessToken, sessionUser.getEmail());
+
+    HttpHeaders headers = new HttpHeaders();
+    CookieUtil.resetRefreshToken(headers);
+
+    return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "로그아웃 성공"), headers, HttpStatus.OK);
   }
 
 

@@ -35,12 +35,20 @@ public class CookieUtil {
 
     ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
         .httpOnly(true)
-        .secure(true)
+//        .secure(true)
         .maxAge(REFRESH_TOKEN_EXPIRE_LENGTH_MS)
         .path("/")
-        .sameSite("None")
+//        .sameSite("None")
         .build();
 
     httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
+  }
+
+  public static void resetRefreshToken(HttpHeaders headers) {
+    ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
+        .maxAge(0)
+        .build();
+
+    headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
   }
 }

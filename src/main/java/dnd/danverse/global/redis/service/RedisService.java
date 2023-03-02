@@ -39,4 +39,17 @@ public class RedisService {
     return refreshTokenRedisRepository.findByRefreshToken(refreshToken)
         .orElseThrow(() -> new JwtException(JWT_REFRESH_TOKEN_EXPIRED));
   }
+
+  /**
+   * Refresh Token 을 Redis 에서 삭제한다.
+   * API 요청자의 email 을 key 로 설정하여 삭제한다.
+   *
+   * @param email : 로그 아웃 API 를 요청한 사용자의 email
+   */
+  @Transactional
+  public void deleteRefreshTokenByEmail(String email) {
+    refreshTokenRedisRepository.deleteById(email);
+  }
+
+
 }
