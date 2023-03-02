@@ -100,4 +100,15 @@ public class ReviewPureService {
     log.info("작성자의 아이디가 {}인 리뷰를 조회한다.", memberId);
     return reviewRepository.findReviewsWithMemberId(memberId);
   }
+
+  /**
+   * Review 를 삭제한다.
+   *
+   * @param review 삭제하고자 하는 Review.
+   */
+  @Transactional
+  public void deleteReview(Review review) {
+    log.info("Review 를 삭제한다. 내용 : {} ", review.getContent());
+    reviewRepository.delete(review);
+  }
 }

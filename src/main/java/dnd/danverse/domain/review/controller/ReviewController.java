@@ -5,10 +5,12 @@ import dnd.danverse.domain.review.dto.request.ReviewContentDto;
 import dnd.danverse.domain.review.dto.request.ReviewUpdateDto;
 import dnd.danverse.domain.review.dto.response.ReviewInfoDto;
 import dnd.danverse.domain.review.dto.response.ReviewInfoWithPerformDto;
+import dnd.danverse.domain.review.service.ReviewDeleteComplexService;
 import dnd.danverse.domain.review.service.ReviewSaveComplexService;
 import dnd.danverse.domain.review.service.ReviewUpdateComplexService;
 import dnd.danverse.domain.review.service.ReviewsSearchComplexService;
 import dnd.danverse.global.response.DataResponse;
+import dnd.danverse.global.response.MessageResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +41,7 @@ public class ReviewController {
   private final ReviewSaveComplexService reviewSaveComplexService;
   private final ReviewsSearchComplexService reviewsSearchComplexService;
   private final ReviewUpdateComplexService reviewUpdateComplexService;
+  private final ReviewDeleteComplexService reviewDeleteComplexService;
 
   /**
    * 후기를 저장한다.
@@ -108,6 +112,26 @@ public class ReviewController {
     ReviewInfoDto reviewInfoDto = reviewUpdateComplexService.updateReview(updateDto, user.getId());
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "리뷰가 성공적으로 수정되었습니다.", reviewInfoDto),
         HttpStatus.OK);
+  }
+
+
+  /**
+   * 후기를 삭제한다.
+   *
+   * @param reviewId 후기 고유 ID
+   * @param sessionUser API 요청자
+   * @return 성공적으로 삭제된 후기 메시지 응답
+   */
+  @DeleteMapping("/reviews/{reviewId}")
+  @ApiOperation(value = "후기를 삭제한다.", notes = "공연에 작성된 후기를 삭제한다")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "reviewId", value = "후기 고유 ID", required = true, dataType = "long", paramType = "path"),
+      @ApiImplicitParam(name = "Authorization", value = "Bearer access_token (서버에서 발급한 access_token)",
+          required = true, dataType = "string", paramType = "header")
+  })
+  public ResponseEntity<MessageResponse> deleteReview(@PathVariable("reviewId") Long reviewId, @AuthenticationPrincipal SessionUser sessionUser) {
+    reviewDeleteComplexService.deleteReview(reviewId, sessionUser.getId());
+    return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "리뷰가 성공적으로 삭제되었습니다."), HttpStatus.OK);
   }
 
 
