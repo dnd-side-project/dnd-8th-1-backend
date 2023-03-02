@@ -56,6 +56,7 @@ public enum ErrorCode {
   JWT_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "J001", "유효하지 않은 토큰입니다."),
   JWT_EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "J002", "만료된 토큰입니다."),
   JWT_REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "J003", "만료된 리프레시 토큰입니다."),
+  ACCESS_TOKEN_LOGOUT(HttpStatus.UNAUTHORIZED, "J004", "로그아웃된 액세스 토큰입니다."),
 
   // 리소스 요청에 대한 권한이 없는 경우
   RESOURCE_FORBIDDEN(HttpStatus.FORBIDDEN, "R001", "해당 리소스에 대한 권한이 없습니다."),
