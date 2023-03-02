@@ -1,9 +1,11 @@
 package dnd.danverse.domain.profile.dto.response;
 
 import dnd.danverse.domain.profile.entity.Profile;
+import dnd.danverse.domain.profilegenre.entity.ProfileGenre;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 /**
@@ -54,6 +56,27 @@ public class ProfileDetailResponseDto {
     this.imgUrl = profile.getProfileImg().getImageUrl();
     this.location = profile.getLocation();
     this.genres = profile.toStringProfileGenre();
+    this.careerStartDate = profile.getCareerStartDay();
+    this.description = profile.getDescription();
+    this.openChatUrl = profile.getOpenChatUrl().getOpenChatUrl();
+    this.portfolio = new PortfolioUrl(profile.getPortfolioUrl());
+  }
+
+  /**
+   * 입력받은 프로필과 새로운 장르 데이터를 반환하는 dto 생성자.
+   *
+   * @param profile 정보 반환을 원하는 프로필 객체.
+   * @param newGenres 새로운 장르 데이터.
+   */
+  public ProfileDetailResponseDto(Profile profile, Set<ProfileGenre> newGenres) {
+    this.id = profile.getMember().getId();
+    this.type = profile.getProfileType().getType();
+    this.name = profile.getProfileName();
+    this.imgUrl = profile.getProfileImg().getImageUrl();
+    this.location = profile.getLocation();
+    this.genres = newGenres.stream()
+        .map(ProfileGenre::getGenre)
+        .collect(Collectors.toSet());
     this.careerStartDate = profile.getCareerStartDay();
     this.description = profile.getDescription();
     this.openChatUrl = profile.getOpenChatUrl().getOpenChatUrl();
