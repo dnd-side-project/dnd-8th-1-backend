@@ -167,10 +167,22 @@ public class Profile extends BaseTimeEntity {
         .collect(Collectors.toSet());
   }
 
+  /**
+   * Profile 객체의 ID 와 파라미터로 넘어온 Profile 객체의 ID 가 같은지 확인한다.
+   *
+   * @param stranger 비교할 Profile 객체
+   * @return 같지 않으면 true, 같으면 false 반환
+   */
   public boolean isNotSame(Profile stranger) {
     return !Objects.equals(this.id, stranger.getId());
   }
 
+  /**
+   * Profile 객체를 Dirty Checking 을 통해 업데이트한다.
+   *
+   * @param request 프로필 수정 요청 dto
+   * @return 수정된 Profile 객체
+   */
   public Profile update(ProfileUpdateRequestDto request) {
     this.profileType = TeamType.of(request.getType());
     this.profileImg = new Image(request.getImgUrl());
