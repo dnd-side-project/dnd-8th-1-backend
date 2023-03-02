@@ -73,13 +73,13 @@ public class PerformUpdateComplexService {
 
     Performance performance = validatePerformWriter.validateWriter(updateRequest.getId(), memberId); //같은 작성자인지 검증 및 performance 반환.
 
-    Performance newPerformance = performancePureService.updatePerform(performance, updateRequest); //장르를 제외한 나머지를 수정한다.
-    if (newPerformance.containGenres(updateRequest.getGenres()) && newPerformance.compareSize(updateRequest.getGenres())) {
-      return new PerformDetailResponse(newPerformance);
+    Performance updatedPerform = performancePureService.updatePerform(performance, updateRequest); //장르를 제외한 나머지를 수정한다.
+    if (updatedPerform.containGenres(updateRequest.getGenres()) && updatedPerform.compareSize(updateRequest.getGenres())) {
+      return new PerformDetailResponse(updatedPerform);
     }
-    Set<PerformGenre> newGenres = updateRequest.getSetOfGenres(newPerformance);
+    Set<PerformGenre> newGenres = updateRequest.getSetOfGenres(updatedPerform);
     performGenrePureService.deleteAndSaveAll(updateRequest.getId(), newGenres);
-    return new PerformDetailResponse(newPerformance, newGenres);
+    return new PerformDetailResponse(updatedPerform, newGenres);
   }
 
 
