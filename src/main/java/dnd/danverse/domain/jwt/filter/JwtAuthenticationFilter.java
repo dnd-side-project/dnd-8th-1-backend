@@ -5,6 +5,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 import dnd.danverse.domain.jwt.service.JwtTokenProvider;
 import dnd.danverse.domain.jwt.exception.JwtException;
+import dnd.danverse.global.redis.service.RedisLogOutService;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.FilterChain;
@@ -32,6 +33,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private final JwtTokenProvider tokenProvider;
+  private final RedisLogOutService logoutTokenService;
 
   private static final List<String> EXCLUDE_URL = List.of(
       "/api/v1/oauth/jwt/refresh");
@@ -48,6 +50,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     String header = request.getHeader(AUTHORIZATION);
     if (hasAuthorization(header)) {
       String accessToken = header.substring(7);
+
+      // Access Token 이 로그아웃 된 토큰인지 확인하는 로직
+      logoutTokenService.checkIfLogOutToken(accessToken);
 
       tokenProvider.validateToken(accessToken);
       Authentication authentication = tokenProvider.getAuthentication(accessToken);
