@@ -21,7 +21,7 @@ public class ReviewDeleteComplexService {
    * 검증이 완료되면 후기를 삭제한다.
    *
    * @param reviewId 삭제할 후기 ID
-   * @param memberId 삭제자 ID
+   * @param memberId 후기 삭제를 원하는 API 접속자 ID
    */
   public void deleteReview(Long reviewId, Long memberId) {
     Review review = reviewWriterValidationService.validateReviewWriter(reviewId, memberId);
