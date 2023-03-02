@@ -31,14 +31,14 @@ public class ProfileUpdateService {
    */
   public ProfileDetailResponseDto updateProfile(ProfileUpdateRequestDto request, Long memberId) {
     Profile profile = profilePureService.retrieveProfile(memberId);
-    Profile oldProfile = profile.update(request);
+    Profile updatedProfile = profile.update(request);
 
-    if (oldProfile.containGenres(request.getGenres()) && oldProfile.compareSize(request.getGenres())) {
-      return new ProfileDetailResponseDto(oldProfile);
+    if (updatedProfile.containGenres(request.getGenres()) && updatedProfile.compareSize(request.getGenres())) {
+      return new ProfileDetailResponseDto(updatedProfile);
     }
-    Set<ProfileGenre> profileGenres = request.getSetOfGenres(oldProfile);
-    profileGenrePureService.deleteAndSaveAll(request.getId(), profileGenres);
-    return new ProfileDetailResponseDto(oldProfile, profileGenres);
+    Set<ProfileGenre> newProfileGenres = request.getSetOfGenres(updatedProfile);
+    profileGenrePureService.deleteAndSaveAll(request.getId(), newProfileGenres);
+    return new ProfileDetailResponseDto(updatedProfile, newProfileGenres);
   }
 
 
