@@ -17,8 +17,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     registry
         .addMapping("/**")
         .allowedOrigins("http://localhost:3000", "https://localhost:3001", "http://localhost:6006",
-            "https://danverse.vercel.app", "https://danverse-*-allsilver.vercel.app",
-            "https://danverse-git-*-allsilver.vercel.app")
+            "https://danverse.vercel.app")
+        .allowedOriginPatterns("https://danverse-.*-allsilver\\.vercel\\.app")
         .allowedMethods(
             HttpMethod.GET.name(),
             HttpMethod.POST.name(),
