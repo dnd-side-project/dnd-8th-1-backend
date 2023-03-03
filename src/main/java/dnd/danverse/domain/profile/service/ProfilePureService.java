@@ -4,6 +4,7 @@ import static dnd.danverse.global.exception.ErrorCode.NO_EXISTS_PROFILE;
 import static dnd.danverse.global.exception.ErrorCode.PROFILE_ALREADY_EXISTS;
 import static dnd.danverse.global.exception.ErrorCode.PROFILE_NOT_FOUND;
 
+import dnd.danverse.domain.profile.dto.request.ProfileUpdateRequestDto;
 import dnd.danverse.domain.profile.entity.Profile;
 import dnd.danverse.domain.profile.exception.NoProfileException;
 import dnd.danverse.domain.profile.exception.ProfileAlreadyException;
@@ -85,6 +86,13 @@ public class ProfilePureService {
       throw new ProfileAlreadyException(PROFILE_ALREADY_EXISTS);
     });
   }
+
+  @Transactional
+  public Profile updateProfile(ProfileUpdateRequestDto request, Profile profile) {
+    log.info("프로필을 수정합니다.");
+    return profile.update(request);
+  }
+
 
   /**
    * 자신이 가지고 있는 프로필을 삭제합니다.
