@@ -1,5 +1,6 @@
 package dnd.danverse.domain.profile.dto.request;
 
+import dnd.danverse.domain.profile.dto.response.PortfolioUrl;
 import dnd.danverse.domain.profile.entity.Profile;
 import dnd.danverse.domain.profilegenre.entity.ProfileGenre;
 import io.swagger.annotations.ApiModelProperty;
@@ -73,8 +74,15 @@ public class ProfileUpdateRequestDto {
   private String openChatUrl;
 
   /**
+   * 프로필 포트폴리오 url.
+   */
+  @ApiModelProperty(value = "프로필 포트폴리오 url")
+  private PortfolioUrl portfolio;
+
+  /**
    * 요청 dto 가 가지고 있는 String 장르 값을 profile 과 연관 관계 매핑이 이루어진
    * ProfileGenre 객체로 변환하여 반환.
+   *
    * @param profile 연관 관계 매핑을 위한 profile 객체
    * @return Profile 과 연관 관계 매핑이 이루어진 ProfileGenre 객체로 변환된 Set
    */
