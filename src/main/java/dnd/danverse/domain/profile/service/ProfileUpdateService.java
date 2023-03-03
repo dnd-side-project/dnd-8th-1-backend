@@ -31,7 +31,7 @@ public class ProfileUpdateService {
    */
   public ProfileDetailResponseDto updateProfile(ProfileUpdateRequestDto request, Long memberId) {
     Profile profile = profilePureService.retrieveProfile(memberId);
-    Profile updatedProfile = profile.update(request);
+    Profile updatedProfile = profilePureService.updateProfile(request, profile);
 
     if (updatedProfile.containGenres(request.getGenres()) && updatedProfile.compareSize(request.getGenres())) {
       return new ProfileDetailResponseDto(updatedProfile);
