@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
   @Query("select new dnd.danverse.domain.review.dto.response."
       + "ReviewInfoDto(r.id,r.content, r.createdAt, m.id,m.name, p.id,p.profileName)"
-      + " from Review r join r.member m left join m.profile p where r.performance.id = :performId")
+      + " from Review r join r.member m left join m.profile p where r.performance.id = :performId order by r.createdAt desc")
   List<ReviewInfoDto> findAllReviewsWithWriter(@Param("performId") Long performId);
 
   @Query("select new dnd.danverse.domain.review.dto.response."
