@@ -36,8 +36,8 @@ public class PortfolioUrl {
    * @param portfolio dto 로 변환하는 포트폴리오 객체.
    */
   public PortfolioUrl(Portfolio portfolio) {
-    this.youtube = portfolio.getYoutubeUrl();
-    this.instagram = portfolio.getInstagramUrl();
-    this.tiktok = portfolio.getTiktokUrl();
+    this.youtube = (portfolio == null) ? null : portfolio.getYoutubeUrl();
+    this.instagram = (portfolio == null) ? null : portfolio.getInstagramUrl();
+    this.tiktok = (portfolio == null) ? null : portfolio.getTiktokUrl();
   }
 }
