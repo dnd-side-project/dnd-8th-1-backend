@@ -191,6 +191,7 @@ public class Profile extends BaseTimeEntity {
     this.careerStartDay = request.getCareerStartDate();
     this.description = request.getDescription();
     this.openChatUrl = new OpenChat(request.getOpenChatUrl());
+    this.portfolioUrl = new Portfolio(request.getPortfolio().getYoutube(), request.getPortfolio().getInstagram(), request.getPortfolio().getTiktok());
 
     return this;
   }
