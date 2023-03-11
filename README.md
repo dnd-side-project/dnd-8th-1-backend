@@ -1,4 +1,9 @@
-# Danverse
+<div align="center">
+ 
+# 💃Danverse🕺
+  
+  ![Untitled](https://user-images.githubusercontent.com/94590894/224463404-7ec9de7b-de2f-4ee1-b2dc-6991ce7945d5.png)
+  
 
 최근에 댄스에 대한 관심이 생겼는데 전문적인 관련 서비스가 없어요 🥲
 
@@ -6,7 +11,10 @@
 
 🪩춤으로 연결되는 댄스 유니버스, 댄버스💫
 
-![Untitled](https://user-images.githubusercontent.com/94590894/224463404-7ec9de7b-de2f-4ee1-b2dc-6991ce7945d5.png)
+</div>
+
+<br>
+
 
 ---
 
