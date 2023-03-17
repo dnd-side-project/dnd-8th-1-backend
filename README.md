@@ -53,13 +53,11 @@
 > ### 아키텍쳐
 ![아키텍처](https://user-images.githubusercontent.com/94590894/224464562-589e15f8-c21e-4b7f-9c55-b8028553cb42.png)
 
-(관련 위키 글 첨부 필요)
+[배포 관련 기술 도입 목적](https://github.com/dnd-side-project/dnd-8th-1-backend/wiki/배포-관련-기술-도입-목적)
 
 ---
 > ### ERD
 ![Copy of DND](https://user-images.githubusercontent.com/94590894/224464749-1067b551-d4b4-4838-a4ad-58895057ef62.png)
-
-(ERD 설계 오류 정리 문서 넣기)
 
 ---
 > ### 프로젝트 주요 관심사
@@ -80,8 +78,8 @@ DB 서버와의 통신을 최소화(N+1 쿼리를 지양하려고 노력)
 복합 Service 와 순수 Service 를 분리하여 개발
 
 --- 
-> ### 위키 참고 (정리하고 링크 넣기)
-1. 기술 도입 목적
-2. 브랜치 관리 전략, 컨벤션
-3. API
+> ### 위키 참고 
+1. [기술 도입 목적](https://github.com/dnd-side-project/dnd-8th-1-backend/wiki/프로젝트-기술-도입-목적)
+2. [브랜치 관리 전략, 컨벤션](https://github.com/dnd-side-project/dnd-8th-1-backend/wiki/Convention)
+3. [API](https://github.com/dnd-side-project/dnd-8th-1-backend/wiki/API-docs)
 
